@@ -14,17 +14,8 @@ jobs:
     steps:
       - name: Check out the code
         uses: actions/checkout@v3
-      - name: Set up pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: latest
-      - name: Use Node.js 16.x
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16.x
-          cache: 'pnpm'
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Set up node
+        uses: './.github/actions/set-up-node'
       - name: Force-install Cypress binaries
         run: pnpm cypress install
       - name: Run E2E tests
@@ -37,17 +28,8 @@ jobs:
     steps:
       - name: Check out the code
         uses: actions/checkout@v3
-      - name: Set up pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: latest
-      - name: Use Node.js 16.x
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16.x
-          cache: 'pnpm'
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Set up node
+        uses: './.github/actions/set-up-node'
       - name: Force-install Cypress binaries
         run: pnpm cypress install
       - name: Run component tests
