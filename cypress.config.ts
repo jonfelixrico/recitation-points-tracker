@@ -6,7 +6,11 @@ export default defineConfig({
   fixturesFolder: 'test/cypress/fixtures',
   screenshotsFolder: 'test/cypress/screenshots',
   videosFolder: 'test/cypress/videos',
-  video: true,
+  /*
+   * Disabled to prevent CI from generating videos.
+   * This is to save up on resources on the server that we're running Cypress on.
+   */
+  video: false,
 
   e2e: {
     setupNodeEvents(on, config) {
