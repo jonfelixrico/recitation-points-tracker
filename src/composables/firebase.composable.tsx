@@ -1,23 +1,21 @@
-import { initializeApp } from 'firebase/app'
-import { getAnalytics } from 'firebase/analytics'
+import { FirebaseApp, initializeApp } from 'firebase/app'
 
-const firebaseConfig = {
-  apiKey: 'AIzaSyD3lfxbWXmctREdQkyekt6SXHQDN3yBfwE',
-  authDomain: 'recitation-points-tracker-test.firebaseapp.com',
-  projectId: 'recitation-points-tracker-test',
-  storageBucket: 'recitation-points-tracker-test.appspot.com',
-  messagingSenderId: '996746436257',
-  appId: '1:996746436257:web:6a3465006cbbf1c8d81ae0',
-  measurementId: 'G-9CX8PG3FVC',
-}
-
-const app = initializeApp(firebaseConfig)
-const analytics = getAnalytics(app)
+let app: FirebaseApp
 
 export function useFirebase() {
-  return app
-}
+  if (!app) {
+    const FIREBASE_CONFIG = {
+      apiKey: 'AIzaSyD3lfxbWXmctREdQkyekt6SXHQDN3yBfwE',
+      authDomain: 'recitation-points-tracker-test.firebaseapp.com',
+      projectId: 'recitation-points-tracker-test',
+      storageBucket: 'recitation-points-tracker-test.appspot.com',
+      messagingSenderId: '996746436257',
+      appId: '1:996746436257:web:6a3465006cbbf1c8d81ae0',
+      measurementId: 'G-9CX8PG3FVC',
+    }
 
-export function useAnalytics() {
-  return analytics
+    app = initializeApp(FIREBASE_CONFIG)
+  }
+
+  return app
 }
