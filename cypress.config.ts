@@ -23,7 +23,7 @@ export default defineConfig({
       return config
     },
     supportFile: 'test/cypress/support/component.ts',
-    specPattern: 'src/**/*.cy.{js,jsx,ts,tsx}',
+    specPattern: 'test/cypress/component/**/*.cy.{js,jsx,ts,tsx}',
     indexHtmlFile: 'test/cypress/support/component-index.html',
     devServer: injectQuasarDevServerConfig(),
   },
