@@ -10,8 +10,8 @@ on:
     branches: ['develop-*']
 
 jobs:
-  run-tests:
-    uses: ./.github/workflows/run-tests.reusable.yml
   run-static-checking:
     uses: ./.github/workflows/static-checking.reusable.yml
-    needs: run-tests
+  run-tests:
+    needs: run-static-checking
+    uses: ./.github/workflows/run-tests.reusable.yml
