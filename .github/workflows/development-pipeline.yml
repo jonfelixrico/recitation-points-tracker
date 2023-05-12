@@ -1,0 +1,10 @@
+name: Develop pipeline
+
+on:
+  push:
+    branches: ['develop-*', 'develop']
+  pull_request:
+
+jobs:
+  run-tests:
+    uses: ./.github/workflows/run-tests.reusable.yml

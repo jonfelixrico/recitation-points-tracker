@@ -7,9 +7,34 @@ on:
   workflow_call:
 
 jobs:
+  lint:
+    name: Check code formatting with ESLint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v3
+      - name: Set up node
+        uses: ./.github/actions/set-up-node
+      - name: Run linter
+        run: pnpm lint
+
+  build:
+    name: Check if code builds
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v3
+      - name: Set up node
+        uses: ./.github/actions/set-up-node
+      - name: Run linter
+        run: pnpm build
+
   e2e:
     name: Cypress E2E test
     runs-on: ubuntu-latest
+    needs: [lint, build]
 
     steps:
       - name: Check out the code
@@ -24,6 +49,7 @@ jobs:
   component:
     name: Cypress component test
     runs-on: ubuntu-latest
+    needs: [lint, build]
 
     steps:
       - name: Check out the code
@@ -38,6 +64,7 @@ jobs:
   unit:
     name: Vitest unit test
     runs-on: ubuntu-latest
+    needs: [lint, build]
 
     steps:
       - name: Check out the code
