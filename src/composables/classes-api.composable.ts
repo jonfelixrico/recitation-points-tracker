@@ -13,15 +13,25 @@ export function useClassesAPI() {
       const output: ClassEntity[] = []
       docs.forEach((doc) => {
         // TODO use validation or something
-        output.push(doc.data() as ClassEntity)
+        output.push({
+          ...doc.data(),
+          id: doc.id,
+        } as ClassEntity)
       })
     },
 
     async getClass(id: string) {
       const docRef = doc(firestore, `users/${uid}/classes`, id)
       const docSnap = await getDoc(docRef)
-      // do something about this
-      return docSnap.data() as ClassEntity
+
+      if (!docSnap.exists) {
+        return null
+      }
+
+      return {
+        ...docSnap.data(),
+        id: docSnap.id,
+      } as ClassEntity
     },
   }
 }
