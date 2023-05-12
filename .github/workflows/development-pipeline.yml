@@ -2,9 +2,8 @@ name: Develop pipeline
 
 on:
   push:
-    branches: ['develop-*']
+    branches: ['develop-*', 'develop']
   pull_request:
-    branches: ['develop-*']
 
 jobs:
   run-static-checking:
