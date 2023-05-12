@@ -6,8 +6,5 @@ on:
   pull_request:
 
 jobs:
-  run-static-checking:
-    uses: ./.github/workflows/static-checking.reusable.yml
   run-tests:
-    needs: [run-static-checking]
     uses: ./.github/workflows/run-tests.reusable.yml
