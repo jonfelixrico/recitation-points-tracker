@@ -29,5 +29,7 @@ export function useAuth() {
     loginViaEmailAndPassword(email: string, password: string) {
       return signInWithEmailAndPassword(auth, email, password)
     },
+
+    auth,
   }
 }
