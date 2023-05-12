@@ -30,7 +30,6 @@ const routes: RouteRecordRaw[] = [
         path: '/classes/:classId',
         name: 'classDetails',
         component: () => import('pages/ClassDetails.vue'),
-        props: true,
       },
     ],
   },
