@@ -15,3 +15,16 @@ export interface StudentEntity {
   seatColumn: string
   seatRow: string
 }
+
+export interface RecitationEntity {
+  id: string
+
+  name: string
+
+  tags: string[]
+}
+
+export interface RecitedStudentsEntity {
+  id: string
+  points: number
+}
