@@ -18,7 +18,8 @@
     "test:e2e:ci": "cross-env NODE_ENV=test start-test \"quasar dev\" http-get://localhost:9000 \"cypress run --e2e\"",
     "test:component": "cross-env NODE_ENV=test cypress open --component",
     "test:component:ci": "cross-env NODE_ENV=test cypress run --component",
-    "firebase:emulator": "firebase emulators:start --export-on-exit --import ./firebase/emulator-state"
+    "firebase:emulator:start": "firebase emulators:start --export-on-exit --import ./firebase/emulator-state",
+    "firebase:emulator:save": "firebase emulators:export ./firebase/emulator-state"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
@@ -36,6 +37,7 @@
     "@quasar/quasar-app-extension-testing": "^2.1.0",
     "@quasar/quasar-app-extension-testing-e2e-cypress": "^5.1.0",
     "@quasar/quasar-app-extension-testing-unit-vitest": "^0.1.0",
+    "@types/dotenv-defaults": "^2.0.1",
     "@types/node": "^12.20.21",
     "@typescript-eslint/eslint-plugin": "^5.10.0",
     "@typescript-eslint/parser": "^5.10.0",
@@ -43,6 +45,7 @@
     "@vue/test-utils": "^2.0.0",
     "autoprefixer": "^10.4.2",
     "cypress": "^12.2.0",
+    "dotenv-defaults": "^5.0.2",
     "eslint": "^8.10.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-cypress": "^2.12.1",
