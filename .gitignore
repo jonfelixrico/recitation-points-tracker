@@ -37,3 +37,5 @@ coverage/
 
 # For Firebase-related debug logs
 *-debug.log
+
+.env
