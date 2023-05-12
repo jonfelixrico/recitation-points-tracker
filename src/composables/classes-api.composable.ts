@@ -18,6 +18,8 @@ export function useClassesAPI() {
           id: doc.id,
         } as ClassEntity)
       })
+
+      return output
     },
 
     async getClass(id: string) {
