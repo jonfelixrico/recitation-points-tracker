@@ -1,7 +1,7 @@
 import { collection, doc, getDoc, getDocs } from 'firebase/firestore'
 import { useFirestore } from './firestore.composable'
 import { useSessionUserId } from './session-user.composable'
-import { ClassEntity } from 'src/models/class.entity'
+import { ClassEntity } from 'src/models/entities'
 
 export function useClassesAPI() {
   const { firestore } = useFirestore()
