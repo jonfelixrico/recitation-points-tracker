@@ -1,8 +1,19 @@
 <template>
-  <div>
-    <q-input label="Username" v-model="credentials.username" />
-    <q-input label="Password" type="password" v-model="credentials.password" />
-    <q-btn @click="attemptLogin">Log In</q-btn>
+  <div class="window-width window-height flex flex-center">
+    <q-form @submit.prevent="attemptLogin">
+      <q-card class="form-card-width">
+        <q-card-section class="column q-gutter-y-sm">
+          <q-input label="Username" v-model="credentials.username" outlined />
+          <q-input
+            label="Password"
+            type="password"
+            v-model="credentials.password"
+            outlined
+          />
+          <q-btn type="submit" color="primary" no-caps>Log In</q-btn>
+        </q-card-section>
+      </q-card>
+    </q-form>
   </div>
 </template>
 
@@ -58,3 +69,9 @@ export default defineComponent({
   },
 })
 </script>
+
+<style lang="scss">
+.form-card-width {
+  width: 500px;
+}
+</style>
