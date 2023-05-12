@@ -6,15 +6,18 @@
       >
     </div>
 
-    <q-scroll-area v-if="classList.length" class="col">
-      <q-list>
-        <q-item v-for="item in classList" :key="item.id">
-          <q-item-section>
-            {{ item.name }}
-          </q-item-section>
+    <div class="col relative-position" v-if="classList.length">
+      <q-scroll-area class="fit absolute">
+        <q-item
+          v-for="item in classList"
+          :key="item.id"
+          clickable
+          @click="navigateToDetailsPage(item.id)"
+        >
+          <q-item-section>{{ item.name }}</q-item-section>
         </q-item>
-      </q-list>
-    </q-scroll-area>
+      </q-scroll-area>
+    </div>
 
     <div v-else class="col flex flex-center">No classes to show</div>
   </q-page>
@@ -64,6 +67,8 @@ export default defineComponent({
     const { getClassList } = useClassesAPI()
     const classList = ref<ClassEntity[]>([])
 
+    const router = useRouter()
+
     onBeforeMount(async () => {
       try {
         classList.value = await getClassList()
@@ -75,6 +80,13 @@ export default defineComponent({
     return {
       classList,
       showCreateDialog,
+
+      navigateToDetailsPage(classId: string) {
+        router.push({
+          name: 'classDetails',
+          params: { classId },
+        })
+      },
     }
   },
 })
