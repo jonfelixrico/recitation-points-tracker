@@ -7,19 +7,21 @@ export function useClassesAPI() {
   const { firestore } = useFirestore()
   const uid = useSessionUserId()
 
-  async function getClassList() {
-    const docs = await getDocs(collection(firestore, `users/${uid}/classes`))
-    const output: ClassEntity[] = []
-    docs.forEach((doc) => {
-      // TODO use validation or something
-      output.push(doc.data() as ClassEntity)
-    })
-  }
+  return {
+    async getClassList() {
+      const docs = await getDocs(collection(firestore, `users/${uid}/classes`))
+      const output: ClassEntity[] = []
+      docs.forEach((doc) => {
+        // TODO use validation or something
+        output.push(doc.data() as ClassEntity)
+      })
+    },
 
-  async function getClass(id: string) {
-    const docRef = doc(firestore, `users/${uid}/classes`, id)
-    const docSnap = await getDoc(docRef)
-    // do something about this
-    return docSnap.data() as ClassEntity
+    async getClass(id: string) {
+      const docRef = doc(firestore, `users/${uid}/classes`, id)
+      const docSnap = await getDoc(docRef)
+      // do something about this
+      return docSnap.data() as ClassEntity
+    },
   }
 }
