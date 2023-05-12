@@ -8,7 +8,7 @@ export const authGuard: NavigationGuardWithThis<undefined> = (to) => {
     return {
       name: 'login',
       query: {
-        redirectFrom: to.fullPath,
+        redirectedFrom: to.fullPath,
       },
     }
   }
