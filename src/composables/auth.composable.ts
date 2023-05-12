@@ -1,4 +1,4 @@
-import { getAuth, signInAnonymously } from 'firebase/auth'
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import { useFirebase } from './firebase.composable'
 
 export function useAuth() {
@@ -6,8 +6,8 @@ export function useAuth() {
   const auth = getAuth(app)
 
   return {
-    doAnonymousLogin() {
-      return signInAnonymously(auth)
+    loginViaEmailAndPassword(email: string, password: string) {
+      return signInWithEmailAndPassword(auth, email, password)
     },
   }
 }
