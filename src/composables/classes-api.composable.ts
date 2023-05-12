@@ -1,4 +1,4 @@
-import { collection, doc, getDoc, getDocs } from 'firebase/firestore'
+import { collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore'
 import { useFirestore } from './firestore.composable'
 import { useSessionUserId } from './session-user.composable'
 import { ClassEntity } from 'src/models/entities'
@@ -32,6 +32,12 @@ export function useClassesAPI() {
         ...docSnap.data(),
         id: docSnap.id,
       } as ClassEntity
+    },
+
+    async createClass(input: ClassEntity) {
+      const { id, ...data } = input
+      await setDoc(doc(firestore, `users/${uid}/classes`, id), data)
+      return input
     },
   }
 }
