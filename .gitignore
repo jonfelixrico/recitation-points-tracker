@@ -34,3 +34,6 @@ yarn-error.log*
 
 .nyc_output
 coverage/
+
+# For Firebase-related debug logs
+*-debug.log

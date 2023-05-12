@@ -95,6 +95,13 @@ module.exports = configure(function (/* ctx */) {
     devServer: {
       // https: true
       open: false, // opens browser window automatically
+      watch: {
+        /*
+         * Necessary to prevent Firebase Emulator save-on-exit errors.
+         * Ref: https://github.com/firebase/firebase-tools/issues/3092#issuecomment-1491220706
+         */
+        usePolling: true,
+      },
     },
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework
