@@ -1,8 +1,13 @@
 <template>
-  <q-page>{{ classData }}</q-page>
+  <q-page class="column">
+    <div class="col" v-if="classData">
+      {{ classData }}
+    </div>
+  </q-page>
 </template>
 
 <script lang="ts">
+import { useQuasar } from 'quasar'
 import { useClassesAPI } from 'src/composables/classes-api.composable'
 import { ClassEntity } from 'src/models/entities'
 import { defineComponent, onMounted, ref } from 'vue'
@@ -21,15 +26,24 @@ export default defineComponent({
   setup() {
     const { getClass } = useClassesAPI()
     const route = useRoute()
+    const { loading } = useQuasar()
 
-    const classData = ref<ClassEntity | null>(null)
+    const data = ref<ClassEntity | null>(null)
 
     onMounted(async () => {
-      classData.value = await getClass(String(route.params.classId))
+      loading.show()
+      try {
+        data.value = await getClass(String(route.params.classId))
+      } catch (e) {
+        // TODO improve logging
+        console.error(e)
+      } finally {
+        loading.hide()
+      }
     })
 
     return {
-      classData,
+      classData: data,
     }
   },
 })
