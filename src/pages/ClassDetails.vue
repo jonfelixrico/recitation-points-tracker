@@ -1,5 +1,5 @@
 <template>
-  <q-page class="q-pt-md">
+  <q-page class="q-pt-md relative-position">
     <template v-if="data">
       <div class="page-width q-mx-auto column q-gutter-y-md">
         <div class="row q-gutter-x-lg items-center">
@@ -9,7 +9,7 @@
           </div>
         </div>
 
-        <q-card class="col">
+        <q-card>
           <q-card-section>
             {{ data }}
           </q-card-section>
