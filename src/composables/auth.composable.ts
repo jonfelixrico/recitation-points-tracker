@@ -1,4 +1,5 @@
 import {
+  browserSessionPersistence,
   connectAuthEmulator,
   getAuth,
   signInWithEmailAndPassword,
@@ -32,8 +33,18 @@ export function useAuth() {
   const auth = getAuthInstance(app)
 
   return {
-    loginViaEmailAndPassword(email: string, password: string) {
-      return signInWithEmailAndPassword(auth, email, password)
+    async loginViaEmailAndPassword(email: string, password: string) {
+      // Firebase doesnt persist session past page life by default. Need to set this to persist longer.
+      await auth.setPersistence(browserSessionPersistence)
+
+      const credentials = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      )
+      console.log('User %s has logged in', credentials.user.uid)
+
+      return credentials
     },
 
     auth,
