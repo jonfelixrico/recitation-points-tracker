@@ -1,15 +1,19 @@
 <template>
-  <q-page class="column">
+  <q-page class="q-pt-md">
     <template v-if="data">
-      <div class="row q-pa-sm q-gutter-x-lg items-center">
-        <q-btn icon="arrow_back" round flat dense @click="$router.back()" />
-        <div class="text-h5">
-          {{ data.name }}
+      <div class="page-width q-mx-auto column q-gutter-y-md">
+        <div class="row q-gutter-x-lg items-center">
+          <q-btn icon="arrow_back" round flat dense @click="$router.back()" />
+          <div class="text-h5">
+            {{ data.name }}
+          </div>
         </div>
-      </div>
 
-      <div class="col">
-        {{ data }}
+        <q-card class="col">
+          <q-card-section>
+            {{ data }}
+          </q-card-section>
+        </q-card>
       </div>
     </template>
   </q-page>
