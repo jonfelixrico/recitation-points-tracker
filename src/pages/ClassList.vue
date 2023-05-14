@@ -1,6 +1,6 @@
 <template>
-  <q-page class="column">
-    <div class="row justify-end q-pa-sm">
+  <q-page class="column page-width q-mx-auto">
+    <div class="row justify-end q-pa-sm border-bottom">
       <q-btn no-caps color="primary" unelevated @click="showCreateDialog"
         >Add Class</q-btn
       >
