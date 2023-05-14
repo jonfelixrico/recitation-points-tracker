@@ -1,8 +1,17 @@
 <template>
   <q-page class="column">
-    <div class="col" v-if="classData">
-      {{ classData }}
-    </div>
+    <template v-if="data">
+      <div class="row q-pa-sm q-gutter-x-lg items-center">
+        <q-btn icon="arrow_back" round flat dense @click="$router.back()" />
+        <div class="text-h5">
+          {{ data.name }}
+        </div>
+      </div>
+
+      <div class="col">
+        {{ data }}
+      </div>
+    </template>
   </q-page>
 </template>
 
@@ -43,7 +52,7 @@ export default defineComponent({
     })
 
     return {
-      classData: data,
+      data,
     }
   },
 })
