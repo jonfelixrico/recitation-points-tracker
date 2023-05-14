@@ -3,6 +3,7 @@ import {
   connectAuthEmulator,
   getAuth,
   signInWithEmailAndPassword,
+  signOut,
 } from 'firebase/auth'
 import { useFirebase } from './firebase.composable'
 import { FirebaseApp } from 'firebase/app'
@@ -45,6 +46,10 @@ export function useAuth() {
       console.log('User %s has logged in', credentials.user.uid)
 
       return credentials
+    },
+
+    async signOut() {
+      await signOut(auth)
     },
 
     auth,
