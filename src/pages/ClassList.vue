@@ -6,10 +6,14 @@
       >
     </div>
 
-    <div class="col relative-position" v-if="classList.length">
+    <div class="col flex flex-center" v-if="isLoading">
+      <q-spinner color="primary" />
+    </div>
+
+    <div class="col relative-position" v-else-if="data.length">
       <q-scroll-area class="fit absolute">
         <q-item
-          v-for="item in classList"
+          v-for="item in data"
           :key="item.id"
           clickable
           @click="navigateToDetailsPage(item.id)"
@@ -19,7 +23,9 @@
       </q-scroll-area>
     </div>
 
-    <div v-else class="col flex flex-center">No classes to show</div>
+    <div v-else-if="!data.length" class="col flex flex-center">
+      No classes to show
+    </div>
   </q-page>
 </template>
 
@@ -60,21 +66,39 @@ function useClassCreationDialog() {
   }
 }
 
+function useClassList() {
+  const { getClassList } = useClassesAPI()
+  const classList = ref<ClassEntity[]>([])
+  const isLoading = ref(false)
+
+  return {
+    data: classList,
+    isLoading,
+
+    async load() {
+      isLoading.value = true
+      try {
+        classList.value = await getClassList()
+      } catch (e) {
+        // TODO improve this logging
+        console.error(e)
+      } finally {
+        isLoading.value = false
+      }
+    },
+  }
+}
+
 export default defineComponent({
   setup() {
     const { showDialog: showCreateDialog } = useClassCreationDialog()
 
-    const { getClassList } = useClassesAPI()
-    const classList = ref<ClassEntity[]>([])
-
     const router = useRouter()
 
+    const classList = useClassList()
+
     onBeforeMount(async () => {
-      try {
-        classList.value = await getClassList()
-      } catch (e) {
-        console.error(e)
-      }
+      await classList.load()
     })
 
     return {
@@ -87,6 +111,9 @@ export default defineComponent({
           params: { classId },
         })
       },
+
+      data: classList.data,
+      isLoading: classList.isLoading,
     }
   },
 })
