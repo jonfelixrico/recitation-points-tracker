@@ -2,25 +2,28 @@
   <q-page class="q-pt-md relative-position">
     <template v-if="classData">
       <div class="page-width q-mx-auto column q-gutter-y-md">
-        <div class="row">
+        <div class="row items-center q-gutter-x-lg">
           <q-btn icon="arrow_back" round flat dense @click="$router.back()" />
+          <div class="text-h5">{{ classData.name }}</div>
         </div>
 
         <q-card>
-          <q-card-section class="text-h5 q-pb-none">
-            {{ classData.name }}
-          </q-card-section>
           <q-card-section>
             {{ classData }}
           </q-card-section>
+          <q-separator />
         </q-card>
 
         <q-card>
-          <q-card-section> Students </q-card-section>
           <q-card-section>
-            <div v-for="student of studentsData" :key="student.id">
-              {{ student }}
-            </div>
+            <div class="text-h6">Students</div>
+            <q-list separator>
+              <q-item v-for="student of studentsData" :key="student.id">
+                <q-item-section>
+                  {{ student }}
+                </q-item-section>
+              </q-item>
+            </q-list>
           </q-card-section>
         </q-card>
       </div>
