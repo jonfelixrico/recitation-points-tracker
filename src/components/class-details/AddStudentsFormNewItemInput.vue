@@ -20,7 +20,14 @@
         </div>
       </q-item-section>
       <q-item-section side>
-        <q-btn icon="add_circle" flat round dense color="primary" />
+        <q-btn
+          icon="add_circle"
+          flat
+          round
+          dense
+          color="primary"
+          type="submit"
+        />
       </q-item-section>
     </q-item>
   </q-form>
