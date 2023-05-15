@@ -14,6 +14,15 @@
             {{ classData }}
           </q-card-section>
         </q-card>
+
+        <q-card>
+          <q-card-section> Students </q-card-section>
+          <q-card-section>
+            <div v-for="student of studentsData" :key="student.id">
+              {{ student }}
+            </div>
+          </q-card-section>
+        </q-card>
       </div>
     </template>
   </q-page>
@@ -22,7 +31,8 @@
 <script lang="ts">
 import { useQuasar } from 'quasar'
 import { useClassesAPI } from 'src/composables/classes-api.composable'
-import { ClassEntity } from 'src/models/entities'
+import { useStudentAPI } from 'src/composables/student-api.composable'
+import { ClassEntity, StudentEntity } from 'src/models/entities'
 import { defineComponent, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 
@@ -38,15 +48,21 @@ export default defineComponent({
 
   setup() {
     const { getClass } = useClassesAPI()
+    const { getStudentList } = useStudentAPI()
+
     const route = useRoute()
+    const classId = String(route.params.classId)
+
     const { loading } = useQuasar()
 
     const classData = ref<ClassEntity | null>(null)
+    const studentsData = ref<StudentEntity[]>([])
 
     onMounted(async () => {
       loading.show()
       try {
-        classData.value = await getClass(String(route.params.classId))
+        classData.value = await getClass(classId)
+        studentsData.value = await getStudentList(classId)
       } catch (e) {
         // TODO improve logging
         console.error(e)
@@ -57,6 +73,7 @@ export default defineComponent({
 
     return {
       classData,
+      studentsData,
     }
   },
 })
