@@ -9,12 +9,24 @@
         {{ student }}
       </q-item-section>
     </q-item>
+
+    <q-form @submit.prevent>
+      <q-item data-cy="input">
+        <!-- TODO add submit handler -->
+        <q-item-section>
+          <q-input outlined class="full-width" dense v-model="inputModel" />
+        </q-item-section>
+        <q-item-section side>
+          <q-btn icon="add_circle" flat round dense color="primary" />
+        </q-item-section>
+      </q-item>
+    </q-form>
   </q-list>
 </template>
 
 <script lang="ts">
 import { StudentEntity } from 'src/models/entities'
-import { PropType, defineComponent } from 'vue'
+import { PropType, defineComponent, ref } from 'vue'
 
 export default defineComponent({
   props: {
@@ -22,6 +34,14 @@ export default defineComponent({
       required: true,
       type: Array as PropType<StudentEntity[]>,
     },
+  },
+
+  setup() {
+    const inputModel = ref('')
+
+    return {
+      inputModel,
+    }
   },
 })
 </script>
