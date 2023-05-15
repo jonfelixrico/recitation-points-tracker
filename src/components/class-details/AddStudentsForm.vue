@@ -5,6 +5,8 @@
       :key="index"
       data-cy="student"
     >
+      <q-item-section side> {{ index + 1 }}. </q-item-section>
+
       <q-item-section>
         {{
           t('common.nameFormat', {
@@ -12,6 +14,10 @@
             lastName: student.lastName,
           })
         }}
+      </q-item-section>
+
+      <q-item-section side>
+        <q-btn icon="delete" flat round dense color="negative" />
       </q-item-section>
     </q-item>
 
