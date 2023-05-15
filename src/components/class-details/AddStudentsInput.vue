@@ -6,7 +6,7 @@
       data-cy="student"
     >
       <q-item-section>
-        {{ student }}
+        {{ t('common.nameFormat', student) }}
       </q-item-section>
     </q-item>
 
@@ -27,6 +27,7 @@
 <script lang="ts">
 import { StudentEntity } from 'src/models/entities'
 import { PropType, defineComponent, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 export default defineComponent({
   props: {
@@ -37,10 +38,12 @@ export default defineComponent({
   },
 
   setup() {
+    const { t } = useI18n()
     const inputModel = ref('')
 
     return {
       inputModel,
+      t,
     }
   },
 })
