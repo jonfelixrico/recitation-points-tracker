@@ -12,7 +12,9 @@
     class="column items-center justify-center empty-list-height q-gutter-y-xs"
   >
     <div class="text-h6">No students to show</div>
-    <q-btn no-caps color="primary" unelevated dense>Add a student</q-btn>
+    <q-btn no-caps color="primary" unelevated dense @click="$emit('add-click')">
+      Add a student
+    </q-btn>
   </div>
 </template>
 
@@ -27,6 +29,8 @@ export default defineComponent({
       type: Array as PropType<StudentEntity[]>,
     },
   },
+
+  emits: ['add-click'],
 })
 </script>
 
