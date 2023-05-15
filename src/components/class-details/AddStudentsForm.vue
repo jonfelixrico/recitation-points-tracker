@@ -15,32 +15,7 @@
       </q-item-section>
     </q-item>
 
-    <q-form @submit.prevent>
-      <q-item data-cy="input">
-        <!-- TODO add submit handler -->
-        <q-item-section>
-          <div class="row q-gutter-x-xs">
-            <q-input
-              outlined
-              class="col"
-              dense
-              v-model="inputModel.lastName"
-              :label="t('classes.addStudentsForm.input.firstNameLabel')"
-            />
-            <q-input
-              :label="t('classes.addStudentsForm.input.lastNameLabel')"
-              outlined
-              class="col"
-              dense
-              v-model="inputModel.firstName"
-            />
-          </div>
-        </q-item-section>
-        <q-item-section side>
-          <q-btn icon="add_circle" flat round dense color="primary" />
-        </q-item-section>
-      </q-item>
-    </q-form>
+    <AddStudentsFormNewItemInput :model-value="inputModel" data-cy="input" />
   </q-list>
 </template>
 
@@ -48,8 +23,10 @@
 import { StudentEntity } from 'src/models/entities'
 import { PropType, defineComponent, reactive } from 'vue'
 import { useI18n } from 'vue-i18n'
+import AddStudentsFormNewItemInput from './AddStudentsFormNewItemInput.vue'
 
 export default defineComponent({
+  components: { AddStudentsFormNewItemInput },
   props: {
     modelValue: {
       required: true,

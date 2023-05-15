@@ -1,6 +1,6 @@
 <template>
   <q-form @submit.prevent="$emit('submit', modelValue)">
-    <q-item data-cy="input">
+    <q-item>
       <q-item-section>
         <div class="row q-gutter-x-xs">
           <q-input
