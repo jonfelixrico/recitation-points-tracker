@@ -1,5 +1,5 @@
 <template>
-  <q-list v-if="students.length" separator>
+  <q-list v-if="students.length" separator data-cy="student-content">
     <q-item v-for="student of students" :key="student.id">
       <q-item-section>
         {{ student }}
@@ -10,6 +10,7 @@
   <div
     v-else
     class="column items-center justify-center empty-list-height q-gutter-y-xs"
+    data-cy="empty-notice"
   >
     <div class="text-h6">No students to show</div>
     <q-btn no-caps color="primary" unelevated dense @click="$emit('add-click')">
