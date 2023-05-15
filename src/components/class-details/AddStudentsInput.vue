@@ -20,8 +20,15 @@
         <!-- TODO add submit handler -->
         <q-item-section>
           <div class="row q-gutter-x-xs">
-            <q-input outlined class="col" dense v-model="inputModel.lastName" />
             <q-input
+              outlined
+              class="col"
+              dense
+              v-model="inputModel.lastName"
+              :label="t('classes.addStudentsInput.firstNameLabel')"
+            />
+            <q-input
+              :label="t('classes.addStudentsInput.lastNameLabel')"
               outlined
               class="col"
               dense
