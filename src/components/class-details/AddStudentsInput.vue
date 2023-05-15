@@ -6,7 +6,12 @@
       data-cy="student"
     >
       <q-item-section>
-        {{ t('common.nameFormat', student) }}
+        {{
+          t('common.nameFormat', {
+            firstName: student.firstName,
+            lastName: student.lastName,
+          })
+        }}
       </q-item-section>
     </q-item>
 
@@ -14,7 +19,15 @@
       <q-item data-cy="input">
         <!-- TODO add submit handler -->
         <q-item-section>
-          <q-input outlined class="full-width" dense v-model="inputModel" />
+          <div class="row q-gutter-x-xs">
+            <q-input outlined class="col" dense v-model="inputModel.lastName" />
+            <q-input
+              outlined
+              class="col"
+              dense
+              v-model="inputModel.firstName"
+            />
+          </div>
         </q-item-section>
         <q-item-section side>
           <q-btn icon="add_circle" flat round dense color="primary" />
@@ -26,7 +39,7 @@
 
 <script lang="ts">
 import { StudentEntity } from 'src/models/entities'
-import { PropType, defineComponent, ref } from 'vue'
+import { PropType, defineComponent, reactive } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 export default defineComponent({
@@ -39,7 +52,10 @@ export default defineComponent({
 
   setup() {
     const { t } = useI18n()
-    const inputModel = ref('')
+    const inputModel = reactive({
+      firstName: '',
+      lastName: '',
+    })
 
     return {
       inputModel,
