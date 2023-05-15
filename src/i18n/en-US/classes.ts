@@ -1,6 +1,8 @@
 export default {
-  addStudentsInput: {
-    firstNameLabel: 'First name',
-    lastNameLabel: 'Last name',
+  addStudentsForm: {
+    input: {
+      firstNameLabel: 'First name',
+      lastNameLabel: 'Last name',
+    },
   },
 }

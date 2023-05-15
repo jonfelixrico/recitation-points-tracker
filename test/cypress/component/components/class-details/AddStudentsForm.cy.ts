@@ -1,9 +1,9 @@
-import AddStudentsInput from 'src/components/class-details/AddStudentsInput.vue'
+import AddStudentsForm from 'src/components/class-details/AddStudentsForm.vue'
 import { StudentEntity } from 'src/models/entities'
 
-describe('AddStudentsInput', () => {
+describe('AddStudentsForm', () => {
   it('should display data in the model - empty', () => {
-    cy.mount(AddStudentsInput, {
+    cy.mount(AddStudentsForm, {
       props: {
         modelValue: [] as Omit<StudentEntity, 'id'>[],
       },
@@ -13,7 +13,7 @@ describe('AddStudentsInput', () => {
   })
 
   it('should display data in the model - populated', () => {
-    cy.mount(AddStudentsInput, {
+    cy.mount(AddStudentsForm, {
       props: {
         modelValue: [
           {
@@ -36,7 +36,7 @@ describe('AddStudentsInput', () => {
   })
 
   it('should have an input', () => {
-    cy.mount(AddStudentsInput, {
+    cy.mount(AddStudentsForm, {
       props: {
         modelValue: [] as Omit<StudentEntity, 'id'>[],
       },

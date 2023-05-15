@@ -25,10 +25,10 @@
               class="col"
               dense
               v-model="inputModel.lastName"
-              :label="t('classes.addStudentsInput.firstNameLabel')"
+              :label="t('classes.addStudentsForm.input.firstNameLabel')"
             />
             <q-input
-              :label="t('classes.addStudentsInput.lastNameLabel')"
+              :label="t('classes.addStudentsForm.input.lastNameLabel')"
               outlined
               class="col"
               dense
