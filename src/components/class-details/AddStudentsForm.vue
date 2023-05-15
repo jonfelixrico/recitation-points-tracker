@@ -20,9 +20,9 @@
         <q-btn icon="delete" flat round dense color="negative" />
       </q-item-section>
     </q-item>
-
-    <AddStudentsFormNewItemInput :model-value="inputModel" data-cy="input" />
   </q-list>
+  <q-separator v-if="modelValue.length" />
+  <AddStudentsFormNewItemInput :model-value="inputModel" data-cy="input" />
 </template>
 
 <script lang="ts">
