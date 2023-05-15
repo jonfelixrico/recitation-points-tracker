@@ -8,7 +8,7 @@
   </q-list>
 
   <div v-else class="flex flex-center empty-list-height">
-    <div class="text-h6">No students to show</div>
+    No students to show
   </div>
 </template>
 
