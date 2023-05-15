@@ -4,7 +4,7 @@
       <div class="page-width q-mx-auto column q-gutter-y-md">
         <div class="row items-center q-gutter-x-lg">
           <q-btn icon="arrow_back" round flat dense @click="$router.back()" />
-          <div class="text-h5">{{ classData.name }}</div>
+          <div class="text-h4">{{ classData.name }}</div>
         </div>
 
         <q-card>
@@ -15,7 +15,16 @@
         </q-card>
 
         <q-card>
-          <q-card-section class="text-h6"> Students </q-card-section>
+          <q-card-section class="row items-center justify-between">
+            <span class="text-h5"> Students </span>
+            <q-btn unelevated no-caps color="primary">
+              <div class="row q-gutter-x-sm items-center">
+                <q-icon name="add" />
+                <div>Add a student</div>
+              </div>
+            </q-btn>
+          </q-card-section>
+          <q-separator />
           <q-card-section>
             <StudentList :students="studentsData" />
           </q-card-section>
