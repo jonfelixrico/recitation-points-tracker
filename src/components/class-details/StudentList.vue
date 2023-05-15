@@ -7,8 +7,12 @@
     </q-item>
   </q-list>
 
-  <div v-else class="flex flex-center empty-list-height">
-    No students to show
+  <div
+    v-else
+    class="column items-center justify-center empty-list-height q-gutter-y-xs"
+  >
+    <div class="text-h6">No students to show</div>
+    <q-btn no-caps color="primary" unelevated dense>Add a student</q-btn>
   </div>
 </template>
 
