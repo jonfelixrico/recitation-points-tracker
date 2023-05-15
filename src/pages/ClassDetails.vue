@@ -15,15 +15,9 @@
         </q-card>
 
         <q-card>
+          <q-card-section class="text-h6"> Students </q-card-section>
           <q-card-section>
-            <div class="text-h6">Students</div>
-            <q-list separator>
-              <q-item v-for="student of studentsData" :key="student.id">
-                <q-item-section>
-                  {{ student }}
-                </q-item-section>
-              </q-item>
-            </q-list>
+            <StudentsList :students="studentsData" />
           </q-card-section>
         </q-card>
       </div>
@@ -33,6 +27,7 @@
 
 <script lang="ts">
 import { useQuasar } from 'quasar'
+import StudentsList from 'src/components/class-details/StudentsList.vue'
 import { useClassesAPI } from 'src/composables/classes-api.composable'
 import { useStudentAPI } from 'src/composables/student-api.composable'
 import { ClassEntity, StudentEntity } from 'src/models/entities'
@@ -40,6 +35,8 @@ import { defineComponent, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 
 export default defineComponent({
+  components: { StudentsList },
+
   async beforeRouteEnter(to) {
     const { getClass } = useClassesAPI()
     try {
