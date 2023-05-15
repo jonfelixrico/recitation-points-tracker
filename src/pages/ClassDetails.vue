@@ -20,7 +20,7 @@
             <q-btn unelevated no-caps color="primary">
               <div class="row q-gutter-x-sm items-center">
                 <q-icon name="add" />
-                <div>Add a student</div>
+                <div>Add students</div>
               </div>
             </q-btn>
           </q-card-section>

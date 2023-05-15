@@ -13,7 +13,7 @@
   >
     <div class="text-h6">No students to show</div>
     <q-btn no-caps color="primary" unelevated dense @click="$emit('add-click')">
-      Add a student
+      Add students
     </q-btn>
   </div>
 </template>
