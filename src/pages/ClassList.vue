@@ -35,7 +35,6 @@ import ClassCreationDialog from 'src/components/ClassCreationDialog.vue'
 import { useClassesAPI } from 'src/composables/classes-api.composable'
 import { ClassEntity } from 'src/models/entities'
 import { defineComponent, ref, onBeforeMount } from 'vue'
-import { nanoid } from 'nanoid'
 import { useRouter } from 'vue-router'
 
 function useClassCreationDialog() {
@@ -48,17 +47,12 @@ function useClassCreationDialog() {
       $q.dialog({
         component: ClassCreationDialog,
       }).onOk(async (data: Omit<ClassEntity, 'id'>) => {
-        const classId = nanoid()
-
-        await createClass({
-          ...data,
-          id: classId,
-        })
+        const { id } = await createClass(data)
 
         await router.push({
           name: 'classDetails',
           params: {
-            classId,
+            classId: id,
           },
         })
       })

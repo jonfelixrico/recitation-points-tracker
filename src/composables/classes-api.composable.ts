@@ -2,6 +2,7 @@ import { collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore'
 import { useFirestore } from './firestore.composable'
 import { useSessionUserId } from './session-user.composable'
 import { ClassEntity } from 'src/models/entities'
+import { nanoid } from 'nanoid'
 
 export function useClassesAPI() {
   const { firestore } = useFirestore()
@@ -36,10 +37,13 @@ export function useClassesAPI() {
       } as ClassEntity
     },
 
-    async createClass(input: ClassEntity) {
-      const { id, ...data } = input
-      await setDoc(doc(firestore, `users/${uid}/classes`, id), data)
-      return input
+    async createClass(input: Omit<ClassEntity, 'id'>): Promise<ClassEntity> {
+      const id = nanoid()
+      await setDoc(doc(firestore, `users/${uid}/classes`, id), input)
+      return {
+        id,
+        ...input,
+      }
     },
   }
 }
