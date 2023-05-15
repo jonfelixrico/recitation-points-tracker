@@ -1,7 +1,8 @@
-import { collection, getDocs } from 'firebase/firestore'
+import { collection, doc, getDocs, writeBatch } from 'firebase/firestore'
 import { useFirestore } from './firestore.composable'
 import { useSessionUserId } from './session-user.composable'
 import { StudentEntity } from 'src/models/entities'
+import { nanoid } from 'nanoid'
 
 export function useStudentAPI() {
   const { firestore } = useFirestore()
@@ -23,6 +24,33 @@ export function useStudentAPI() {
       })
 
       return output
+    },
+
+    async createStudents(
+      classId: string,
+      students: Omit<StudentEntity, 'id'>[]
+    ): Promise<StudentEntity[]> {
+      const path = `users/${uid}/classes/${classId}/students`
+
+      const insertedStudents: StudentEntity[] = []
+
+      const batch = writeBatch(firestore)
+
+      for (const student of students) {
+        const id = nanoid()
+
+        const docRef = doc(firestore, path, id)
+        batch.set(docRef, student)
+
+        insertedStudents.push({
+          ...student,
+          id,
+        })
+      }
+
+      await batch.commit()
+
+      return insertedStudents
     },
   }
 }
