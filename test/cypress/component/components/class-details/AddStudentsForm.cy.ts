@@ -1,8 +1,8 @@
-import AddStudentsForm from 'src/components/class-details/AddStudentsForm.vue'
+import AddStudentsInput from 'src/components/class-details/AddStudentsInput.vue'
 
-describe('AddStudentsForm', () => {
+describe('AddStudentsInput', () => {
   it('should display data in the model', () => {
-    cy.mount(AddStudentsForm, {
+    cy.mount(AddStudentsInput, {
       props: {
         modelValue: [],
       },
