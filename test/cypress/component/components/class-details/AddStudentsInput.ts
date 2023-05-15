@@ -34,4 +34,14 @@ describe('AddStudentsInput', () => {
 
     cy.dataCy('student').should('have.length', 2)
   })
+
+  it('should have an input', () => {
+    cy.mount(AddStudentsInput, {
+      props: {
+        modelValue: [] as Omit<StudentEntity, 'id'>[],
+      },
+    })
+
+    cy.dataCy('input').should('exist')
+  })
 })
