@@ -1,7 +1,15 @@
 <template>
-  <div v-for="(student, index) of modelValue" :key="index" data-cy="student">
-    {{ student }}
-  </div>
+  <q-list separator>
+    <q-item
+      v-for="(student, index) of modelValue"
+      :key="index"
+      data-cy="student"
+    >
+      <q-item-section>
+        {{ student }}
+      </q-item-section>
+    </q-item>
+  </q-list>
 </template>
 
 <script lang="ts">
