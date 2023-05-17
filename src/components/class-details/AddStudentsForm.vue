@@ -1,5 +1,5 @@
 <template>
-  <div class="column container">
+  <div class="column">
     <q-form @submit.prevent="addStudent" data-cy="input" ref="formRef">
       <div class="q-px-sm q-pb-xs q-pt-sm">
         <div class="row q-gutter-x-sm">
@@ -124,9 +124,3 @@ export default defineComponent({
   },
 })
 </script>
-
-<style lang="scss">
-.container {
-  height: 500px;
-}
-</style>
