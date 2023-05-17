@@ -14,26 +14,24 @@ describe('AddStudentsForm', () => {
   })
 
   it('should display data in the model - populated', () => {
+    const studentsArr: Omit<StudentEntity, 'id'>[] = Array.from(
+      { length: 10 },
+      (_, index) => {
+        return {
+          firstName: `FN ${index}`,
+          lastName: `LN ${index}`,
+          seatColumn: 0,
+          seatRow: 0,
+        }
+      }
+    )
     cy.mount(AddStudentsForm, {
       props: {
-        modelValue: [
-          {
-            firstName: 'Student',
-            lastName: 'Student 1',
-            seatColumn: 1,
-            seatRow: 1,
-          },
-          {
-            firstName: 'Student',
-            lastName: 'Student 2',
-            seatColumn: 1,
-            seatRow: 1,
-          },
-        ] as Omit<StudentEntity, 'id'>[],
+        modelValue: studentsArr,
       },
     })
 
-    cy.dataCy('student').should('have.length', 2)
+    cy.dataCy('student').should('have.length', 10)
     cy.dataCy('empty').should('not.exist')
   })
 
