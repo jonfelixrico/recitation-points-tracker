@@ -22,7 +22,7 @@
     </q-item>
   </q-list>
   <q-separator v-if="modelValue.length" />
-  <q-form @submit.prevent="addStudent" data-cy="input">
+  <q-form @submit.prevent="addStudent" data-cy="input" ref="formRef">
     <q-item>
       <q-item-section>
         <div class="row q-gutter-x-xs">
@@ -46,7 +46,9 @@
           />
         </div>
       </q-item-section>
-      <q-item-section side>
+
+      <!-- padding-bottom is to offset the error space at the bottom of the fields -->
+      <q-item-section side style="padding-bottom: 20px">
         <q-btn
           icon="add_circle"
           flat
@@ -62,8 +64,9 @@
 </template>
 
 <script lang="ts">
+import { QForm } from 'quasar'
 import { StudentEntity } from 'src/models/entities'
-import { PropType, defineComponent, reactive } from 'vue'
+import { PropType, defineComponent, reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 export default defineComponent({
@@ -83,6 +86,8 @@ export default defineComponent({
       lastName: '',
     })
 
+    const formRef = ref<QForm | null>(null)
+
     function addStudent() {
       emit('update:modelValue', [
         ...props.modelValue,
@@ -95,12 +100,17 @@ export default defineComponent({
 
       inputModel.firstName = ''
       inputModel.lastName = ''
+
+      if (formRef.value) {
+        formRef.value.reset()
+      }
     }
 
     return {
       inputModel,
       t,
       addStudent,
+      formRef,
     }
   },
 })
