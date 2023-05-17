@@ -10,6 +10,7 @@ describe('AddStudentsForm', () => {
     })
 
     cy.dataCy('student').should('not.exist')
+    cy.dataCy('empty').should('exist')
   })
 
   it('should display data in the model - populated', () => {
@@ -33,6 +34,7 @@ describe('AddStudentsForm', () => {
     })
 
     cy.dataCy('student').should('have.length', 2)
+    cy.dataCy('empty').should('not.exist')
   })
 
   it('should have an input', () => {
