@@ -30,17 +30,19 @@
             outlined
             class="col"
             dense
-            v-model="inputModel.lastName"
+            v-model="inputModel.firstName"
             :label="t('classes.addStudentsForm.input.firstNameLabel')"
             :rules="[(val) => !!val || t('common.validationError.required')]"
+            data-cy="first-name"
           />
           <q-input
             :label="t('classes.addStudentsForm.input.lastNameLabel')"
             outlined
             class="col"
             dense
-            v-model="inputModel.firstName"
+            v-model="inputModel.lastName"
             :rules="[(val) => !!val || t('common.validationError.required')]"
+            data-cy="last-name"
           />
         </div>
       </q-item-section>
@@ -52,6 +54,7 @@
           dense
           color="primary"
           type="submit"
+          data-cy="submit"
         />
       </q-item-section>
     </q-item>
