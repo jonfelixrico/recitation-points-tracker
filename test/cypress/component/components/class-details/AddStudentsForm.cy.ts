@@ -1,11 +1,10 @@
 import AddStudentsForm from 'src/components/class-details/AddStudentsForm.vue'
-import { StudentEntity } from 'src/models/entities'
 
 describe('AddStudentsForm - items', () => {
   it('should display data in the model - empty', () => {
     cy.mount(AddStudentsForm, {
       props: {
-        modelValue: [] as Omit<StudentEntity, 'id'>[],
+        modelValue: [],
       },
     })
 
@@ -14,17 +13,12 @@ describe('AddStudentsForm - items', () => {
   })
 
   it('should display data in the model - populated', () => {
-    const studentsArr: Omit<StudentEntity, 'id'>[] = Array.from(
-      { length: 10 },
-      (_, index) => {
-        return {
-          firstName: `FN ${index}`,
-          lastName: `LN ${index}`,
-          seatColumn: 0,
-          seatRow: 0,
-        }
+    const studentsArr = Array.from({ length: 10 }, (_, index) => {
+      return {
+        firstName: `FN ${index}`,
+        lastName: `LN ${index}`,
       }
-    )
+    })
     cy.mount(AddStudentsForm, {
       props: {
         modelValue: studentsArr,
@@ -40,7 +34,7 @@ describe('AddStudentsForm - input', () => {
   it('should exist', () => {
     cy.mount(AddStudentsForm, {
       props: {
-        modelValue: [] as Omit<StudentEntity, 'id'>[],
+        modelValue: [],
       },
     })
 
@@ -51,7 +45,7 @@ describe('AddStudentsForm - input', () => {
     const spy = cy.spy()
     cy.mount(AddStudentsForm, {
       props: {
-        modelValue: [] as Omit<StudentEntity, 'id'>[],
+        modelValue: [],
         'onUpdate:modelValue': spy,
       },
     })
@@ -70,7 +64,7 @@ describe('AddStudentsForm - input', () => {
     const spy = cy.spy()
     cy.mount(AddStudentsForm, {
       props: {
-        modelValue: [] as Omit<StudentEntity, 'id'>[],
+        modelValue: [],
         'onUpdate:modelValue': spy,
       },
     })
