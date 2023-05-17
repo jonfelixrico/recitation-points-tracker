@@ -13,7 +13,7 @@ describe('AddStudentsDialog', () => {
       cy.wrap(el)
         .dataCy('form')
         .dataCy('input')
-        .dataCy('last-name')
+        .dataCy('first-name')
         .type('First name')
 
       cy.wrap(el)
