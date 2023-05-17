@@ -17,7 +17,12 @@
         <q-card>
           <q-card-section class="row items-center justify-between">
             <span class="text-h5"> Students </span>
-            <q-btn unelevated no-caps color="primary">
+            <q-btn
+              unelevated
+              no-caps
+              color="primary"
+              @click="showAddStudentsDialog"
+            >
               <div class="row q-gutter-x-sm items-center">
                 <q-icon name="add" />
                 <div>Add students</div>
@@ -26,7 +31,10 @@
           </q-card-section>
           <q-separator />
           <q-card-section>
-            <StudentList :students="studentsData" />
+            <StudentList
+              :students="students"
+              @add-click="showAddStudentsDialog"
+            />
           </q-card-section>
         </q-card>
       </div>
@@ -36,12 +44,34 @@
 
 <script lang="ts">
 import { useQuasar } from 'quasar'
+import AddStudentsDialog from 'src/components/class-details/AddStudentsDialog.vue'
 import StudentList from 'src/components/class-details/StudentList.vue'
 import { useClassesAPI } from 'src/composables/classes-api.composable'
 import { useStudentAPI } from 'src/composables/student-api.composable'
 import { ClassEntity, StudentEntity } from 'src/models/entities'
-import { defineComponent, onMounted, ref } from 'vue'
+import { Ref, computed, defineComponent, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
+
+function useStudentsList(classId: Ref<string>) {
+  const { dialog } = useQuasar()
+
+  const { getStudentList } = useStudentAPI()
+  const data = ref<StudentEntity[]>([])
+
+  return {
+    async load() {
+      data.value = await getStudentList(classId.value)
+    },
+
+    showDialog() {
+      dialog({
+        component: AddStudentsDialog,
+      })
+    },
+
+    data,
+  }
+}
 
 export default defineComponent({
   components: { StudentList },
@@ -56,22 +86,21 @@ export default defineComponent({
   },
 
   setup() {
-    const { getClass } = useClassesAPI()
-    const { getStudentList } = useStudentAPI()
-
     const route = useRoute()
-    const classId = String(route.params.classId)
+    const classId = computed(() => String(route.params.classId))
 
     const { loading } = useQuasar()
 
     const classData = ref<ClassEntity | null>(null)
-    const studentsData = ref<StudentEntity[]>([])
+    const studentsList = useStudentsList(classId)
+
+    const { getClass } = useClassesAPI()
 
     onMounted(async () => {
       loading.show()
       try {
-        classData.value = await getClass(classId)
-        studentsData.value = await getStudentList(classId)
+        classData.value = await getClass(classId.value)
+        await studentsList.load()
       } catch (e) {
         // TODO improve logging
         console.error(e)
@@ -82,7 +111,8 @@ export default defineComponent({
 
     return {
       classData,
-      studentsData,
+      students: studentsList.data,
+      showAddStudentsDialog: studentsList.showDialog,
     }
   },
 })
