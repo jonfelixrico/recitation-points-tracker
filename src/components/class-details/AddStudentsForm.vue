@@ -36,7 +36,8 @@
       </div>
     </q-form>
     <q-separator />
-    <div class="col overflow-auto">
+
+    <div class="col overflow-auto" v-if="modelValue.length">
       <q-list separator>
         <q-item
           v-for="(student, index) of modelValue"
@@ -59,6 +60,14 @@
           </q-item-section>
         </q-item>
       </q-list>
+    </div>
+
+    <div
+      v-else
+      data-cy="empty"
+      class="col column justify-center items-center text-accent"
+    >
+      <div>No students added yet</div>
     </div>
   </div>
 </template>
