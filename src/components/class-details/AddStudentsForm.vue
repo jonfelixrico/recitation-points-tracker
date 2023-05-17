@@ -22,7 +22,7 @@
     </q-item>
   </q-list>
   <q-separator v-if="modelValue.length" />
-  <q-form @submit.prevent="$emit('submit', modelValue)" data-cy="input">
+  <q-form @submit.prevent="addStudent" data-cy="input">
     <q-item>
       <q-item-section>
         <div class="row q-gutter-x-xs">
@@ -71,16 +71,33 @@ export default defineComponent({
     },
   },
 
-  setup() {
+  emits: ['update:modelValue'],
+
+  setup(props, { emit }) {
     const { t } = useI18n()
     const inputModel = reactive({
       firstName: '',
       lastName: '',
     })
 
+    function addStudent() {
+      emit('update:modelValue', [
+        ...props.modelValue,
+        {
+          ...inputModel,
+          seatColumn: 1,
+          seatRow: 1,
+        },
+      ] as StudentEntity[])
+
+      inputModel.firstName = ''
+      inputModel.lastName = ''
+    }
+
     return {
       inputModel,
       t,
+      addStudent,
     }
   },
 })
