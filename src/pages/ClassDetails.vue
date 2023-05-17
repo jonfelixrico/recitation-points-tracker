@@ -52,21 +52,42 @@ import { ClassEntity, StudentEntity } from 'src/models/entities'
 import { Ref, computed, defineComponent, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 
-function useStudentsList(classId: Ref<string>) {
-  const { dialog } = useQuasar()
+// TODO move to proper types
+interface PartialStudent {
+  firstName: string
+  lastName: string
+}
 
-  const { getStudentList } = useStudentAPI()
+function useStudentsList(classId: Ref<string>) {
+  const { dialog, loading } = useQuasar()
+
+  const { getStudentList, createStudents } = useStudentAPI()
   const data = ref<StudentEntity[]>([])
 
+  async function load() {
+    data.value = await getStudentList(classId.value)
+  }
+
+  async function saveAddedStudents(value: PartialStudent[]) {
+    loading.show()
+    try {
+      await createStudents(classId.value, value)
+      await load()
+    } catch (e) {
+      // TODO improve logging
+      console.error(e)
+    } finally {
+      loading.hide()
+    }
+  }
+
   return {
-    async load() {
-      data.value = await getStudentList(classId.value)
-    },
+    load,
 
     showDialog() {
       dialog({
         component: AddStudentsDialog,
-      })
+      }).onOk(saveAddedStudents)
     },
 
     data,
