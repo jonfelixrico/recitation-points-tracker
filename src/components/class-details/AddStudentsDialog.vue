@@ -3,9 +3,10 @@
   <q-dialog ref="dialogRef" @hide="onDialogHide">
     <q-card class="q-dialog-plugin">
       <q-card-section>
-        <AddStudentsForm data-cy="form" v-model="studentsList" />
+        <AddStudentsForm data-cy="form" v-model="studentsList" class="form" />
       </q-card-section>
-      <q-card-actions>
+      <q-separator />
+      <q-card-actions align="right">
         <q-btn color="primary" unelevated no-caps @click="submitData">{{
           t('common.submit')
         }}</q-btn>
@@ -52,3 +53,9 @@ export default defineComponent({
   },
 })
 </script>
+
+<style lang="scss">
+.form {
+  height: 500px;
+}
+</style>
