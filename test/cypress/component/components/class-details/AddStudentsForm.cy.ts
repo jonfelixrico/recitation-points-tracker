@@ -8,7 +8,7 @@ describe('AddStudentsForm - items', () => {
       },
     })
 
-    cy.dataCy('student').should('not.exist')
+    cy.dataCy('item').should('not.exist')
     cy.dataCy('empty').should('exist')
   })
 
@@ -25,7 +25,7 @@ describe('AddStudentsForm - items', () => {
       },
     })
 
-    cy.dataCy('student').should('have.length', 10)
+    cy.dataCy('item').should('have.length', 10)
     cy.dataCy('empty').should('not.exist')
   })
 })

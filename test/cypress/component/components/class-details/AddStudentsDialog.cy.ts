@@ -28,7 +28,7 @@ describe('AddStudentsDialog', () => {
           cy.wrap(el).dataCy('form').dataCy('input').dataCy('submit').click()
         }
 
-        cy.wrap(el).dataCy('form').dataCy('student').should('have.length', 5)
+        cy.wrap(el).dataCy('form').dataCy('item').should('have.length', 5)
       },
     })
   })
