@@ -1,31 +1,8 @@
 <template>
-  <q-list separator>
-    <q-item
-      v-for="(student, index) of modelValue"
-      :key="index"
-      data-cy="student"
-    >
-      <q-item-section side> {{ index + 1 }}. </q-item-section>
-
-      <q-item-section>
-        {{
-          t('common.nameFormat', {
-            firstName: student.firstName,
-            lastName: student.lastName,
-          })
-        }}
-      </q-item-section>
-
-      <q-item-section side>
-        <q-btn icon="delete" flat round dense color="negative" />
-      </q-item-section>
-    </q-item>
-  </q-list>
-  <q-separator v-if="modelValue.length" />
-  <q-form @submit.prevent="addStudent" data-cy="input" ref="formRef">
-    <q-item>
-      <q-item-section>
-        <div class="row q-gutter-x-xs">
+  <div class="column container">
+    <q-form @submit.prevent="addStudent" data-cy="input" ref="formRef">
+      <div class="q-px-md" style="padding-top: 20px">
+        <div class="row q-gutter-x-sm">
           <q-input
             outlined
             class="col"
@@ -44,23 +21,46 @@
             :rules="[(val) => !!val || t('common.validationError.required')]"
             data-cy="last-name"
           />
+          <div style="padding-bottom: 20px" class="flex flex-center">
+            <q-btn
+              icon="add_circle"
+              flat
+              round
+              dense
+              color="primary"
+              type="submit"
+              data-cy="submit"
+            />
+          </div>
         </div>
-      </q-item-section>
+      </div>
+    </q-form>
+    <q-separator />
+    <div class="col overflow-auto">
+      <q-list separator>
+        <q-item
+          v-for="(student, index) of modelValue"
+          :key="index"
+          data-cy="student"
+        >
+          <q-item-section side> {{ index + 1 }}. </q-item-section>
 
-      <!-- padding-bottom is to offset the error space at the bottom of the fields -->
-      <q-item-section side style="padding-bottom: 20px">
-        <q-btn
-          icon="add_circle"
-          flat
-          round
-          dense
-          color="primary"
-          type="submit"
-          data-cy="submit"
-        />
-      </q-item-section>
-    </q-item>
-  </q-form>
+          <q-item-section>
+            {{
+              t('common.nameFormat', {
+                firstName: student.firstName,
+                lastName: student.lastName,
+              })
+            }}
+          </q-item-section>
+
+          <q-item-section side>
+            <q-btn icon="delete" flat round dense color="negative" />
+          </q-item-section>
+        </q-item>
+      </q-list>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -115,3 +115,9 @@ export default defineComponent({
   },
 })
 </script>
+
+<style lang="scss">
+.container {
+  height: 500px;
+}
+</style>
