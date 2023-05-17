@@ -11,7 +11,7 @@ export function useStudentAPI() {
   return {
     async getStudentList(classId: string): Promise<StudentEntity[]> {
       const docs = await getDocs(
-        collection(firestore, `users/${uid}/classes/${classId}`)
+        collection(firestore, `users/${uid}/classes/${classId}/students`)
       )
 
       const output: StudentEntity[] = []
