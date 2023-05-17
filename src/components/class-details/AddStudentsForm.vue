@@ -32,6 +32,7 @@
             dense
             v-model="inputModel.lastName"
             :label="t('classes.addStudentsForm.input.firstNameLabel')"
+            :rules="[(val) => !!val || t('common.validationError.required')]"
           />
           <q-input
             :label="t('classes.addStudentsForm.input.lastNameLabel')"
@@ -39,6 +40,7 @@
             class="col"
             dense
             v-model="inputModel.firstName"
+            :rules="[(val) => !!val || t('common.validationError.required')]"
           />
         </div>
       </q-item-section>
