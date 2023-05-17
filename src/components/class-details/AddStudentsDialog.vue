@@ -43,7 +43,7 @@ export default defineComponent({
       onDialogHide,
 
       submitData() {
-        onDialogOK(studentsList)
+        onDialogOK(studentsList.value)
       },
 
       studentsList,
