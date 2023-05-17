@@ -74,15 +74,19 @@
 
 <script lang="ts">
 import { QForm } from 'quasar'
-import { StudentEntity } from 'src/models/entities'
 import { PropType, defineComponent, reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+
+interface PartialStudent {
+  firstName: string
+  lastName: string
+}
 
 export default defineComponent({
   props: {
     modelValue: {
       required: true,
-      type: Array as PropType<StudentEntity[]>,
+      type: Array as PropType<PartialStudent[]>,
     },
   },
 
@@ -100,12 +104,8 @@ export default defineComponent({
     function addStudent() {
       emit('update:modelValue', [
         ...props.modelValue,
-        {
-          ...inputModel,
-          seatColumn: 1,
-          seatRow: 1,
-        },
-      ] as StudentEntity[])
+        inputModel,
+      ] as PartialStudent[])
 
       inputModel.firstName = ''
       inputModel.lastName = ''
