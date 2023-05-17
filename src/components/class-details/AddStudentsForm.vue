@@ -77,6 +77,7 @@ import { QForm } from 'quasar'
 import { PropType, defineComponent, reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
+// TODO move to proper types
 interface PartialStudent {
   firstName: string
   lastName: string
