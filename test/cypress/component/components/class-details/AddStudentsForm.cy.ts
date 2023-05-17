@@ -1,7 +1,7 @@
 import AddStudentsForm from 'src/components/class-details/AddStudentsForm.vue'
 import { StudentEntity } from 'src/models/entities'
 
-describe('AddStudentsForm', () => {
+describe('AddStudentsForm - items', () => {
   it('should display data in the model - empty', () => {
     cy.mount(AddStudentsForm, {
       props: {
@@ -34,8 +34,10 @@ describe('AddStudentsForm', () => {
     cy.dataCy('student').should('have.length', 10)
     cy.dataCy('empty').should('not.exist')
   })
+})
 
-  it('should have an input', () => {
+describe('AddStudentsForm - input', () => {
+  it('should exist', () => {
     cy.mount(AddStudentsForm, {
       props: {
         modelValue: [] as Omit<StudentEntity, 'id'>[],
@@ -44,9 +46,7 @@ describe('AddStudentsForm', () => {
 
     cy.dataCy('input').should('exist')
   })
-})
 
-describe('AddStudentsForm -- input', () => {
   it('should should not accept empty inputs', () => {
     const spy = cy.spy()
     cy.mount(AddStudentsForm, {
