@@ -3,4 +3,5 @@ export default {
   validationError: {
     required: 'This field is required',
   },
+  submit: 'Submit',
 }
