@@ -116,6 +116,7 @@ export default defineComponent({
 
       if (formRef.value) {
         formRef.value.reset()
+        formRef.value.focus()
       }
     }
 
