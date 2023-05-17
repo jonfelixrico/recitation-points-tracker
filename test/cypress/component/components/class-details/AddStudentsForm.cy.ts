@@ -45,3 +45,34 @@ describe('AddStudentsForm', () => {
     cy.dataCy('input').should('exist')
   })
 })
+
+describe('AddStudentsForm -- input', () => {
+  it('should should not accept empty inputs', () => {
+    const spy = cy.spy()
+    cy.mount(AddStudentsForm, {
+      props: {
+        modelValue: [] as Omit<StudentEntity, 'id'>[],
+        ['onUpdate:modelValue']: spy,
+      },
+    })
+
+    cy.dataCy('input').dataCy('submit').click()
+    expect(spy).not.to.have.been.called
+  })
+
+  it('should should not accept empty inputs', () => {
+    const spy = cy.spy()
+    cy.mount(AddStudentsForm, {
+      props: {
+        modelValue: [] as Omit<StudentEntity, 'id'>[],
+        ['onUpdate:modelValue']: spy,
+      },
+    })
+
+    const input = cy.dataCy('input')
+    input.dataCy('first-name').type('First name')
+    input.dataCy('last-name').type('Last name')
+    input.dataCy('submit').click()
+    expect(spy).not.have.been.called
+  })
+})
