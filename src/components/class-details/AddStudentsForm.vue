@@ -105,7 +105,10 @@ export default defineComponent({
     function addStudent() {
       emit('update:modelValue', [
         ...props.modelValue,
-        inputModel,
+        {
+          // need to make a shallow copy
+          ...inputModel,
+        },
       ] as PartialStudent[])
 
       inputModel.firstName = ''
