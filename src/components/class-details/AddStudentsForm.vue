@@ -22,17 +22,46 @@
     </q-item>
   </q-list>
   <q-separator v-if="modelValue.length" />
-  <AddStudentsFormNewItemInput :model-value="inputModel" data-cy="input" />
+  <q-form @submit.prevent="$emit('submit', modelValue)" data-cy="input">
+    <q-item>
+      <q-item-section>
+        <div class="row q-gutter-x-xs">
+          <q-input
+            outlined
+            class="col"
+            dense
+            v-model="inputModel.lastName"
+            :label="t('classes.addStudentsForm.input.firstNameLabel')"
+          />
+          <q-input
+            :label="t('classes.addStudentsForm.input.lastNameLabel')"
+            outlined
+            class="col"
+            dense
+            v-model="inputModel.firstName"
+          />
+        </div>
+      </q-item-section>
+      <q-item-section side>
+        <q-btn
+          icon="add_circle"
+          flat
+          round
+          dense
+          color="primary"
+          type="submit"
+        />
+      </q-item-section>
+    </q-item>
+  </q-form>
 </template>
 
 <script lang="ts">
 import { StudentEntity } from 'src/models/entities'
 import { PropType, defineComponent, reactive } from 'vue'
 import { useI18n } from 'vue-i18n'
-import AddStudentsFormNewItemInput from './AddStudentsFormNewItemInput.vue'
 
 export default defineComponent({
-  components: { AddStudentsFormNewItemInput },
   props: {
     modelValue: {
       required: true,
