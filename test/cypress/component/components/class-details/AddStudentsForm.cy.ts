@@ -52,27 +52,37 @@ describe('AddStudentsForm -- input', () => {
     cy.mount(AddStudentsForm, {
       props: {
         modelValue: [] as Omit<StudentEntity, 'id'>[],
-        ['onUpdate:modelValue']: spy,
+        'onUpdate:modelValue': spy,
       },
     })
 
-    cy.dataCy('input').dataCy('submit').click()
-    expect(spy).not.to.have.been.called
+    cy.dataCy('input').dataCy('first-name').clear()
+    cy.dataCy('input').dataCy('last-name').clear()
+    cy.dataCy('input')
+      .dataCy('submit')
+      .click()
+      .then(() => {
+        expect(spy).not.to.have.been.called
+      })
   })
 
-  it('should should not accept empty inputs', () => {
+  it('should should accept valid inputs', () => {
     const spy = cy.spy()
     cy.mount(AddStudentsForm, {
       props: {
         modelValue: [] as Omit<StudentEntity, 'id'>[],
-        ['onUpdate:modelValue']: spy,
+        'onUpdate:modelValue': spy,
       },
     })
 
-    const input = cy.dataCy('input')
-    input.dataCy('first-name').type('First name')
-    input.dataCy('last-name').type('Last name')
-    input.dataCy('submit').click()
-    expect(spy).not.have.been.called
+    cy.dataCy('input').dataCy('first-name').type('First name')
+    cy.dataCy('input').dataCy('last-name').type('Last name')
+
+    cy.dataCy('input')
+      .dataCy('submit')
+      .click()
+      .then(() => {
+        expect(spy).to.have.been.called
+      })
   })
 })
