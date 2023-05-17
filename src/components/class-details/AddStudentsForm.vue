@@ -42,7 +42,7 @@
         <q-item
           v-for="(student, index) of modelValue"
           :key="index"
-          data-cy="student"
+          data-cy="item"
         >
           <q-item-section side> {{ index + 1 }}. </q-item-section>
 
