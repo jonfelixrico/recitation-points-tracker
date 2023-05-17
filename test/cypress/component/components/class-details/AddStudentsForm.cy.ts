@@ -84,5 +84,8 @@ describe('AddStudentsForm -- input', () => {
       .then(() => {
         expect(spy).to.have.been.called
       })
+
+    cy.dataCy('input').dataCy('first-name').should('be.empty')
+    cy.dataCy('input').dataCy('last-name').should('be.empty')
   })
 })
