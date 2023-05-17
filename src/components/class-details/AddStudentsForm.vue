@@ -1,7 +1,7 @@
 <template>
   <div class="column container">
     <q-form @submit.prevent="addStudent" data-cy="input" ref="formRef">
-      <div class="q-px-md" style="padding-top: 20px">
+      <div class="q-px-sm q-pb-xs q-pt-sm">
         <div class="row q-gutter-x-sm">
           <q-input
             outlined
