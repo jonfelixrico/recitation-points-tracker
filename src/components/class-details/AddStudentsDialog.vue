@@ -5,6 +5,11 @@
       <q-card-section>
         <AddStudentsForm data-cy="form" v-model="studentsList" />
       </q-card-section>
+      <q-card-actions>
+        <q-btn color="primary" unelevated no-caps @click="submitData">{{
+          t('common.submit')
+        }}</q-btn>
+      </q-card-actions>
     </q-card>
   </q-dialog>
 </template>
@@ -13,6 +18,7 @@
 import { useDialogPluginComponent } from 'quasar'
 import { defineComponent, ref } from 'vue'
 import AddStudentsForm from './AddStudentsForm.vue'
+import { useI18n } from 'vue-i18n'
 
 // TODO move to proper types
 interface PartialStudent {
@@ -27,6 +33,7 @@ export default defineComponent({
 
   setup() {
     const { dialogRef, onDialogHide, onDialogOK } = useDialogPluginComponent()
+    const { t } = useI18n()
 
     const studentsList = ref<PartialStudent[]>([])
 
@@ -39,6 +46,8 @@ export default defineComponent({
       },
 
       studentsList,
+
+      t,
     }
   },
 })
