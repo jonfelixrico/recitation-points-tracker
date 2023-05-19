@@ -7,7 +7,7 @@
         </template>
 
         <template #lastName>
-          <span class="font-weight-bold">{{
+          <span class="text-weight-bold">{{
             student.lastName.toUpperCase()
           }}</span>
         </template>
