@@ -31,4 +31,20 @@ describe('StudentList', () => {
     cy.dataCy('empty-notice').should('exist')
     cy.dataCy('student-content').should('not.exist')
   })
+
+  it('should emit on click of the add students', () => {
+    const spy = cy.spy()
+    cy.mount(StudentList, {
+      props: {
+        students: [] as StudentEntity[],
+        onAddStudentClick: spy,
+      },
+    })
+
+    cy.dataCy('add-student-button')
+      .click()
+      .then(() => {
+        expect(spy).to.have.been.called
+      })
+  })
 })
