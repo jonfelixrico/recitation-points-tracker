@@ -84,13 +84,13 @@ function onDeleteClick(id: string) {
   })
 
   dialog({
-    title: t('classes.dialogs.removeStudent.title'),
-    message: t('classes.dialogs.removeStudent.message', {
+    title: t('classes.dialogs.deleteStudent.title'),
+    message: t('classes.dialogs.deleteStudent.message', {
       // TODO create a custom component to highlight this
       name: `<mark><b>${nameToDelete}</b></mark>`,
     }),
     ok: {
-      label: t('classes.dialogs.removeStudent.okLabel'),
+      label: t('classes.dialogs.deleteStudent.okLabel'),
       unelevated: true,
       noCaps: true,
     },
