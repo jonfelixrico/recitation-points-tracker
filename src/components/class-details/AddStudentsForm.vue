@@ -44,7 +44,7 @@
           :key="index"
           data-cy="item"
           :student="student"
-          :item-no="index"
+          :item-no="index + 1"
           @delete-click="removeItem(index)"
         />
       </q-list>

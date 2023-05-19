@@ -7,16 +7,11 @@
           <div class="text-h4">{{ classData.name }}</div>
         </div>
 
-        <q-card>
-          <q-card-section>
-            {{ classData }}
-          </q-card-section>
-          <q-separator />
-        </q-card>
+        <!-- TODO display card data -->
 
         <q-card>
           <q-card-section class="row items-center justify-between">
-            <span class="text-h5"> Students </span>
+            <span class="text-h5"> {{ t('classes.studentList') }} </span>
             <q-btn
               unelevated
               no-caps
@@ -25,7 +20,7 @@
             >
               <div class="row q-gutter-x-sm items-center">
                 <q-icon name="add" />
-                <div>Add students</div>
+                <div>{{ t('classes.addStudents') }}</div>
               </div>
             </q-btn>
           </q-card-section>
@@ -43,20 +38,17 @@
 </template>
 
 <script lang="ts">
+import { orderBy } from 'lodash'
 import { useQuasar } from 'quasar'
 import AddStudentsDialog from 'src/components/class-details/AddStudentsDialog.vue'
 import StudentList from 'src/components/class-details/StudentList.vue'
+import { DraftStudent } from 'src/components/class-details/draft-student.inteface'
 import { useClassesAPI } from 'src/composables/classes-api.composable'
 import { useStudentAPI } from 'src/composables/student-api.composable'
 import { ClassEntity, StudentEntity } from 'src/models/entities'
 import { Ref, computed, defineComponent, onMounted, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
-
-// TODO move to proper types
-interface PartialStudent {
-  firstName: string
-  lastName: string
-}
 
 function useStudentsList(classId: Ref<string>) {
   const { dialog, loading } = useQuasar()
@@ -68,7 +60,7 @@ function useStudentsList(classId: Ref<string>) {
     data.value = await getStudentList(classId.value)
   }
 
-  async function saveAddedStudents(value: PartialStudent[]) {
+  async function saveAddedStudents(value: DraftStudent[]) {
     loading.show()
     try {
       await createStudents(classId.value, value)
@@ -90,7 +82,9 @@ function useStudentsList(classId: Ref<string>) {
       }).onOk(saveAddedStudents)
     },
 
-    data,
+    data: computed(() =>
+      orderBy(data.value, ['lastName', 'firstName'], ['asc', 'asc'])
+    ),
   }
 }
 
@@ -117,6 +111,8 @@ export default defineComponent({
 
     const { getClass } = useClassesAPI()
 
+    const { t } = useI18n()
+
     onMounted(async () => {
       loading.show()
       try {
@@ -134,6 +130,7 @@ export default defineComponent({
       classData,
       students: studentsList.data,
       showAddStudentsDialog: studentsList.showDialog,
+      t,
     }
   },
 })

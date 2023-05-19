@@ -4,4 +4,5 @@ export default {
     required: 'This field is required',
   },
   submit: 'Submit',
+  cancel: 'Cancel',
 }

@@ -8,6 +8,7 @@ specifiers:
   '@quasar/quasar-app-extension-testing-e2e-cypress': ^5.1.0
   '@quasar/quasar-app-extension-testing-unit-vitest': ^0.1.0
   '@types/dotenv-defaults': ^2.0.1
+  '@types/lodash': ^4.14.194
   '@types/node': ^12.20.21
   '@typescript-eslint/eslint-plugin': ^5.10.0
   '@typescript-eslint/parser': ^5.10.0
@@ -23,6 +24,7 @@ specifiers:
   eslint-plugin-vue: ^9.0.0
   firebase: ^9.21.0
   firebase-tools: ^12.0.0
+  lodash: ^4.17.21
   nanoid: ^4.0.2
   pinia: ^2.0.11
   prettier: ^2.5.1
@@ -37,6 +39,7 @@ dependencies:
   '@quasar/extras': 1.16.3
   axios: 1.4.0
   firebase: 9.21.0
+  lodash: 4.17.21
   nanoid: 4.0.2
   pinia: 2.0.36_hmuptsblhheur2tugfgucj7gc4
   quasar: 2.12.0
@@ -51,6 +54,7 @@ devDependencies:
   '@quasar/quasar-app-extension-testing-e2e-cypress': 5.1.0_6ctygwdrf6dua6n4vnxbnh6bh4
   '@quasar/quasar-app-extension-testing-unit-vitest': 0.1.0_7fltlbgwb752d3opdwgq3dijwi
   '@types/dotenv-defaults': 2.0.1
+  '@types/lodash': 4.14.194
   '@types/node': 12.20.55
   '@typescript-eslint/eslint-plugin': 5.59.5_jdo46vuzdvtqioigt7za7mzwma
   '@typescript-eslint/parser': 5.59.5_jgkqkwom7vrxl4kyi454n2sy2i
@@ -1535,6 +1539,10 @@ packages:
 
   /@types/linkify-it/3.0.2:
     resolution: {integrity: sha512-HZQYqbiFVWufzCwexrvh694SOim8z2d+xJl5UNamcvQFejLY/2YUtzXHYi3cHdI7PMlS8ejH2slRAOJQ32aNbA==}
+    dev: true
+
+  /@types/lodash/4.14.194:
+    resolution: {integrity: sha512-r22s9tAS7imvBt2lyHC9B8AGwWnXaYb1tY09oyLkXDs4vArpYJzw09nj8MLx5VfciBPGIb+ZwG0ssYnEPJxn/g==}
     dev: true
 
   /@types/long/4.0.2:
@@ -5641,7 +5649,6 @@ packages:
 
   /lodash/4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
-    dev: true
 
   /log-symbols/4.1.0:
     resolution: {integrity: sha512-8XPvpAA8uyhfteu8pIvQxpJZ7SYYdpUivZpGy6sFsBuKRY/7rQGavedeB8aK+Zkyq6upMFVL/9AW6vOYzfRyLg==}
