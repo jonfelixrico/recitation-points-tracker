@@ -47,17 +47,12 @@ import { orderBy } from 'lodash'
 import { useQuasar } from 'quasar'
 import AddStudentsDialog from 'src/components/class-details/AddStudentsDialog.vue'
 import StudentList from 'src/components/class-details/StudentList.vue'
+import { DraftStudent } from 'src/components/class-details/draft-student.inteface'
 import { useClassesAPI } from 'src/composables/classes-api.composable'
 import { useStudentAPI } from 'src/composables/student-api.composable'
 import { ClassEntity, StudentEntity } from 'src/models/entities'
 import { Ref, computed, defineComponent, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
-
-// TODO move to proper types
-interface PartialStudent {
-  firstName: string
-  lastName: string
-}
 
 function useStudentsList(classId: Ref<string>) {
   const { dialog, loading } = useQuasar()
@@ -69,7 +64,7 @@ function useStudentsList(classId: Ref<string>) {
     data.value = await getStudentList(classId.value)
   }
 
-  async function saveAddedStudents(value: PartialStudent[]) {
+  async function saveAddedStudents(value: DraftStudent[]) {
     loading.show()
     try {
       await createStudents(classId.value, value)
