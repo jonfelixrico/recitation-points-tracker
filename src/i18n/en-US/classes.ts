@@ -1,9 +1,10 @@
 export default {
-  addStudentsForm: {
+  addStudents: {
     input: {
       firstNameLabel: 'First name',
       lastNameLabel: 'Last name',
     },
+
     emptyMessage: 'No students added yet',
   },
 }

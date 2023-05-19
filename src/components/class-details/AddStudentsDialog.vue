@@ -1,7 +1,8 @@
 <template>
   <!-- notice dialogRef here -->
-  <q-dialog ref="dialogRef" @hide="onDialogHide">
+  <q-dialog ref="dialogRef" @hide="onDialogHide" no-backdrop-dismiss>
     <q-card class="q-dialog-plugin">
+      <q-card-section class="q-pb-none text-h5"> </q-card-section>
       <q-card-section>
         <AddStudentsForm v-model="studentsList" class="form" />
       </q-card-section>
@@ -13,6 +14,7 @@
           no-caps
           @click="submitData"
           data-cy="submit-button"
+          :disable="!studentsList.length"
           >{{ t('common.submit') }}</q-btn
         >
       </q-card-actions>
