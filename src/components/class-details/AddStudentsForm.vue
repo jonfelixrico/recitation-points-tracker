@@ -1,6 +1,6 @@
 <template>
   <div class="column">
-    <q-form @submit.prevent="addStudent" data-cy="input" ref="formRef">
+    <q-form @submit.prevent="addItem" data-cy="input" ref="formRef">
       <div class="q-px-sm q-pb-xs q-pt-sm">
         <div class="row q-gutter-x-sm">
           <q-input
@@ -45,6 +45,7 @@
           data-cy="item"
           :student="student"
           :item-no="index"
+          @delete-click="removeItem(index)"
         />
       </q-list>
     </div>
@@ -89,29 +90,38 @@ export default defineComponent({
 
     const formRef = ref<QForm | null>(null)
 
-    function addStudent() {
-      emit('update:modelValue', [
-        ...props.modelValue,
-        {
-          // need to make a shallow copy
-          ...inputModel,
-        },
-      ] as DraftStudent[])
-
-      inputModel.firstName = ''
-      inputModel.lastName = ''
-
-      if (formRef.value) {
-        formRef.value.reset()
-        formRef.value.focus()
-      }
-    }
-
     return {
       inputModel,
       t,
-      addStudent,
       formRef,
+
+      addItem() {
+        emit('update:modelValue', [
+          ...props.modelValue,
+          {
+            /*
+             * need to make a shallow copy or else all values in the list will be
+             * the same as the inputs
+             */
+            ...inputModel,
+          },
+        ] as DraftStudent[])
+
+        inputModel.firstName = ''
+        inputModel.lastName = ''
+
+        if (formRef.value) {
+          formRef.value.reset()
+          formRef.value.focus()
+        }
+      },
+
+      removeItem(index: number) {
+        const clone = [...props.modelValue]
+        clone.splice(index, 1)
+
+        emit('update:modelValue', clone)
+      },
     }
   },
 })
