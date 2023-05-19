@@ -32,6 +32,7 @@ import { Dialog } from 'quasar'
 // Since Cypress v10 we cannot import `config` directly from VTU as Cypress bundles its own version of it
 // See https://github.com/cypress-io/cypress/issues/22611
 import { VueTestUtils } from 'cypress/vue'
+import { i18nInstance } from 'src/boot/i18n'
 const { config } = VueTestUtils
 
 // Example to import i18n from boot and use as plugin
@@ -43,6 +44,16 @@ const { config } = VueTestUtils
 config.global.mocks = {
   $t: () => '',
 }
+
+/*
+ * This is to support the use of `useI18n`.
+ * Found in https://stackoverflow.com/a/75931829.
+ */
+config.global.plugins.push({
+  install(app) {
+    app.use(i18nInstance)
+  },
+})
 
 // Overwrite the transition and transition-group stubs which are stubbed by test-utils by default.
 // We do want transitions to show when doing visual testing :)
