@@ -8,7 +8,13 @@ export default boot(() => {
 
   // Persistent listener for auth state changes
   auth.onAuthStateChanged((user) => {
-    sessionStore.setUserId(user?.uid ?? null)
+    if (user) {
+      console.info('User %s is now the current logged in user', user.uid)
+      sessionStore.setUserId(user.uid)
+    } else {
+      console.info('There is no more logged in user')
+      sessionStore.setUserId(null)
+    }
   })
 
   /*
@@ -18,6 +24,7 @@ export default boot(() => {
    */
   return new Promise((resolve) => {
     const unsubscriber = auth.onAuthStateChanged(() => {
+      console.info('Firebase has finished checking for its auth state')
       resolve()
       unsubscriber()
     })
