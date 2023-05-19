@@ -9,10 +9,10 @@ export default boot(() => {
   // Persistent listener for auth state changes
   auth.onAuthStateChanged((user) => {
     if (user) {
-      console.info('User %s is now the current logged in user', user.uid)
+      console.debug('User %s is now the current logged in user', user.uid)
       sessionStore.setUserId(user.uid)
     } else {
-      console.info('There is no more logged in user')
+      console.debug('There is no more logged in user')
       sessionStore.setUserId(null)
     }
   })
