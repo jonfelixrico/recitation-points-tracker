@@ -17,8 +17,8 @@ describe('StudentList', () => {
       },
     })
 
-    cy.dataCy('student-content').should('exist')
     cy.dataCy('empty-notice').should('not.exist')
+    cy.dataCy('item').should('have.length', 1)
   })
 
   it('should show a notice if there are no students', () => {
@@ -29,7 +29,7 @@ describe('StudentList', () => {
     })
 
     cy.dataCy('empty-notice').should('exist')
-    cy.dataCy('student-content').should('not.exist')
+    cy.dataCy('item').should('not.exist')
   })
 
   it('should emit on click of the add students button', () => {
