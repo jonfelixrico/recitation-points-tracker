@@ -10,7 +10,7 @@ export const useSessionStore = defineStore('session', {
   }),
 
   actions: {
-    setUserId(userId: string) {
+    setUserId(userId: string | null) {
       this.userId = userId
     },
   },
