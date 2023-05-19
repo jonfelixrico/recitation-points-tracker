@@ -4,9 +4,14 @@
       <q-toolbar>
         <q-toolbar-title> Quasar App </q-toolbar-title>
 
-        <q-btn color="negative" unelevated dense no-caps>{{
-          t('mainLayout.toolbar.logOut')
-        }}</q-btn>
+        <q-btn
+          color="negative"
+          unelevated
+          dense
+          no-caps
+          @click="promptLogout"
+          >{{ t('mainLayout.toolbar.logOut') }}</q-btn
+        >
       </q-toolbar>
     </q-header>
 
@@ -17,7 +22,42 @@
 </template>
 
 <script setup lang="ts">
+import { useQuasar } from 'quasar'
+import { useAuth } from 'src/composables/auth.composable'
 import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
 
 const { t } = useI18n()
+const { dialog, loading } = useQuasar()
+const { signOut } = useAuth()
+const router = useRouter()
+
+function promptLogout() {
+  dialog({
+    title: t('mainLayout.dialogs.logOut.title'),
+    message: t('mainLayout.dialogs.logOut.message'),
+    ok: {
+      unelevated: true,
+      noCaps: true,
+      label: t('mainLayout.dialogs.logOut.okLabel'),
+    },
+    cancel: {
+      noCaps: true,
+      flat: true,
+    },
+  }).onOk(async () => {
+    loading.show()
+    try {
+      await signOut()
+      await router.push({
+        name: 'login',
+      })
+    } catch (e) {
+      // TODO improve logging
+      console.error(e)
+    } finally {
+      loading.hide()
+    }
+  })
+}
 </script>
