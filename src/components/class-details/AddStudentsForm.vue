@@ -1,6 +1,6 @@
 <template>
   <div class="column">
-    <q-form @submit.prevent="addStudent" data-cy="input" ref="formRef">
+    <q-form @submit.prevent="addItem" data-cy="input" ref="formRef">
       <div class="q-px-sm q-pb-xs q-pt-sm">
         <div class="row q-gutter-x-sm">
           <q-input
@@ -8,12 +8,12 @@
             class="col"
             dense
             v-model="inputModel.firstName"
-            :label="t('classes.addStudentsForm.input.firstNameLabel')"
+            :label="t('classes.dialogs.addStudents.input.firstNameLabel')"
             :rules="[(val) => !!val || t('common.validationError.required')]"
             data-cy="first-name"
           />
           <q-input
-            :label="t('classes.addStudentsForm.input.lastNameLabel')"
+            :label="t('classes.dialogs.addStudents.input.lastNameLabel')"
             outlined
             class="col"
             dense
@@ -39,35 +39,23 @@
 
     <div class="col overflow-auto" v-if="modelValue.length">
       <q-list separator>
-        <q-item
+        <AddStudentsFormItem
           v-for="(student, index) of modelValue"
           :key="index"
           data-cy="item"
-        >
-          <q-item-section side> {{ index + 1 }}. </q-item-section>
-
-          <q-item-section>
-            {{
-              t('common.nameFormat', {
-                firstName: student.firstName,
-                lastName: student.lastName,
-              })
-            }}
-          </q-item-section>
-
-          <q-item-section side>
-            <q-btn icon="delete" flat round dense color="negative" />
-          </q-item-section>
-        </q-item>
+          :student="student"
+          :item-no="index"
+          @delete-click="removeItem(index)"
+        />
       </q-list>
     </div>
 
     <div
       v-else
-      data-cy="empty"
+      data-cy="empty-message"
       class="col column justify-center items-center text-accent"
     >
-      <div>No students added yet</div>
+      <div>{{ t('classes.dialogs.addStudents.emptyMessage') }}</div>
     </div>
   </div>
 </template>
@@ -76,18 +64,18 @@
 import { QForm } from 'quasar'
 import { PropType, defineComponent, reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-
-// TODO move to proper types
-interface PartialStudent {
-  firstName: string
-  lastName: string
-}
+import { DraftStudent } from './draft-student.inteface'
+import AddStudentsFormItem from './AddStudentsFormItem.vue'
 
 export default defineComponent({
+  components: {
+    AddStudentsFormItem,
+  },
+
   props: {
     modelValue: {
       required: true,
-      type: Array as PropType<PartialStudent[]>,
+      type: Array as PropType<DraftStudent[]>,
     },
   },
 
@@ -102,29 +90,38 @@ export default defineComponent({
 
     const formRef = ref<QForm | null>(null)
 
-    function addStudent() {
-      emit('update:modelValue', [
-        ...props.modelValue,
-        {
-          // need to make a shallow copy
-          ...inputModel,
-        },
-      ] as PartialStudent[])
-
-      inputModel.firstName = ''
-      inputModel.lastName = ''
-
-      if (formRef.value) {
-        formRef.value.reset()
-        formRef.value.focus()
-      }
-    }
-
     return {
       inputModel,
       t,
-      addStudent,
       formRef,
+
+      addItem() {
+        emit('update:modelValue', [
+          ...props.modelValue,
+          {
+            /*
+             * need to make a shallow copy or else all values in the list will be
+             * the same as the inputs
+             */
+            ...inputModel,
+          },
+        ] as DraftStudent[])
+
+        inputModel.firstName = ''
+        inputModel.lastName = ''
+
+        if (formRef.value) {
+          formRef.value.reset()
+          formRef.value.focus()
+        }
+      },
+
+      removeItem(index: number) {
+        const clone = [...props.modelValue]
+        clone.splice(index, 1)
+
+        emit('update:modelValue', clone)
+      },
     }
   },
 })
