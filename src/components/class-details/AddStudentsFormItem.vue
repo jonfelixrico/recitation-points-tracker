@@ -1,14 +1,19 @@
 <template>
   <q-item>
-    <q-item-section side> {{ itemNo }}. </q-item-section>
+    <q-item-section side>
+      <span data-cy="item-no">{{ itemNo }}</span>
+    </q-item-section>
 
     <q-item-section>
-      {{
-        t('common.nameFormat', {
-          firstName: student.firstName,
-          lastName: student.lastName,
-        })
-      }}
+      <i18n-t keypath="common.nameFormat" tag="span" class="white-space-pre">
+        <template #firstName>
+          <span data-cy="first-name">{{ student.firstName }}</span>
+        </template>
+
+        <template #lastName>
+          <span data-cy="last-name">{{ student.lastName }}</span>
+        </template>
+      </i18n-t>
     </q-item-section>
 
     <q-item-section side>
@@ -19,6 +24,7 @@
         dense
         color="negative"
         @click="$emit('delete-click')"
+        data-cy="delete-button"
       />
     </q-item-section>
   </q-item>
@@ -42,7 +48,7 @@ export default defineComponent({
     },
   },
 
-  emits: ['delete-click'],
+  emits: ['deleteClick'],
 
   setup() {
     const { t } = useI18n()
