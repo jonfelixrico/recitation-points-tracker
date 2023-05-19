@@ -7,7 +7,15 @@
           {{ t('classes.dialogs.addStudents.title') }}
         </div>
 
-        <q-btn icon="close" flat dense v-close-popup round color="accent" />
+        <q-btn
+          data-cy="close-button"
+          icon="close"
+          flat
+          dense
+          v-close-popup
+          round
+          color="accent"
+        />
       </q-card-section>
       <q-separator />
       <AddStudentsForm v-model="studentsList" class="form" />
