@@ -43,6 +43,7 @@
 </template>
 
 <script lang="ts">
+import { orderBy } from 'lodash'
 import { useQuasar } from 'quasar'
 import AddStudentsDialog from 'src/components/class-details/AddStudentsDialog.vue'
 import StudentList from 'src/components/class-details/StudentList.vue'
@@ -90,7 +91,9 @@ function useStudentsList(classId: Ref<string>) {
       }).onOk(saveAddedStudents)
     },
 
-    data,
+    data: computed(() =>
+      orderBy(data.value, ['lastName', 'firstName'], ['asc', 'asc'])
+    ),
   }
 }
 
