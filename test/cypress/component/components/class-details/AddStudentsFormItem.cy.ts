@@ -10,13 +10,16 @@ describe('AddStudentsFormItem', () => {
           firstName: 'First name',
           lastName: 'Last name',
         } as DraftStudent,
+        itemNo: 1,
+        onDeleteClick: spy,
       },
-      itemNo: 1,
-      onDeleteClick: spy,
     })
 
-    cy.dataCy('delete-button').click()
-    expect(spy).to.have.been.called
+    cy.dataCy('delete-button')
+      .click()
+      .then(() => {
+        expect(spy).to.have.been.called
+      })
   })
 
   it('should display information', () => {
@@ -26,12 +29,12 @@ describe('AddStudentsFormItem', () => {
           firstName: 'First name',
           lastName: 'Last name',
         } as DraftStudent,
+        itemNo: 1,
       },
-      itemNo: 1,
     })
 
-    cy.dataCy('item-no').should('equal', '1')
-    cy.dataCy('first-name').should('equal', 'First name')
-    cy.dataCy('last-name').should('equal', 'Last name')
+    cy.dataCy('item-no').should('contain', '1')
+    cy.dataCy('first-name').should('contain', 'First name')
+    cy.dataCy('last-name').should('contain', 'Last name')
   })
 })
