@@ -52,7 +52,7 @@
 
     <div
       v-else
-      data-cy="empty"
+      data-cy="empty-message"
       class="col column justify-center items-center text-accent"
     >
       <div>{{ t('classes.addStudentsForm.emptyMessage') }}</div>
