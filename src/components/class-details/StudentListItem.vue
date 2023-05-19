@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
 import { StudentEntity } from 'src/models/entities'
-import { PropType, defineProps } from 'vue'
+import { PropType } from 'vue'
 
 defineProps({
   student: {
