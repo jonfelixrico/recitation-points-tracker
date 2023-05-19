@@ -14,7 +14,7 @@
             v-model="credentials.password"
             outlined
           />
-          <q-btn type="submit" color="primary" no-caps>{{
+          <q-btn unelevated type="submit" color="primary" no-caps>{{
             t('session.loginForm.buttonLabel')
           }}</q-btn>
         </q-card-section>
