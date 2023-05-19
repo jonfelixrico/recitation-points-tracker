@@ -13,7 +13,14 @@
     data-cy="empty-notice"
   >
     <div class="text-h6">{{ t('classes.emptyStudents') }}</div>
-    <q-btn no-caps color="primary" unelevated dense @click="$emit('addClick')">
+    <q-btn
+      no-caps
+      color="primary"
+      unelevated
+      dense
+      @click="$emit('addClick')"
+      data-cy="add-student-button"
+    >
       {{ t('classes.addStudents') }}
     </q-btn>
   </div>

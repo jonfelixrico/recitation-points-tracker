@@ -37,7 +37,7 @@ describe('StudentList', () => {
     cy.mount(StudentList, {
       props: {
         students: [] as StudentEntity[],
-        onAddStudentClick: spy,
+        onAddClick: spy,
       },
     })
 
