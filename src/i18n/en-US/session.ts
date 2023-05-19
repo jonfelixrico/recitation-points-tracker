@@ -1,20 +1,7 @@
 export default {
-  buttons: {
-    logIn: {
-      label: 'Log in',
-    },
-    logOut: {
-      label: 'Log out',
-    },
-  },
-
-  fields: {
-    username: {
-      label: 'Username',
-    },
-
-    password: {
-      label: 'Password',
-    },
+  loginForm: {
+    username: 'Username',
+    password: 'Password',
+    buttonLabel: 'Log In',
   },
 }

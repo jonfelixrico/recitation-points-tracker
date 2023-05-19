@@ -4,18 +4,18 @@
       <q-card class="form-card-width">
         <q-card-section class="column q-gutter-y-sm">
           <q-input
-            :label="t('session.fields.username.label')"
+            :label="t('session.loginForm.username')"
             v-model="credentials.username"
             outlined
           />
           <q-input
-            :label="t('session.fields.password.label')"
+            :label="t('session.loginForm.password')"
             type="password"
             v-model="credentials.password"
             outlined
           />
           <q-btn type="submit" color="primary" no-caps>{{
-            t('session.buttons.logIn.label')
+            t('session.loginForm.buttonLabel')
           }}</q-btn>
         </q-card-section>
       </q-card>
