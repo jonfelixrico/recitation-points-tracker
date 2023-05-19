@@ -7,9 +7,14 @@
       </q-card-section>
       <q-separator />
       <q-card-actions align="right">
-        <q-btn color="primary" unelevated no-caps @click="submitData">{{
-          t('common.submit')
-        }}</q-btn>
+        <q-btn
+          color="primary"
+          unelevated
+          no-caps
+          @click="submitData"
+          data-cy="submit-button"
+          >{{ t('common.submit') }}</q-btn
+        >
       </q-card-actions>
     </q-card>
   </q-dialog>
