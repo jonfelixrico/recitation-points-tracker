@@ -40,7 +40,6 @@
 import { StudentEntity } from 'src/models/entities'
 import { PropType } from 'vue'
 import { useI18n } from 'vue-i18n'
-import StudentListItem from './StudentListItem.vue'
 
 defineProps({
   students: {
