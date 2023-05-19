@@ -2,12 +2,14 @@ import DialogWrapper from 'app/test/cypress/wrappers/DialogWrapper.vue'
 import AddStudentsDialog from 'src/components/class-details/AddStudentsDialog.vue'
 
 describe('AddStudentsDialog', () => {
-  it('should integrate properly with the form component', () => {
+  it('should handle adding', () => {
     cy.mount(DialogWrapper, {
       props: {
         component: AddStudentsDialog,
       },
     })
+
+    cy.dataCy('empty-message').should('exist')
 
     cy.withinDialog({
       persistent: true,
@@ -29,6 +31,7 @@ describe('AddStudentsDialog', () => {
         }
 
         cy.wrap(el).dataCy('form').dataCy('item').should('have.length', 5)
+        cy.dataCy('empty-message').should('not.exist')
       },
     })
   })
