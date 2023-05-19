@@ -3,7 +3,7 @@
   <q-dialog ref="dialogRef" @hide="onDialogHide">
     <q-card class="q-dialog-plugin">
       <q-card-section>
-        <AddStudentsForm data-cy="form" v-model="studentsList" class="form" />
+        <AddStudentsForm v-model="studentsList" class="form" />
       </q-card-section>
       <q-separator />
       <q-card-actions align="right">
