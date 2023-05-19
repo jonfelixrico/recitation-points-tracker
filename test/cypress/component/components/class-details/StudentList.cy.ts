@@ -67,14 +67,14 @@ describe('StudentList', () => {
     })
 
     cy.dataCy('item')
-      .select(['[data-student-id="test"]'])
+      .get('[data-student-id="test"]')
       .dataCy('delete-button')
       .click()
       .then(() => {
         cy.withinDialog({
           fn: (el) => {
             cy.wrap(el)
-              .dataCy('ok-buton')
+              .dataCy('ok-button')
               .click()
               .then(() => {
                 expect(spy).to.have.been.called
