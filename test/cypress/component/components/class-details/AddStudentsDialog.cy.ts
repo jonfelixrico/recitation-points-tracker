@@ -42,21 +42,26 @@ describe('AddStudentsDialog', () => {
 
         const ITEM_COUNT = 3
 
-        for (let i = 1; i <= ITEM_COUNT; i++) {
-          cy.wrap(el).dataCy('input').dataCy('first-name').type(`FN ${i}`)
-          cy.wrap(el).dataCy('input').dataCy('last-name').type(`LN ${i}`)
+        for (let itemNo = 1; itemNo <= ITEM_COUNT; itemNo++) {
+          cy.wrap(el).dataCy('input').dataCy('first-name').type(`FN ${itemNo}`)
+          cy.wrap(el).dataCy('input').dataCy('last-name').type(`LN ${itemNo}`)
           cy.wrap(el).dataCy('input').dataCy('submit').click()
         }
 
         cy.wrap(el).dataCy('item').should('have.length', ITEM_COUNT)
         cy.wrap(el).dataCy('empty-message').should('not.exist')
 
-        for (let i = ITEM_COUNT; i >= 1; i--) {
+        for (let itemNo = ITEM_COUNT; itemNo >= 1; itemNo--) {
           cy.wrap(el)
             .dataCy('item')
-            .eq(i - 1)
+            .eq(itemNo - 1)
             .dataCy('delete-button')
             .click()
+            .then(() => {
+              cy.wrap(el)
+                .dataCy('item')
+                .should('have.length', itemNo - 1)
+            })
         }
 
         cy.wrap(el).dataCy('item').should('not.exist')
