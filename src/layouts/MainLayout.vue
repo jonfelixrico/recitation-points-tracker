@@ -34,12 +34,12 @@ const router = useRouter()
 
 function promptLogout() {
   dialog({
-    title: t('mainLayout.dialogs.logOut.title'),
-    message: t('mainLayout.dialogs.logOut.message'),
+    title: t('mainLayout.dialogs.logOutPrompt.title'),
+    message: t('mainLayout.dialogs.logOutPrompt.message'),
     ok: {
       unelevated: true,
       noCaps: true,
-      label: t('mainLayout.dialogs.logOut.okLabel'),
+      label: t('mainLayout.dialogs.logOutPrompt.okLabel'),
     },
     cancel: {
       noCaps: true,
