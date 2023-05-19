@@ -32,7 +32,7 @@ describe('StudentList', () => {
     cy.dataCy('student-content').should('not.exist')
   })
 
-  it('should emit on click of the add students', () => {
+  it('should emit on click of the add students button', () => {
     const spy = cy.spy()
     cy.mount(StudentList, {
       props: {
@@ -45,6 +45,42 @@ describe('StudentList', () => {
       .click()
       .then(() => {
         expect(spy).to.have.been.called
+      })
+  })
+
+  it("should emit on click of a student's delete button", () => {
+    const spy = cy.spy()
+
+    cy.mount(StudentList, {
+      props: {
+        students: [
+          {
+            id: 'test',
+            firstName: 'First name',
+            lastName: 'Last name',
+            seatColumn: 1,
+            seatRow: 1,
+          },
+        ] as StudentEntity[],
+        onDeleteClick: spy,
+      },
+    })
+
+    cy.dataCy('item')
+      .select(['[data-student-id="test"]'])
+      .dataCy('delete-button')
+      .click()
+      .then(() => {
+        cy.withinDialog({
+          fn: (el) => {
+            cy.wrap(el)
+              .dataCy('ok-buton')
+              .click()
+              .then(() => {
+                expect(spy).to.have.been.called
+              })
+          },
+        })
       })
   })
 })
