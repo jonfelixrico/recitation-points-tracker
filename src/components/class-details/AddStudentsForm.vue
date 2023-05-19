@@ -67,7 +67,7 @@
       data-cy="empty"
       class="col column justify-center items-center text-accent"
     >
-      <div>No students added yet</div>
+      <div>{{ t('classes.addStudentsForm.emptyMessage') }}</div>
     </div>
   </div>
 </template>
