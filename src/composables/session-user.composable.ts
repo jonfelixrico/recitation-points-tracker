@@ -1,11 +1,10 @@
-import { useAuth } from './auth.composable'
+import { useSessionStore } from 'src/stores/session-store'
 
 /**
  * Get the uid of the session user.
  * @returns
  */
 export function useSessionUserId() {
-  const { auth } = useAuth()
-
-  return auth.currentUser?.uid
+  const { userId } = useSessionStore()
+  return userId
 }
