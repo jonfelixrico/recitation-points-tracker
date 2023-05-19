@@ -2,10 +2,15 @@
   <!-- notice dialogRef here -->
   <q-dialog ref="dialogRef" @hide="onDialogHide" no-backdrop-dismiss>
     <q-card class="q-dialog-plugin">
-      <q-card-section class="q-pb-none text-h5"> </q-card-section>
-      <q-card-section>
-        <AddStudentsForm v-model="studentsList" class="form" />
+      <q-card-section class="row items-center justify-between">
+        <div class="text-h6">
+          {{ t('classes.dialogs.addStudents.title') }}
+        </div>
+
+        <q-btn icon="close" flat dense v-close-popup round color="accent" />
       </q-card-section>
+      <q-separator />
+      <AddStudentsForm v-model="studentsList" class="form" />
       <q-separator />
       <q-card-actions align="right">
         <q-btn
