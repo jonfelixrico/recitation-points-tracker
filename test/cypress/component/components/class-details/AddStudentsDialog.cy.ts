@@ -63,6 +63,7 @@ describe('AddStudentsDialog', () => {
         cy.wrap(el).dataCy('empty-message').should('exist')
 
         cy.wrap(el).dataCy('submit-button').should('be.disabled')
+        cy.wrap(el).dataCy('close-button').click()
       },
     })
   })
