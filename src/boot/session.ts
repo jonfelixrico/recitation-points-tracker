@@ -24,7 +24,7 @@ export default boot(() => {
    */
   return new Promise((resolve) => {
     const unsubscriber = auth.onAuthStateChanged(() => {
-      console.info('Firebase has finished checking for its auth state')
+      console.debug('Firebase has finished checking for its auth state')
       resolve()
       unsubscriber()
     })
