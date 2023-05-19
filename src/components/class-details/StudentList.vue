@@ -12,9 +12,9 @@
     class="column items-center justify-center empty-list-height q-gutter-y-xs"
     data-cy="empty-notice"
   >
-    <div class="text-h6">No students to show</div>
-    <q-btn no-caps color="primary" unelevated dense @click="$emit('add-click')">
-      Add students
+    <div class="text-h6">{{ t('classes.emptyStudents') }}</div>
+    <q-btn no-caps color="primary" unelevated dense @click="$emit('addClick')">
+      {{ t('classes.addStudents') }}
     </q-btn>
   </div>
 </template>
@@ -22,6 +22,7 @@
 <script lang="ts">
 import { StudentEntity } from 'src/models/entities'
 import { PropType, defineComponent } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 export default defineComponent({
   props: {
@@ -31,7 +32,15 @@ export default defineComponent({
     },
   },
 
-  emits: ['add-click'],
+  emits: ['addClick'],
+
+  setup() {
+    const { t } = useI18n()
+
+    return {
+      t,
+    }
+  },
 })
 </script>
 

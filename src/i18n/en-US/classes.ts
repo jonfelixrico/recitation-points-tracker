@@ -11,4 +11,7 @@ export default {
       title: 'Add Students',
     },
   },
+
+  addStudents: 'Add students',
+  emptyStudents: 'No students to show',
 }
