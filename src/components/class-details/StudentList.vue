@@ -1,6 +1,12 @@
 <template>
   <q-list v-if="students.length" separator data-cy="student-content">
-    <q-item v-for="student of students" :key="student.id" :student="student">
+    <q-item
+      v-for="(student, index) of students"
+      :key="student.id"
+      :student="student"
+    >
+      <q-item-section side>{{ index + 1 }}</q-item-section>
+
       <q-item-section>
         <i18n-t keypath="common.nameFormat" tag="span" class="white-space-pre">
           <template #firstName>
