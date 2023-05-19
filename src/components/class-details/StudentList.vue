@@ -1,10 +1,20 @@
 <template>
   <q-list v-if="students.length" separator data-cy="student-content">
-    <StudentListItem
-      v-for="student of students"
-      :key="student.id"
-      :student="student"
-    />
+    <q-item v-for="student of students" :key="student.id" :student="student">
+      <q-item-section>
+        <i18n-t keypath="common.nameFormat" tag="span" class="white-space-pre">
+          <template #firstName>
+            <span>{{ student.firstName }}</span>
+          </template>
+
+          <template #lastName>
+            <span class="text-weight-bold">{{
+              student.lastName.toUpperCase()
+            }}</span>
+          </template>
+        </i18n-t>
+      </q-item-section>
+    </q-item>
   </q-list>
 
   <div
