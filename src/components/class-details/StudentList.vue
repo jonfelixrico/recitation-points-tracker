@@ -4,6 +4,8 @@
       v-for="(student, index) of students"
       :key="student.id"
       :student="student"
+      :data-student="student.id"
+      data-cy="item"
     >
       <q-item-section side>{{ index + 1 }}</q-item-section>
 
@@ -29,6 +31,7 @@
           flat
           dense
           @click="onDeleteClick(student.id)"
+          data-cy="delete-button"
         />
       </q-item-section>
     </q-item>
@@ -93,6 +96,7 @@ function onDeleteClick(id: string) {
       label: t('classes.dialogs.deleteStudent.okLabel'),
       unelevated: true,
       noCaps: true,
+      'data-cy': 'ok-button',
     },
     cancel: {
       noCaps: true,
