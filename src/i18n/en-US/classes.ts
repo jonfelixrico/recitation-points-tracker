@@ -10,6 +10,12 @@ export default {
 
       title: 'Add Students',
     },
+
+    removeStudent: {
+      title: 'Remove student',
+      message: 'Are you sure you want to delete {name}?',
+      okLabel: "Yes, I'm sure",
+    },
   },
 
   addStudents: 'Add students',
