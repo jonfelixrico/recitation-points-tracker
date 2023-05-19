@@ -14,6 +14,17 @@
           </template>
         </i18n-t>
       </q-item-section>
+
+      <q-item-section side>
+        <q-btn
+          icon="delete"
+          color="negative"
+          round
+          flat
+          dense
+          @click="onDeleteClick(student.id)"
+        />
+      </q-item-section>
     </q-item>
   </q-list>
 
@@ -37,20 +48,55 @@
 </template>
 
 <script setup lang="ts">
+import { useQuasar } from 'quasar'
 import { StudentEntity } from 'src/models/entities'
 import { PropType } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-defineProps({
+const props = defineProps({
   students: {
     required: true,
     type: Array as PropType<StudentEntity[]>,
   },
 })
-
-defineEmits(['addClick'])
+const emit = defineEmits(['addClick', 'deleteClick'])
 
 const { t } = useI18n()
+
+const { dialog } = useQuasar()
+
+function onDeleteClick(id: string) {
+  const item = props.students.find((s) => s.id === id)
+  if (!item) {
+    // method is misused if this condition is triggered
+    return
+  }
+
+  const nameToDelete = t('common.nameFormat', {
+    firstName: item.firstName,
+    lastName: item.lastName,
+  })
+
+  dialog({
+    title: t('classes.dialogs.removeStudent.title'),
+    message: t('classes.dialogs.removeStudent.message', {
+      // TODO create a custom component to highlight this
+      name: `<mark><b>${nameToDelete}</b></mark>`,
+    }),
+    ok: {
+      label: t('classes.dialogs.removeStudent.okLabel'),
+      unelevated: true,
+      noCaps: true,
+    },
+    cancel: {
+      noCaps: true,
+      flat: true,
+    },
+    html: true,
+  }).onOk(() => {
+    emit('deleteClick', id)
+  })
+}
 </script>
 
 <style lang="scss">
