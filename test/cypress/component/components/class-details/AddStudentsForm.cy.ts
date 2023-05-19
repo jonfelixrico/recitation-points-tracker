@@ -1,4 +1,5 @@
 import AddStudentsForm from 'src/components/class-details/AddStudentsForm.vue'
+import { DraftStudent } from 'src/components/class-details/draft-student.inteface'
 
 describe('AddStudentsForm - items', () => {
   it('should display data in the model - empty', () => {
@@ -27,6 +28,29 @@ describe('AddStudentsForm - items', () => {
 
     cy.dataCy('item').should('have.length', 10)
     cy.dataCy('empty').should('not.exist')
+  })
+
+  it('should remove item if clicked', () => {
+    const studentsArr = Array.from({ length: 2 }, (_, index) => {
+      return {
+        firstName: `FN ${index}`,
+        lastName: `LN ${index}`,
+      }
+    })
+
+    cy.mount(AddStudentsForm, {
+      props: {
+        modelValue: studentsArr,
+      },
+    })
+
+    cy.dataCy('item')
+      .eq(0)
+      .dataCy('delete-button')
+      .click()
+      .then(() => {
+        cy.dataCy('item').should('have.length', 1)
+      })
   })
 })
 
