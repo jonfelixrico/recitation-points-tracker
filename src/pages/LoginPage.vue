@@ -3,14 +3,20 @@
     <q-form @submit.prevent="attemptLogin">
       <q-card class="form-card-width">
         <q-card-section class="column q-gutter-y-sm">
-          <q-input label="Username" v-model="credentials.username" outlined />
           <q-input
-            label="Password"
+            :label="t('session.fields.username.label')"
+            v-model="credentials.username"
+            outlined
+          />
+          <q-input
+            :label="t('session.fields.password.label')"
             type="password"
             v-model="credentials.password"
             outlined
           />
-          <q-btn type="submit" color="primary" no-caps>Log In</q-btn>
+          <q-btn type="submit" color="primary" no-caps>{{
+            t('session.buttons.logIn.label')
+          }}</q-btn>
         </q-card-section>
       </q-card>
     </q-form>
@@ -21,6 +27,7 @@
 import { defineComponent, reactive } from 'vue'
 import { useAuth } from 'src/composables/auth.composable'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 
 function usePostLoginRedirect() {
   const router = useRouter()
@@ -43,6 +50,7 @@ function usePostLoginRedirect() {
 
 export default defineComponent({
   setup() {
+    const { t } = useI18n()
     const { loginViaEmailAndPassword } = useAuth()
 
     const credentials = reactive<{ username: string; password: string }>({
@@ -65,6 +73,7 @@ export default defineComponent({
     return {
       attemptLogin,
       credentials,
+      t,
     }
   },
 })

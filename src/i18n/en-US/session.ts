@@ -1,6 +1,12 @@
 export default {
-  logIn: 'Log in',
-  logOut: 'Log out',
+  buttons: {
+    logIn: {
+      label: 'Log in',
+    },
+    logOut: {
+      label: 'Log out',
+    },
+  },
 
   fields: {
     username: {
