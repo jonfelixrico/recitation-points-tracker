@@ -39,26 +39,13 @@
 
     <div class="col overflow-auto" v-if="modelValue.length">
       <q-list separator>
-        <q-item
+        <AddStudentsFormItem
           v-for="(student, index) of modelValue"
           :key="index"
           data-cy="item"
-        >
-          <q-item-section side> {{ index + 1 }}. </q-item-section>
-
-          <q-item-section>
-            {{
-              t('common.nameFormat', {
-                firstName: student.firstName,
-                lastName: student.lastName,
-              })
-            }}
-          </q-item-section>
-
-          <q-item-section side>
-            <q-btn icon="delete" flat round dense color="negative" />
-          </q-item-section>
-        </q-item>
+          :student="student"
+          :item-no="index"
+        />
       </q-list>
     </div>
 
@@ -77,8 +64,13 @@ import { QForm } from 'quasar'
 import { PropType, defineComponent, reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { DraftStudent } from './draft-student.inteface'
+import AddStudentsFormItem from './AddStudentsFormItem.vue'
 
 export default defineComponent({
+  components: {
+    AddStudentsFormItem,
+  },
+
   props: {
     modelValue: {
       required: true,
