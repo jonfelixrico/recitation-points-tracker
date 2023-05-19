@@ -23,7 +23,7 @@
         round
         dense
         color="negative"
-        @click="$emit('delete-click')"
+        @click="$emit('deleteClick')"
         data-cy="delete-button"
       />
     </q-item-section>
