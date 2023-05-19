@@ -14,22 +14,14 @@ describe('AddStudentsDialog', () => {
         cy.wrap(el).dataCy('empty-message').should('exist')
 
         for (let i = 1; i <= 5; i++) {
-          cy.wrap(el)
-            .dataCy('form')
-            .dataCy('input')
-            .dataCy('first-name')
-            .type(`FN ${i}`)
+          cy.wrap(el).dataCy('input').dataCy('first-name').type(`FN ${i}`)
 
-          cy.wrap(el)
-            .dataCy('form')
-            .dataCy('input')
-            .dataCy('last-name')
-            .type(`LN ${i}`)
+          cy.wrap(el).dataCy('input').dataCy('last-name').type(`LN ${i}`)
 
-          cy.wrap(el).dataCy('form').dataCy('input').dataCy('submit').click()
+          cy.wrap(el).dataCy('input').dataCy('submit').click()
         }
 
-        cy.wrap(el).dataCy('form').dataCy('item').should('have.length', 5)
+        cy.wrap(el).dataCy('item').should('have.length', 5)
         cy.wrap(el).dataCy('empty-message').should('not.exist')
 
         cy.wrap(el).dataCy('submit-button').click()
@@ -53,7 +45,7 @@ describe('AddStudentsDialog', () => {
         for (let i = 1; i <= ITEM_COUNT; i++) {
           cy.wrap(el).dataCy('input').dataCy('first-name').type(`FN ${i}`)
           cy.wrap(el).dataCy('input').dataCy('last-name').type(`LN ${i}`)
-          cy.wrap(el).dataCy('form').dataCy('input').dataCy('submit').click()
+          cy.wrap(el).dataCy('input').dataCy('submit').click()
         }
 
         cy.wrap(el).dataCy('item').should('have.length', ITEM_COUNT)
