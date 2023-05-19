@@ -12,9 +12,26 @@ const routes: RouteRecordRaw[] = [
 
   {
     path: '/',
-    name: 'home',
     component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/IndexPage.vue') }],
+    children: [
+      {
+        path: '',
+        name: 'home',
+        redirect: {
+          name: 'classList',
+        },
+      },
+      {
+        path: '/classes',
+        name: 'classList',
+        component: () => import('pages/ClassList.vue'),
+      },
+      {
+        path: '/classes/:classId',
+        name: 'classDetails',
+        component: () => import('pages/ClassDetails.vue'),
+      },
+    ],
   },
 
   // Always leave this as last one,
