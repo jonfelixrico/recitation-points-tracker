@@ -1,10 +1,10 @@
 <template>
   <q-list v-if="students.length" separator data-cy="student-content">
-    <q-item v-for="student of students" :key="student.id">
-      <q-item-section>
-        {{ student }}
-      </q-item-section>
-    </q-item>
+    <StudentListItem
+      v-for="student of students"
+      :key="student.id"
+      :student="student"
+    />
   </q-list>
 
   <div
@@ -19,29 +19,22 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { StudentEntity } from 'src/models/entities'
-import { PropType, defineComponent } from 'vue'
+import { PropType } from 'vue'
 import { useI18n } from 'vue-i18n'
+import StudentListItem from './StudentListItem.vue'
 
-export default defineComponent({
-  props: {
-    students: {
-      required: true,
-      type: Array as PropType<StudentEntity[]>,
-    },
-  },
-
-  emits: ['addClick'],
-
-  setup() {
-    const { t } = useI18n()
-
-    return {
-      t,
-    }
+defineProps({
+  students: {
+    required: true,
+    type: Array as PropType<StudentEntity[]>,
   },
 })
+
+defineEmits(['addClick'])
+
+const { t } = useI18n()
 </script>
 
 <style lang="scss">
