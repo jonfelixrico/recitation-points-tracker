@@ -13,7 +13,7 @@ export default {
 
     removeStudent: {
       title: 'Remove student',
-      message: 'Are you sure you want to delete {name}?',
+      message: 'Are you sure you want to remove {name} from the student list?',
       okLabel: "Yes, I'm sure",
     },
   },
