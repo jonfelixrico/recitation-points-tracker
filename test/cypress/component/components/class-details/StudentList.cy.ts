@@ -66,8 +66,7 @@ describe('StudentList', () => {
       },
     })
 
-    cy.dataCy('item')
-      .get('[data-student-id="test"]')
+    cy.get('[data-student="test"]')
       .dataCy('delete-button')
       .click()
       .then(() => {
