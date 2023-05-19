@@ -7,16 +7,11 @@
           <div class="text-h4">{{ classData.name }}</div>
         </div>
 
-        <q-card>
-          <q-card-section>
-            {{ classData }}
-          </q-card-section>
-          <q-separator />
-        </q-card>
+        <!-- TODO display card data -->
 
         <q-card>
           <q-card-section class="row items-center justify-between">
-            <span class="text-h5"> Students </span>
+            <span class="text-h5"> {{ t('classes.studentList') }} </span>
             <q-btn
               unelevated
               no-caps
@@ -25,7 +20,7 @@
             >
               <div class="row q-gutter-x-sm items-center">
                 <q-icon name="add" />
-                <div>Add students</div>
+                <div>{{ t('classes.addStudents') }}</div>
               </div>
             </q-btn>
           </q-card-section>
@@ -52,6 +47,7 @@ import { useClassesAPI } from 'src/composables/classes-api.composable'
 import { useStudentAPI } from 'src/composables/student-api.composable'
 import { ClassEntity, StudentEntity } from 'src/models/entities'
 import { Ref, computed, defineComponent, onMounted, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 
 function useStudentsList(classId: Ref<string>) {
@@ -115,6 +111,8 @@ export default defineComponent({
 
     const { getClass } = useClassesAPI()
 
+    const { t } = useI18n()
+
     onMounted(async () => {
       loading.show()
       try {
@@ -132,6 +130,7 @@ export default defineComponent({
       classData,
       students: studentsList.data,
       showAddStudentsDialog: studentsList.showDialog,
+      t,
     }
   },
 })

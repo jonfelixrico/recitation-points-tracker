@@ -20,4 +20,6 @@ export default {
 
   addStudents: 'Add students',
   emptyStudents: 'No students to show',
+
+  studentList: 'Students',
 }
