@@ -1,15 +1,19 @@
 <template>
-  <q-page class="column">
-    <div class="row justify-end q-pa-sm">
+  <q-page class="column page-width q-mx-auto">
+    <div class="row justify-end q-pa-sm border-bottom">
       <q-btn no-caps color="primary" unelevated @click="showCreateDialog"
         >Add Class</q-btn
       >
     </div>
 
-    <div class="col relative-position" v-if="classList.length">
+    <div class="col flex flex-center" v-if="isLoading">
+      <q-spinner color="primary" />
+    </div>
+
+    <div class="col relative-position" v-else-if="data.length">
       <q-scroll-area class="fit absolute">
         <q-item
-          v-for="item in classList"
+          v-for="item in data"
           :key="item.id"
           clickable
           @click="navigateToDetailsPage(item.id)"
@@ -19,7 +23,9 @@
       </q-scroll-area>
     </div>
 
-    <div v-else class="col flex flex-center">No classes to show</div>
+    <div v-else-if="!data.length" class="col flex flex-center">
+      No classes to show
+    </div>
   </q-page>
 </template>
 
@@ -29,7 +35,6 @@ import ClassCreationDialog from 'src/components/ClassCreationDialog.vue'
 import { useClassesAPI } from 'src/composables/classes-api.composable'
 import { ClassEntity } from 'src/models/entities'
 import { defineComponent, ref, onBeforeMount } from 'vue'
-import { nanoid } from 'nanoid'
 import { useRouter } from 'vue-router'
 
 function useClassCreationDialog() {
@@ -42,20 +47,38 @@ function useClassCreationDialog() {
       $q.dialog({
         component: ClassCreationDialog,
       }).onOk(async (data: Omit<ClassEntity, 'id'>) => {
-        const classId = nanoid()
-
-        await createClass({
-          ...data,
-          id: classId,
-        })
+        const { id } = await createClass(data)
 
         await router.push({
           name: 'classDetails',
           params: {
-            classId,
+            classId: id,
           },
         })
       })
+    },
+  }
+}
+
+function useClassList() {
+  const { getClassList } = useClassesAPI()
+  const classList = ref<ClassEntity[]>([])
+  const isLoading = ref(false)
+
+  return {
+    data: classList,
+    isLoading,
+
+    async load() {
+      isLoading.value = true
+      try {
+        classList.value = await getClassList()
+      } catch (e) {
+        // TODO improve this logging
+        console.error(e)
+      } finally {
+        isLoading.value = false
+      }
     },
   }
 }
@@ -64,17 +87,12 @@ export default defineComponent({
   setup() {
     const { showDialog: showCreateDialog } = useClassCreationDialog()
 
-    const { getClassList } = useClassesAPI()
-    const classList = ref<ClassEntity[]>([])
-
     const router = useRouter()
 
+    const classList = useClassList()
+
     onBeforeMount(async () => {
-      try {
-        classList.value = await getClassList()
-      } catch (e) {
-        console.error(e)
-      }
+      await classList.load()
     })
 
     return {
@@ -87,6 +105,9 @@ export default defineComponent({
           params: { classId },
         })
       },
+
+      data: classList.data,
+      isLoading: classList.isLoading,
     }
   },
 })

@@ -1,1 +1,7 @@
-// app global css in SCSS form
+.page-width {
+  width: $breakpoint-sm;
+}
+
+.border-bottom {
+  border-bottom: 1px solid $separator-color;
+}

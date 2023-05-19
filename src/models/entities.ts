@@ -12,8 +12,9 @@ export interface StudentEntity {
   firstName: string
   lastName: string
 
-  seatColumn: string
-  seatRow: string
+  // TODO use a tighter typing here
+  seatColumn?: number
+  seatRow?: number
 }
 
 export interface RecitationEntity {
