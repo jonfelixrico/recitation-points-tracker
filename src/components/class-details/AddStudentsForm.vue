@@ -76,18 +76,13 @@
 import { QForm } from 'quasar'
 import { PropType, defineComponent, reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-
-// TODO move to proper types
-interface PartialStudent {
-  firstName: string
-  lastName: string
-}
+import { DraftStudent } from './draft-student.inteface'
 
 export default defineComponent({
   props: {
     modelValue: {
       required: true,
-      type: Array as PropType<PartialStudent[]>,
+      type: Array as PropType<DraftStudent[]>,
     },
   },
 
@@ -109,7 +104,7 @@ export default defineComponent({
           // need to make a shallow copy
           ...inputModel,
         },
-      ] as PartialStudent[])
+      ] as DraftStudent[])
 
       inputModel.firstName = ''
       inputModel.lastName = ''
