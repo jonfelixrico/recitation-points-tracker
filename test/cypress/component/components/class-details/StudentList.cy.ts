@@ -8,8 +8,8 @@ describe('StudentList', () => {
         students: [
           {
             id: 'test',
-            firstName: 'Student',
-            lastName: '1',
+            firstName: 'First name',
+            lastName: 'Last name',
             seatColumn: 1,
             seatRow: 1,
           },
