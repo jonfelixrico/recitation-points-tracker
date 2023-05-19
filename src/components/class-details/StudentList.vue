@@ -1,5 +1,5 @@
 <template>
-  <q-list v-if="students.length" separator data-cy="student-content">
+  <q-list v-if="students.length" separator>
     <q-item
       v-for="(student, index) of students"
       :key="student.id"
