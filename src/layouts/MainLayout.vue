@@ -52,6 +52,15 @@ function promptLogout() {
       await router.push({
         name: 'login',
       })
+
+      dialog({
+        title: t('mainLayout.dialogs.logOutNotice.title'),
+        message: t('mainLayout.dialogs.logOutNotice.message'),
+        ok: {
+          unelevated: true,
+          noCaps: true,
+        },
+      })
     } catch (e) {
       // TODO improve logging
       console.error(e)
