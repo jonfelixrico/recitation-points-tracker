@@ -8,12 +8,12 @@
             class="col"
             dense
             v-model="inputModel.firstName"
-            :label="t('classes.addStudents.input.firstNameLabel')"
+            :label="t('classes.dialogs.addStudents.input.firstNameLabel')"
             :rules="[(val) => !!val || t('common.validationError.required')]"
             data-cy="first-name"
           />
           <q-input
-            :label="t('classes.addStudents.input.lastNameLabel')"
+            :label="t('classes.dialogs.addStudents.input.lastNameLabel')"
             outlined
             class="col"
             dense
@@ -55,7 +55,7 @@
       data-cy="empty-message"
       class="col column justify-center items-center text-accent"
     >
-      <div>{{ t('classes.addStudents.emptyMessage') }}</div>
+      <div>{{ t('classes.dialogs.addStudents.emptyMessage') }}</div>
     </div>
   </div>
 </template>
