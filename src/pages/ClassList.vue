@@ -31,7 +31,7 @@
 
 <script lang="ts">
 import { useQuasar } from 'quasar'
-import CreateClassDialog from 'src/components/CreateClassDialog.vue'
+import CreateClassDialog from 'src/components/class-list/CreateClassDialog.vue'
 import { useClassesAPI } from 'src/composables/classes-api.composable'
 import { ClassEntity } from 'src/models/entities'
 import { defineComponent, ref, onBeforeMount } from 'vue'
