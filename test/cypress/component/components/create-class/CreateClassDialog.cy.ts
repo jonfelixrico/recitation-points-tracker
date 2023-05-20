@@ -34,14 +34,14 @@ describe('CreateClassDialog', () => {
         })
 
       cy.wrap(el)
-        .dataCy('subract-button')
+        .dataCy('subtract-button')
         .click()
         .then(() => {
           cy.wrap(el).dataCy('column-item').should('have.length', 2)
         })
 
       cy.wrap(el)
-        .dataCy('subract-button')
+        .dataCy('subtract-button')
         .click()
         .then(() => {
           cy.wrap(el).dataCy('column-item').should('have.length', 1)
