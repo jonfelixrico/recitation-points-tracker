@@ -6,19 +6,26 @@
         <q-card-section class="text-h6"> Create Class </q-card-section>
         <q-card-section class="column q-gutter-y-sm">
           <q-input v-model="model.name" outlined label="Class name" />
-          <q-input
-            v-model.number="model.seatRows"
-            type="number"
-            outlined
-            label="Rows"
-          />
+        </q-card-section>
 
-          <q-input
-            v-model.number="model.seatColumns"
-            type="number"
-            outlined
-            label="Columns"
-          />
+        <q-card-section>
+          <div class="row q-gutter-x-md">
+            <q-input
+              v-model.number="model.seatRows"
+              type="number"
+              outlined
+              label="Rows"
+              class="col"
+            />
+
+            <q-input
+              v-model.number="model.seatColumns"
+              type="number"
+              outlined
+              label="Columns"
+              class="col"
+            />
+          </div>
         </q-card-section>
 
         <!-- TODO tags input -->
