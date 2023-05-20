@@ -8,13 +8,7 @@
     </div>
 
     <div v-for="index in colCountModel" :key="index">
-      <q-input
-        type="number"
-        :model-value="seatCountData[index] ?? ''"
-        @update:model-value="(value) => setSeatCount(index, value)"
-        outlined
-        :label="t('classes.dialogs.createClass.input.seatCountLabel')"
-      />
+      <ColumnInput v-model="seatCountDataModel" :col-index="index" />
     </div>
   </div>
 </template>
@@ -22,6 +16,8 @@
 <script setup lang="ts">
 import { PropType, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import ColumnInput from './ColumnInput.vue'
+import { ColumnSeatCountMap } from './create-class-typings'
 
 const { t } = useI18n()
 
@@ -32,14 +28,14 @@ const props = defineProps({
   },
 
   seatCountData: {
-    type: Object as PropType<Record<number, number | null>>,
+    type: Object as PropType<ColumnSeatCountMap>,
     required: true,
   },
 })
 
 const emit = defineEmits<{
   (e: 'update:colCount', value: number): void
-  (e: 'update:seatCountData', value: Record<number, number | null>): void
+  (e: 'update:seatCountData', value: ColumnSeatCountMap): void
 }>()
 
 const colCountModel = computed({
@@ -52,11 +48,13 @@ const colCountModel = computed({
   },
 })
 
-function setSeatCount(index: number, value: unknown) {
-  const copy = {
-    ...props.seatCountData,
-  }
-  copy[index] = value === '' ? null : Number(value)
-  emit('update:seatCountData', copy)
-}
+const seatCountDataModel = computed({
+  get() {
+    return props.seatCountData
+  },
+
+  set(value: ColumnSeatCountMap) {
+    emit('update:seatCountData', value)
+  },
+})
 </script>
