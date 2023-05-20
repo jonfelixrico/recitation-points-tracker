@@ -8,17 +8,17 @@
         }}</q-card-section>
         <q-card-section class="column q-gutter-y-sm">
           <q-input
-            v-model="model.name"
+            v-model="name"
             outlined
             :label="t('classes.dialogs.createClass.input.nameLabel')"
           />
         </q-card-section>
 
         <q-card-section class="row q-gutter-x-sm items-center">
-          <div class="col">{{ t('classes.dialogs.createClass.columns') }}</div>
-
-          <q-btn icon="add" flat round dense />
-          <q-btn icon="remove" flat round dense />
+          <ColumnSection
+            v-model:col-count="colCount"
+            v-model:seat-count-data="seatCountData"
+          />
         </q-card-section>
 
         <!-- TODO tags input -->
@@ -46,22 +46,21 @@
 
 <script setup lang="ts">
 import { useDialogPluginComponent } from 'quasar'
-import { ClassEntity } from 'src/models/entities'
-import { reactive } from 'vue'
+import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { ColumnSeatCountMap } from './create-class-typings'
+import ColumnSection from './ColumnSection.vue'
 
 defineEmits([...useDialogPluginComponent.emits])
 const { dialogRef, onDialogHide, onDialogOK } = useDialogPluginComponent()
 const { t } = useI18n()
 
-const model = reactive<Omit<ClassEntity, 'id'>>({
-  name: '',
-  seatColumns: 1,
-  seatRows: 1,
-  tags: [],
-})
+const name = ref<string>('')
+const seatCountData = ref<ColumnSeatCountMap>({})
+const colCount = ref<number>(0)
 
 function submitData() {
-  onDialogOK(model)
+  // TODO noop
+  onDialogOK()
 }
 </script>
