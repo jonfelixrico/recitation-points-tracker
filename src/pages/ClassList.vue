@@ -1,9 +1,10 @@
 <template>
   <q-page class="column page-width q-mx-auto">
     <div class="row justify-end q-pa-sm border-bottom">
-      <q-btn no-caps color="primary" unelevated @click="showCreateDialog"
-        >Add Class</q-btn
-      >
+      <q-btn no-caps color="primary" unelevated @click="showCreateDialog">
+        <!-- TODO i18nize this -->
+        Add Class
+      </q-btn>
     </div>
 
     <div class="col flex flex-center" v-if="isLoading">
@@ -24,6 +25,7 @@
     </div>
 
     <div v-else-if="!data.length" class="col flex flex-center">
+      <!-- TODO i18nize this -->
       No classes to show
     </div>
   </q-page>
@@ -45,6 +47,7 @@ function useCreateClassDialog() {
   return {
     async showDialog() {
       $q.dialog({
+        // TODO use the one under create-class
         component: CreateClassDialog,
       }).onOk(async (data: Omit<ClassEntity, 'id'>) => {
         const { id } = await createClass(data)
