@@ -17,9 +17,7 @@ describe('SeatingArrangement', () => {
     })
 
     cy.dataCy('seat').should('have.length', 44)
-    cy.get('[data-empty-seat]').should('have.length', 43)
-    cy.get(
-      '[data-occupant-id="test"][data-col-no="5"][data-row-no="6"]'
-    ).should('exist')
+    cy.get('[data-empty]').should('have.length', 43)
+    cy.get('[data-occupied][data-col-no="5"][data-row-no="6"]').should('exist')
   })
 })
