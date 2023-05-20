@@ -1,3 +1,3 @@
-export type ColumnSeatCountData = {
+export type ColumSeatCountMap = {
   [key: number]: number
 }
