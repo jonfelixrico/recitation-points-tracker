@@ -41,8 +41,18 @@ describe('CreateClassDialog', () => {
         .click()
         .then(() => {
           cy.wrap(el).dataCy('column-item').should('have.length', 2)
-          cy.wrap(el).dataCy('column-item').eq(0).dataCy('input').type('5')
-          cy.wrap(el).dataCy('column-item').eq(1).dataCy('input').type('6')
+
+          // these value checks are to determine the values of "earlier" rows are not affected by "later" rows being subtracted
+          cy.wrap(el)
+            .dataCy('column-item')
+            .eq(0)
+            .dataCy('input')
+            .should('have.value', 5)
+          cy.wrap(el)
+            .dataCy('column-item')
+            .eq(1)
+            .dataCy('input')
+            .should('have.value', 6)
         })
 
       cy.wrap(el)
@@ -50,7 +60,13 @@ describe('CreateClassDialog', () => {
         .click()
         .then(() => {
           cy.wrap(el).dataCy('column-item').should('have.length', 1)
-          cy.wrap(el).dataCy('column-item').eq(0).dataCy('input').type('5')
+
+          // these value checks are to determine the values of "earlier" rows are not affected by "later" rows being subtracted
+          cy.wrap(el)
+            .dataCy('column-item')
+            .eq(0)
+            .dataCy('input')
+            .should('have.value', 5)
         })
 
       cy.wrap(el).dataCy('cancel-button').click()
