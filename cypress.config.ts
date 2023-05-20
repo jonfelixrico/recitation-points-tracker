@@ -12,6 +12,7 @@ export default defineConfig({
    */
   video: false,
 
+  // TODO move to a separate file if ther are more env vars
   env: {
     FIREBASE_AUTH_EMULATOR_HOST: 'http://localhost:9099',
     FIRESTORE_EMULATOR_HOST: 'http://localhost:9098',
