@@ -4,12 +4,11 @@ describe('SeatingArrangement', () => {
   it('should have the correct arrangement displayed', () => {
     cy.mount(SeatingArrangement, {
       props: {
-        columnCount: 8,
-        rowCount: 5,
+        arrangement: [7, 7, 7, 7, 8, 8],
       },
     })
 
-    cy.dataCy('seat').should('have.length', 40)
-    cy.dataCy('column').should('have.length', 8)
+    cy.dataCy('seat').should('have.length', 44)
+    cy.dataCy('column').should('have.length', 6)
   })
 })
