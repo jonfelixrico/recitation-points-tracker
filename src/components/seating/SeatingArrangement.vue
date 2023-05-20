@@ -19,7 +19,7 @@
         <div
           v-else
           data-cy="seat"
-          class="seat"
+          class="seat occupied"
           :data-occupant-id="indexedOccupants[colNo][rowNo].id"
           data-occupied
           :data-row-no="rowNo"
@@ -31,20 +31,19 @@
 </template>
 
 <script setup lang="ts">
-import { PropType, computed } from 'vue'
+import { computed } from 'vue'
 import { SeatOccupant } from './seating-types'
 
-const props = defineProps({
-  arrangement: {
-    required: true,
-    type: Array as PropType<number[]>,
-  },
-
-  occupants: {
-    required: true,
-    type: Array as PropType<SeatOccupant[]>,
-  },
-})
+const props = withDefaults(
+  defineProps<{
+    arrangement: number[]
+    occupants: SeatOccupant[]
+  }>(),
+  {
+    arrangement: () => [],
+    occupants: () => [],
+  }
+)
 
 const indexedOccupants = computed(() => {
   const map: Record<number, Record<number, SeatOccupant>> = {}
@@ -69,5 +68,9 @@ const indexedOccupants = computed(() => {
   height: $size;
 
   background-color: $grey;
+
+  &.occupied {
+    background-color: $green;
+  }
 }
 </style>
