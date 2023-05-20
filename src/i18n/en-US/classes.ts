@@ -28,7 +28,7 @@ export default {
         columnsLabel: 'Columns',
 
         nameLabel: 'Name',
-        seatCountLabel: 'Seat count',
+        seatCountLabel: 'Seat count for column {colNo}',
       },
     },
   },
