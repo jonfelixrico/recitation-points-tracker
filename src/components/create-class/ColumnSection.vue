@@ -26,7 +26,11 @@
     </div>
 
     <div v-for="index in colCountModel" :key="index" data-cy="column-item">
-      <ColumnInput v-model="seatCountDataModel" :col-index="index" />
+      <ColumnInput
+        v-model="seatCountDataModel"
+        :col-index="index"
+        data-cy="input"
+      />
     </div>
   </div>
 </template>
