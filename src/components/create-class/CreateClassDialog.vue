@@ -14,8 +14,9 @@
           />
         </q-card-section>
 
-        <q-card-section class="row q-gutter-x-sm items-center">
+        <q-card-section>
           <ColumnSection
+            class="full-width"
             v-model:col-count="colCount"
             v-model:seat-count-data="seatCountData"
           />

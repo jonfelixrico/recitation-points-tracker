@@ -1,13 +1,31 @@
 <template>
-  <div>
+  <div class="column q-gutter-y-sm">
     <div class="row q-gutter-x-xs">
-      <div class="col">{{ t('classes.dialogs.createClass.columns') }}</div>
+      <div class="col text-weight-bold">
+        {{ t('classes.dialogs.createClass.columns') }}
+      </div>
 
-      <q-btn icon="add" flat round dense @click="colCountModel += 1" />
-      <q-btn icon="remove" flat round dense @click="colCountModel -= 1" />
+      <q-btn
+        icon="add"
+        flat
+        round
+        dense
+        @click="colCountModel += 1"
+        data-cy="add-button"
+        color="positive"
+      />
+      <q-btn
+        icon="remove"
+        flat
+        round
+        dense
+        @click="colCountModel -= 1"
+        data-cy="subtract-button"
+        color="negative"
+      />
     </div>
 
-    <div v-for="index in colCountModel" :key="index">
+    <div v-for="index in colCountModel" :key="index" data-cy="column-item">
       <ColumnInput v-model="seatCountDataModel" :col-index="index" />
     </div>
   </div>
