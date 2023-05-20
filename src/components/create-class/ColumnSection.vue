@@ -26,6 +26,7 @@
     </div>
 
     <div v-for="index in colCountModel" :key="index" data-cy="column-item">
+      <!-- TODO add more information here (column number maybe?) -->
       <ColumnInput
         v-model="seatCountDataModel"
         :col-index="index"
