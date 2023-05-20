@@ -15,11 +15,12 @@
     "test:unit": "vitest",
     "test:unit:ci": "vitest run",
     "test:e2e": "cross-env NODE_ENV=test start-test \"quasar dev\" http-get://localhost:9000 \"cypress open --e2e\"",
-    "test:e2e:ci": "cross-env NODE_ENV=test start-test \"quasar dev\" http-get://localhost:9000 \"cypress run --e2e\"",
+    "cypress:e2e:run": "cross-env NODE_ENV=test start-test \"quasar dev\" http-get://localhost:9000 \"cypress run --e2e\"",
+    "test:e2e:ci": "firebase emulators:exec --import ./firebase/emulator-state \"pnpm cypress:e2e:run\"",
     "test:component": "cross-env NODE_ENV=test cypress open --component",
     "test:component:ci": "cross-env NODE_ENV=test cypress run --component",
-    "firebase:emulator:start": "firebase emulators:start --export-on-exit --import ./firebase/emulator-state",
-    "firebase:emulator:save": "firebase emulators:export ./firebase/emulator-state"
+    "firebase:emulators:start": "firebase emulators:start --import ./firebase/emulator-state",
+    "firebase:emulators:save": "firebase emulators:export ./firebase/emulator-state"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
