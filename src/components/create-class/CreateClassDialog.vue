@@ -60,7 +60,12 @@ const seatCountData = ref<ColumnSeatCountMap>({})
 const colCount = ref<number>(0)
 
 function submitData() {
-  // TODO noop
-  onDialogOK()
+  onDialogOK({
+    name: name.value,
+    seatArrangement: Array.from(
+      { length: colCount.value },
+      (_, index) => seatCountData.value[index]
+    ),
+  })
 }
 </script>
