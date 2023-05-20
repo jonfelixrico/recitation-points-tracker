@@ -37,7 +37,13 @@
         <!-- TODO tags input -->
 
         <q-card-actions align="right">
-          <q-btn flat :label="t('common.cancel')" v-close-popup no-caps />
+          <q-btn
+            flat
+            :label="t('common.cancel')"
+            v-close-popup
+            no-caps
+            data-cy="cancel-button"
+          />
           <q-btn
             color="primary"
             :label="t('common.submit')"

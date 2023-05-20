@@ -1,5 +1,5 @@
 import DialogWrapper from 'app/test/cypress/wrappers/DialogWrapper.vue'
-import CreateClassDialog from 'components/class-list/CreateClassDialogV2.vue'
+import CreateClassDialog from 'components/create-class/CreateClassDialog.vue'
 
 describe('CreateClassDialog', () => {
   it('should handle adding and removing of columns', () => {
