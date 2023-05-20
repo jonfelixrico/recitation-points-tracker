@@ -31,13 +31,13 @@
 
 <script lang="ts">
 import { useQuasar } from 'quasar'
-import ClassCreationDialog from 'src/components/ClassCreationDialog.vue'
+import CreateClassDialog from 'src/components/CreateClassDialog.vue'
 import { useClassesAPI } from 'src/composables/classes-api.composable'
 import { ClassEntity } from 'src/models/entities'
 import { defineComponent, ref, onBeforeMount } from 'vue'
 import { useRouter } from 'vue-router'
 
-function useClassCreationDialog() {
+function useCreateClassDialog() {
   const $q = useQuasar()
   const { createClass } = useClassesAPI()
   const router = useRouter()
@@ -45,7 +45,7 @@ function useClassCreationDialog() {
   return {
     async showDialog() {
       $q.dialog({
-        component: ClassCreationDialog,
+        component: CreateClassDialog,
       }).onOk(async (data: Omit<ClassEntity, 'id'>) => {
         const { id } = await createClass(data)
 
@@ -85,7 +85,7 @@ function useClassList() {
 
 export default defineComponent({
   setup() {
-    const { showDialog: showCreateDialog } = useClassCreationDialog()
+    const { showDialog: showCreateDialog } = useCreateClassDialog()
 
     const router = useRouter()
 
