@@ -22,4 +22,8 @@ export default {
   emptyStudents: 'No students to show',
 
   studentList: 'Students',
+
+  notifs: {
+    studentDeleteSuccess: 'Student {name} has been removed',
+  },
 }
