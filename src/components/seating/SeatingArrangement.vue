@@ -6,24 +6,57 @@
       class="column q-gutter-y-xs"
       data-cy="column"
     >
-      <div
-        v-for="rowNo in seatCount"
-        :key="rowNo"
-        data-cy="seat"
-        class="seat"
-      />
+      <template v-for="rowNo in seatCount" :key="rowNo">
+        <div
+          v-if="!indexedOccupants[colNo]?.[rowNo]"
+          data-cy="seat"
+          data-empty-seat
+          class="seat"
+          :data-row-no="rowNo"
+          :data-col-no="colNo"
+        />
+
+        <div
+          v-else
+          data-cy="seat"
+          class="seat"
+          :data-occupant-id="indexedOccupants[colNo][rowNo].id"
+          :data-row-no="rowNo"
+          :data-col-no="colNo"
+        />
+      </template>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { PropType } from 'vue'
+import { PropType, computed } from 'vue'
+import { SeatOccupant } from './seating-types'
 
-defineProps({
+const props = defineProps({
   arrangement: {
     required: true,
     type: Array as PropType<number[]>,
   },
+
+  occupants: {
+    required: true,
+    type: Array as PropType<SeatOccupant[]>,
+  },
+})
+
+const indexedOccupants = computed(() => {
+  const map: Record<number, Record<number, SeatOccupant>> = {}
+
+  for (const occupant of props.occupants) {
+    if (!map[occupant.colNo]) {
+      map[occupant.colNo] = {}
+    }
+
+    map[occupant.colNo][occupant.rowNo] = occupant
+  }
+
+  return map
 })
 </script>
 
