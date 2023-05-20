@@ -4,8 +4,8 @@ describe('SeatingArrangement', () => {
   it('should have the correct seat count', () => {
     cy.mount(SeatingArrangement, {
       props: {
-        columns: 5,
-        row: 5,
+        columnCount: 5,
+        rowCount: 5,
       },
     })
 
