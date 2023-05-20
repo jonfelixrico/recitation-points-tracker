@@ -18,8 +18,8 @@
     "test:e2e:ci": "cross-env NODE_ENV=test start-test \"quasar dev\" http-get://localhost:9000 \"cypress run --e2e\"",
     "test:component": "cross-env NODE_ENV=test cypress open --component",
     "test:component:ci": "cross-env NODE_ENV=test cypress run --component",
-    "firebase:emulator:start": "firebase emulators:start --import ./firebase/emulator-state",
-    "firebase:emulator:save": "firebase emulators:export ./firebase/emulator-state"
+    "firebase:emulators:start": "firebase emulators:start --import ./firebase/emulator-state",
+    "firebase:emulators:save": "firebase emulators:export ./firebase/emulator-state"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
