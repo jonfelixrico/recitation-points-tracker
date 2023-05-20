@@ -68,7 +68,7 @@ const props = defineProps({
     type: Array as PropType<StudentEntity[]>,
   },
 })
-const emit = defineEmits(['addClick', 'deleteClick'])
+const emit = defineEmits(['addClick', 'delete'])
 
 const { t } = useI18n()
 
@@ -104,7 +104,7 @@ function onDeleteClick(id: string) {
     },
     html: true,
   }).onOk(() => {
-    emit('deleteClick', id)
+    emit('delete', id)
   })
 }
 </script>
