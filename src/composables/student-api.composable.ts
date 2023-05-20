@@ -59,7 +59,7 @@ export function useStudentAPI() {
       return insertedStudents
     },
 
-    async deletStudent(classId: string, studentId: string) {
+    async deleteStudent(classId: string, studentId: string) {
       const docRef = doc(
         firestore,
         `users/${uid}/classes/${classId}/students`,
