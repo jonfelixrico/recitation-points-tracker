@@ -76,7 +76,7 @@ function useStudentsList(classId: Ref<string>) {
   return {
     load,
 
-    showDialog() {
+    showAddDialog() {
       dialog({
         component: AddStudentsDialog,
       }).onOk(saveAddedStudents)
@@ -129,7 +129,7 @@ export default defineComponent({
     return {
       classData,
       students: studentsList.data,
-      showAddStudentsDialog: studentsList.showDialog,
+      showAddStudentsDialog: studentsList.showAddDialog,
       t,
     }
   },
