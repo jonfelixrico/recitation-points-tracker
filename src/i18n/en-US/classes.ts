@@ -19,10 +19,16 @@ export default {
 
     createClass: {
       title: 'Create Class',
+      columns: 'Columns',
+
       input: {
+        // TODO rmeove
         rowsLabel: 'Rows',
+        // TODO remove
         columnsLabel: 'Columns',
+
         nameLabel: 'Name',
+        seatCountLabel: 'Seat count',
       },
     },
   },
