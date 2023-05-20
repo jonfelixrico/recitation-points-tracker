@@ -32,34 +32,22 @@
   </q-dialog>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { useDialogPluginComponent } from 'quasar'
 import { ClassEntity } from 'src/models/entities'
-import { defineComponent, reactive } from 'vue'
+import { reactive } from 'vue'
 
-export default defineComponent({
-  emits: [...useDialogPluginComponent.emits],
+defineEmits([...useDialogPluginComponent.emits])
+const { dialogRef, onDialogHide, onDialogOK } = useDialogPluginComponent()
 
-  setup() {
-    const { dialogRef, onDialogHide, onDialogOK } = useDialogPluginComponent()
-
-    const model = reactive<Omit<ClassEntity, 'id'>>({
-      name: '',
-      seatColumns: 1,
-      seatRows: 1,
-      tags: [],
-    })
-
-    return {
-      dialogRef,
-      onDialogHide,
-
-      submitData() {
-        onDialogOK(model)
-      },
-
-      model,
-    }
-  },
+const model = reactive<Omit<ClassEntity, 'id'>>({
+  name: '',
+  seatColumns: 1,
+  seatRows: 1,
+  tags: [],
 })
+
+function submitData() {
+  onDialogOK(model)
+}
 </script>
