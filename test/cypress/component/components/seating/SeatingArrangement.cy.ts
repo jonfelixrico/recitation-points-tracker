@@ -1,4 +1,4 @@
-import SeatingArrangement from 'src/components/SeatingArrangement.vue'
+import SeatingArrangement from 'src/components/seating/SeatingArrangement.vue'
 
 describe('SeatingArrangement', () => {
   it('should have the correct arrangement displayed', () => {
