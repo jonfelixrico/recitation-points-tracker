@@ -52,7 +52,8 @@ import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 
 function useStudentsList(classId: Ref<string>) {
-  const { dialog, loading } = useQuasar()
+  const { dialog, loading, notify } = useQuasar()
+  const { t } = useI18n()
 
   const { getStudentList, createStudents, deleteStudent } = useStudentAPI()
   const data = ref<StudentEntity[]>([])
@@ -83,11 +84,24 @@ function useStudentsList(classId: Ref<string>) {
       }).onOk(saveAddedStudents)
     },
 
-    async processDelete({ id }: StudentEntity) {
+    async processDelete({ id, firstName, lastName }: StudentEntity) {
       loading.show()
       try {
         await deleteStudent(classId.value, id)
         console.info('Deleted student %s from class %s', id, classId.value)
+
+        const formattedName = t('common.nameFormat', {
+          firstName,
+          lastName,
+        })
+
+        notify({
+          message: t('classes.notifs.studentDeleteSuccess', {
+            name: `<b>${formattedName}</b>`,
+          }),
+          html: true,
+        })
+
         await load()
       } catch (e) {
         // TODO improve logging
