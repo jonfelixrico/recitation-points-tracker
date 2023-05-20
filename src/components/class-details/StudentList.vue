@@ -68,7 +68,7 @@ const props = defineProps({
     type: Array as PropType<StudentEntity[]>,
   },
 })
-const emit = defineEmits(['addClick', 'deleteClick'])
+const emit = defineEmits(['addClick', 'delete'])
 
 const { t } = useI18n()
 
@@ -87,13 +87,13 @@ function onDeleteClick(id: string) {
   })
 
   dialog({
-    title: t('classes.dialogs.deleteStudent.title'),
-    message: t('classes.dialogs.deleteStudent.message', {
+    title: t('classes.dialogs.deleteStudentPrompt.title'),
+    message: t('classes.dialogs.deleteStudentPrompt.message', {
       // TODO create a custom component to highlight this
       name: `<mark><b>${nameToDelete}</b></mark>`,
     }),
     ok: {
-      label: t('classes.dialogs.deleteStudent.okLabel'),
+      label: t('classes.dialogs.deleteStudentPrompt.okLabel'),
       unelevated: true,
       noCaps: true,
       'data-cy': 'ok-button',
@@ -104,7 +104,7 @@ function onDeleteClick(id: string) {
     },
     html: true,
   }).onOk(() => {
-    emit('deleteClick', id)
+    emit('delete', item)
   })
 }
 </script>

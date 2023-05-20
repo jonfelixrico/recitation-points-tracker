@@ -1,4 +1,10 @@
-import { collection, doc, getDocs, writeBatch } from 'firebase/firestore'
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  writeBatch,
+} from 'firebase/firestore'
 import { useFirestore } from './firestore.composable'
 import { useSessionUserId } from './session-user.composable'
 import { StudentEntity } from 'src/models/entities'
@@ -51,6 +57,16 @@ export function useStudentAPI() {
       await batch.commit()
 
       return insertedStudents
+    },
+
+    async deleteStudent(classId: string, studentId: string) {
+      const docRef = doc(
+        firestore,
+        `users/${uid}/classes/${classId}/students`,
+        studentId
+      )
+
+      await deleteDoc(docRef)
     },
   }
 }

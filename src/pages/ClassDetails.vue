@@ -29,6 +29,7 @@
             <StudentList
               :students="students"
               @add-click="showAddStudentsDialog"
+              @delete="processStudentDelete"
             />
           </q-card-section>
         </q-card>
@@ -51,9 +52,10 @@ import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 
 function useStudentsList(classId: Ref<string>) {
-  const { dialog, loading } = useQuasar()
+  const { dialog, loading, notify } = useQuasar()
+  const { t } = useI18n()
 
-  const { getStudentList, createStudents } = useStudentAPI()
+  const { getStudentList, createStudents, deleteStudent } = useStudentAPI()
   const data = ref<StudentEntity[]>([])
 
   async function load() {
@@ -76,10 +78,37 @@ function useStudentsList(classId: Ref<string>) {
   return {
     load,
 
-    showDialog() {
+    showAddDialog() {
       dialog({
         component: AddStudentsDialog,
       }).onOk(saveAddedStudents)
+    },
+
+    async processDelete({ id, firstName, lastName }: StudentEntity) {
+      loading.show()
+      try {
+        await deleteStudent(classId.value, id)
+        console.info('Deleted student %s from class %s', id, classId.value)
+
+        const formattedName = t('common.nameFormat', {
+          firstName,
+          lastName,
+        })
+
+        notify({
+          message: t('classes.notifs.studentDeleteSuccess', {
+            name: `<b>${formattedName}</b>`,
+          }),
+          html: true,
+        })
+
+        const index = data.value.findIndex((s) => s.id === id)
+        data.value.splice(index, 1)
+      } catch (e) {
+        // TODO improve logging
+        console.error(e)
+      }
+      loading.hide()
     },
 
     data: computed(() =>
@@ -129,7 +158,8 @@ export default defineComponent({
     return {
       classData,
       students: studentsList.data,
-      showAddStudentsDialog: studentsList.showDialog,
+      showAddStudentsDialog: studentsList.showAddDialog,
+      processStudentDelete: studentsList.processDelete,
       t,
     }
   },
