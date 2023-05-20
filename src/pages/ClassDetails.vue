@@ -83,15 +83,11 @@ function useStudentsList(classId: Ref<string>) {
       }).onOk(saveAddedStudents)
     },
 
-    async processDelete(studentId: string) {
+    async processDelete({ id }: StudentEntity) {
       loading.show()
       try {
-        await deleteStudent(classId.value, studentId)
-        console.info(
-          'Deleted student %s from class %s',
-          studentId,
-          classId.value
-        )
+        await deleteStudent(classId.value, id)
+        console.info('Deleted student %s from class %s', id, classId.value)
         await load()
       } catch (e) {
         // TODO improve logging

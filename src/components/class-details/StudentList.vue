@@ -104,7 +104,7 @@ function onDeleteClick(id: string) {
     },
     html: true,
   }).onOk(() => {
-    emit('delete', id)
+    emit('delete', item)
   })
 }
 </script>
