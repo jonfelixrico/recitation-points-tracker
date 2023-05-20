@@ -29,6 +29,7 @@
             <StudentList
               :students="students"
               @add-click="showAddStudentsDialog"
+              @delete="processStudentDelete"
             />
           </q-card-section>
         </q-card>
@@ -53,7 +54,7 @@ import { useRoute } from 'vue-router'
 function useStudentsList(classId: Ref<string>) {
   const { dialog, loading } = useQuasar()
 
-  const { getStudentList, createStudents } = useStudentAPI()
+  const { getStudentList, createStudents, deleteStudent } = useStudentAPI()
   const data = ref<StudentEntity[]>([])
 
   async function load() {
@@ -80,6 +81,23 @@ function useStudentsList(classId: Ref<string>) {
       dialog({
         component: AddStudentsDialog,
       }).onOk(saveAddedStudents)
+    },
+
+    async processDelete(studentId: string) {
+      loading.show()
+      try {
+        await deleteStudent(classId.value, studentId)
+        console.info(
+          'Deleted student %s from class %s',
+          studentId,
+          classId.value
+        )
+        await load()
+      } catch (e) {
+        // TODO improve logging
+        console.error(e)
+      }
+      loading.hide()
     },
 
     data: computed(() =>
@@ -130,6 +148,7 @@ export default defineComponent({
       classData,
       students: studentsList.data,
       showAddStudentsDialog: studentsList.showAddDialog,
+      processStudentDelete: studentsList.processDelete,
       t,
     }
   },
