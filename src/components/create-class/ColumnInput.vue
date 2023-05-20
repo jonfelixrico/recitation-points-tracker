@@ -1,4 +1,9 @@
 <template>
+  <!--
+    The only reason why we have a special wrapper class for this input is so that we can use v-vmodel.number.lazy.
+    We can't do that directly in the intended parent component because AFAIK we can't use get/set computed with object
+    properties. I could be wrong though.
+  -->
   <q-input
     type="number"
     v-model.number.lazy="model"
