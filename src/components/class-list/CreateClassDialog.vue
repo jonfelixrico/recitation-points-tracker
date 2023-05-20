@@ -3,9 +3,15 @@
   <q-dialog ref="dialogRef" @hide="onDialogHide">
     <q-card class="q-dialog-plugin">
       <q-form @submit.prevent="submitData">
-        <q-card-section class="text-h6"> Create Class </q-card-section>
+        <q-card-section class="text-h6">{{
+          t('classes.dialogs.createClass.title')
+        }}</q-card-section>
         <q-card-section class="column q-gutter-y-sm">
-          <q-input v-model="model.name" outlined label="Class name" />
+          <q-input
+            v-model="model.name"
+            outlined
+            :label="t('classes.dialogs.createClass.input.nameLabel')"
+          />
         </q-card-section>
 
         <q-card-section>
@@ -14,7 +20,7 @@
               v-model.number="model.seatRows"
               type="number"
               outlined
-              label="Rows"
+              :label="t('classes.dialogs.createClass.input.rowsLabel')"
               class="col"
             />
 
@@ -22,7 +28,7 @@
               v-model.number="model.seatColumns"
               type="number"
               outlined
-              label="Columns"
+              :label="t('classes.dialogs.createClass.input.columnsLabel')"
               class="col"
             />
           </div>
@@ -43,9 +49,11 @@
 import { useDialogPluginComponent } from 'quasar'
 import { ClassEntity } from 'src/models/entities'
 import { reactive } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 defineEmits([...useDialogPluginComponent.emits])
 const { dialogRef, onDialogHide, onDialogOK } = useDialogPluginComponent()
+const { t } = useI18n()
 
 const model = reactive<Omit<ClassEntity, 'id'>>({
   name: '',

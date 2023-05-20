@@ -16,6 +16,15 @@ export default {
       message: 'Are you sure you want to remove {name} from the student list?',
       okLabel: "Yes, I'm sure",
     },
+
+    createClass: {
+      title: 'Create Class',
+      input: {
+        rowsLabel: 'Rows',
+        columnsLabel: 'Columns',
+        nameLabel: 'Name',
+      },
+    },
   },
 
   addStudents: 'Add students',
