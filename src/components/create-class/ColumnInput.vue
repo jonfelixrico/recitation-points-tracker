@@ -3,7 +3,11 @@
     type="number"
     v-model.number.lazy="model"
     outlined
-    :label="t('classes.dialogs.createClass.input.seatCountLabel')"
+    :label="
+      t('classes.dialogs.createClass.input.seatCountLabel', {
+        colNo: colIndex + 1,
+      })
+    "
   />
 </template>
 
