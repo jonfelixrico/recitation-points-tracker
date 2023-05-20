@@ -102,7 +102,8 @@ function useStudentsList(classId: Ref<string>) {
           html: true,
         })
 
-        await load()
+        const index = data.value.findIndex((s) => s.id === id)
+        data.value.splice(index, 1)
       } catch (e) {
         // TODO improve logging
         console.error(e)
