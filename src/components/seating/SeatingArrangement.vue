@@ -31,19 +31,20 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { PropType, computed } from 'vue'
 import { SeatOccupant } from './seating-types'
 
-const props = withDefaults(
-  defineProps<{
-    arrangement: number[]
-    occupants: SeatOccupant[]
-  }>(),
-  {
-    arrangement: () => [],
-    occupants: () => [],
-  }
-)
+const props = defineProps({
+  arrangement: {
+    required: true,
+    type: Array as PropType<number[]>,
+  },
+
+  occupants: {
+    type: Array as PropType<SeatOccupant[]>,
+    default: () => [],
+  },
+})
 
 const indexedOccupants = computed(() => {
   const map: Record<number, Record<number, SeatOccupant>> = {}
