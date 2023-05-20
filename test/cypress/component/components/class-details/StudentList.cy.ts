@@ -62,7 +62,7 @@ describe('StudentList', () => {
             seatRow: 1,
           },
         ] as StudentEntity[],
-        onDeleteClick: spy,
+        onDelete: spy,
       },
     })
 
