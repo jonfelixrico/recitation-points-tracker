@@ -10,7 +10,7 @@
         <div
           v-if="!indexedOccupants[colNo]?.[rowNo]"
           data-cy="seat"
-          data-empty-seat
+          data-empty
           class="seat"
           :data-row-no="rowNo"
           :data-col-no="colNo"
@@ -21,6 +21,7 @@
           data-cy="seat"
           class="seat"
           :data-occupant-id="indexedOccupants[colNo][rowNo].id"
+          data-occupied
           :data-row-no="rowNo"
           :data-col-no="colNo"
         />
