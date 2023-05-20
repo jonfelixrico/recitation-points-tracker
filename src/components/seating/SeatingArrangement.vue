@@ -1,25 +1,28 @@
 <template>
   <div class="row no-wrap q-gutter-x-xs">
     <div
-      v-for="columnNo in columnCount"
-      :key="columnNo"
+      v-for="(seatCount, colNo) of arrangement"
+      :key="colNo"
       class="column q-gutter-y-xs"
       data-cy="column"
     >
-      <div v-for="rowNo in rowCount" :key="rowNo" data-cy="seat" class="seat" />
+      <div
+        v-for="rowNo in seatCount"
+        :key="rowNo"
+        data-cy="seat"
+        class="seat"
+      />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { PropType } from 'vue'
+
 defineProps({
-  rowCount: {
+  arrangement: {
     required: true,
-    type: Number,
-  },
-  columnCount: {
-    required: true,
-    type: Number,
+    type: Array as PropType<number[]>,
   },
 })
 </script>
