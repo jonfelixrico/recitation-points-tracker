@@ -50,6 +50,8 @@ function useCreateClassDialog() {
         // TODO use the one under create-class
         component: CreateClassDialog,
       }).onOk(async (data: Omit<ClassEntity, 'id'>) => {
+        // TODO update createClass to use CreatedClass
+        // TODO update entities
         const { id } = await createClass(data)
 
         await router.push({
