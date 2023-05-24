@@ -37,7 +37,19 @@ describe('CreateClassDialog', () => {
         .dataCy('submit-button')
         .click()
         .then(() => {
-          expect(okSpy.firstCall.args[0].seatArrangement).deep.equal([5, 6, 7])
+          cy.withinDialog({
+            dataCy: 'prompt',
+            fn: (inner) => {
+              cy.wrap(inner)
+                .dataCy('submit-button')
+                .click()
+                .then(() => {
+                  expect(okSpy.firstCall.args[0].seatArrangement).deep.equal([
+                    5, 6, 7,
+                  ])
+                })
+            },
+          })
         })
     })
   })
