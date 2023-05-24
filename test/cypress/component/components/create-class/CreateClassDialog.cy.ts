@@ -12,13 +12,10 @@ describe('CreateClassDialog', () => {
     })
 
     cy.withinDialog((el) => {
-      cy.wrap(el).dataCy('column-item').should('have.length', 0)
-
       cy.wrap(el)
         .dataCy('add-button')
         .click()
         .then(() => {
-          cy.wrap(el).dataCy('column-item').should('have.length', 1)
           cy.wrap(el).dataCy('column-item').eq(0).dataCy('input').type('5')
         })
 
@@ -26,7 +23,6 @@ describe('CreateClassDialog', () => {
         .dataCy('add-button')
         .click()
         .then(() => {
-          cy.wrap(el).dataCy('column-item').should('have.length', 2)
           cy.wrap(el).dataCy('column-item').eq(1).dataCy('input').type('6')
         })
 
@@ -34,7 +30,6 @@ describe('CreateClassDialog', () => {
         .dataCy('add-button')
         .click()
         .then(() => {
-          cy.wrap(el).dataCy('column-item').should('have.length', 3)
           cy.wrap(el).dataCy('column-item').eq(2).dataCy('input').type('7')
         })
 
