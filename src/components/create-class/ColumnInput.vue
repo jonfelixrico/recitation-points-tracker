@@ -41,13 +41,13 @@ const emit = defineEmits<{
 
 const model = computed({
   get() {
-    return props.modelValue[props.colNo] ?? null
+    return props.modelValue[props.colNo - 1] ?? null
   },
 
   set(value: number) {
     emit('update:modelValue', {
       ...props.modelValue,
-      [props.colNo]: value,
+      [props.colNo - 1]: value,
     })
   },
 })
