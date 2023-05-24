@@ -21,8 +21,6 @@
         />
       </q-card-section>
 
-      <q-separator />
-
       <q-card-section class="row">
         <div>
           <div>
