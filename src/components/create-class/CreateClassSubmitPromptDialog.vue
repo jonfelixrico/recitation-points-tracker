@@ -1,6 +1,11 @@
 <template>
   <!-- notice dialogRef here -->
-  <q-dialog ref="dialogRef" @hide="onDialogHide" no-backdrop-dismiss>
+  <q-dialog
+    ref="dialogRef"
+    @hide="onDialogHide"
+    no-backdrop-dismiss
+    data-cy="prompt"
+  >
     <q-card class="q-dialog-plugin">
       <q-card-section class="text-h6">
         {{ t('classes.dialogs.createClassSubmitPrompt.title') }}
