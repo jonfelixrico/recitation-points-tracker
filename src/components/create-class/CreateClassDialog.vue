@@ -38,6 +38,7 @@
             type="submit"
             unelevated
             no-caps
+            data-cy="submit-button"
           />
         </q-card-actions>
       </q-form>

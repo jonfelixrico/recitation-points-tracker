@@ -42,9 +42,7 @@ describe('CreateClassDialog', () => {
         .dataCy('submit-button')
         .click()
         .then(() => {
-          expect(okSpy).to.have.been.called.calledWith({
-            seatArrangement: [5, 6, 7],
-          })
+          expect(okSpy.firstCall.args[0].seatArrangement).deep.equal([5, 6, 7])
         })
     })
   })
