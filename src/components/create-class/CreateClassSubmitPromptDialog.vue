@@ -2,13 +2,12 @@
   <!-- notice dialogRef here -->
   <q-dialog ref="dialogRef" @hide="onDialogHide" no-backdrop-dismiss>
     <q-card class="q-dialog-plugin">
+      <q-card-section class="text-h6">
+        {{ t('classes.dialogs.createClassSubmitPrompt.title') }}
+      </q-card-section>
+
       <q-card-section>
-        <div class="text-h6">
-          {{ t('classes.dialogs.createClassSubmitPrompt.title') }}
-        </div>
-        <div>
-          {{ t('classes.dialogs.createClassSubmitPrompt.message') }}
-        </div>
+        {{ t('classes.dialogs.createClassSubmitPrompt.message') }}
       </q-card-section>
 
       <q-card-section class="column q-gutter-y-sm">
