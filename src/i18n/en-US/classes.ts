@@ -34,9 +34,7 @@ export default {
 
     createClassSubmitPrompt: {
       title: 'Create Class',
-      message:
-        'Please confirm that the details are correct. Are you sure you want to submit it?',
-      okLabel: 'Yes, submit',
+      message: 'Please confirm that the details are correct before submitting.',
       columnCount: '{count} column | {count} columns',
       seatCount: '{count} seat | {count} seats',
       input: {
