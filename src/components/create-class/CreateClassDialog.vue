@@ -73,9 +73,7 @@ function submitData() {
   }
 
   dialog({
-    component: {
-      CreateClassSubmitPromptDialog,
-    },
+    component: CreateClassSubmitPromptDialog,
     componentProps: {
       modelValue: value,
     },
