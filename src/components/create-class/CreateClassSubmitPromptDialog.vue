@@ -10,6 +10,8 @@
         {{ t('classes.dialogs.createClassSubmitPrompt.message') }}
       </q-card-section>
 
+      <q-separator />
+
       <q-card-section class="column q-gutter-y-sm">
         <q-input
           :model-value="modelValue.name"
@@ -19,7 +21,33 @@
         />
       </q-card-section>
 
-      <!-- TODO seat preview -->
+      <q-separator />
+
+      <q-card-section class="row">
+        <div>
+          <div>
+            {{
+              t('classes.dialogs.createClassSubmitPrompt.columnCount', {
+                count: modelValue.seatArrangement.length,
+              })
+            }}
+          </div>
+          <div>
+            {{
+              t('classes.dialogs.createClassSubmitPrompt.seatCount', {
+                count: modelValue.seatArrangement.reduce(
+                  (acc, val) => acc + val
+                ),
+              })
+            }}
+          </div>
+        </div>
+        <div class="col row justify-center">
+          <SeatingArrangement :arrangement="modelValue.seatArrangement" />
+        </div>
+      </q-card-section>
+
+      <q-separator />
 
       <q-card-actions align="right">
         <q-btn
@@ -47,6 +75,7 @@ import { useDialogPluginComponent } from 'quasar'
 import { PropType } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { CreatedClass } from './create-class-typings'
+import SeatingArrangement from 'components/seating/SeatingArrangement.vue'
 
 defineEmits([...useDialogPluginComponent.emits])
 const { dialogRef, onDialogHide, onDialogOK } = useDialogPluginComponent()
