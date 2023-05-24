@@ -20,7 +20,7 @@
         />
       </q-card-section>
 
-      <!-- TODO tags input -->
+      <!-- TODO seat preview -->
 
       <q-card-actions align="right">
         <q-btn
