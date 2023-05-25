@@ -37,18 +37,16 @@
         <q-card>
           <q-card-section class="text-h5">
             <!-- TODO i18nize -->
-            Seating
+            Seat Plan
           </q-card-section>
 
           <q-separator />
 
-          <q-card-section>
-            <ClassSeatingArrangement
-              class="seating-visualizer"
-              v-if="classData?.seatingArrangement?.columns"
-              :columns="classData.seatingArrangement.columns"
-            />
-          </q-card-section>
+          <ClassSeatingArrangement
+            class="seating-visualizer"
+            v-if="classData?.seatingArrangement?.columns"
+            :columns="classData.seatingArrangement.columns"
+          />
         </q-card>
       </div>
     </template>
