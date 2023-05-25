@@ -34,6 +34,7 @@
 <script lang="ts">
 import { useQuasar } from 'quasar'
 import CreateClassDialog from 'src/components/create-class/CreateClassDialog.vue'
+import { CreatedClass } from 'src/components/create-class/create-class-typings'
 import { useClassesAPI } from 'src/composables/classes-api.composable'
 import { ClassEntity } from 'src/models/entities'
 import { defineComponent, ref, onBeforeMount } from 'vue'
@@ -49,10 +50,15 @@ function useCreateClassDialog() {
       $q.dialog({
         // TODO use the one under create-class
         component: CreateClassDialog,
-      }).onOk(async (data: Omit<ClassEntity, 'id'>) => {
-        // TODO update createClass to use CreatedClass
-        // TODO update entities
-        const { id } = await createClass(data)
+      }).onOk(async ({ name, seatArrangement }: CreatedClass) => {
+        const { id } = await createClass({
+          name,
+          tags: [],
+          seatingArrangement: {
+            columns: seatArrangement,
+            occupants: {},
+          },
+        })
 
         await router.push({
           name: 'classDetails',
