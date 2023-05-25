@@ -33,6 +33,23 @@
             />
           </q-card-section>
         </q-card>
+
+        <q-card>
+          <q-card-section class="text-h5">
+            <!-- TODO i18nize -->
+            Seating
+          </q-card-section>
+
+          <q-separator />
+
+          <q-card-section>
+            <ClassSeatingArrangement
+              class="seating-visualizer"
+              v-if="classData?.seatingArrangement?.columns"
+              :columns="classData.seatingArrangement.columns"
+            />
+          </q-card-section>
+        </q-card>
       </div>
     </template>
   </q-page>
@@ -42,6 +59,7 @@
 import { orderBy } from 'lodash'
 import { useQuasar } from 'quasar'
 import AddStudentsDialog from 'src/components/class-details/AddStudentsDialog.vue'
+import ClassSeatingArrangement from 'src/components/class-details/ClassSeatingArrangement.vue'
 import StudentList from 'src/components/class-details/StudentList.vue'
 import { DraftStudent } from 'src/components/class-details/draft-student.inteface'
 import { useClassesAPI } from 'src/composables/classes-api.composable'
@@ -118,7 +136,7 @@ function useStudentsList(classId: Ref<string>) {
 }
 
 export default defineComponent({
-  components: { StudentList },
+  components: { StudentList, ClassSeatingArrangement },
 
   async beforeRouteEnter(to) {
     const { getClass } = useClassesAPI()
@@ -165,3 +183,9 @@ export default defineComponent({
   },
 })
 </script>
+
+<style lang="scss" scoped>
+.seating-visualizer {
+  height: 600px;
+}
+</style>
