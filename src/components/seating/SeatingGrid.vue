@@ -17,9 +17,10 @@
         data-cy="seat"
         :data-row-no="rowNo"
         :data-col-no="colNo"
+        class="tile"
       >
         <slot :rowNo="rowNo" :colNo="colNo">
-          <div class="bg-grey" />
+          <div class="bg-grey fit" />
         </slot>
       </div>
     </div>
@@ -43,7 +44,7 @@ defineProps({
 </script>
 
 <style scoped lang="scss">
-.seat {
+.tile {
   width: var(--tile-size);
   height: var(--tile-size);
 }
