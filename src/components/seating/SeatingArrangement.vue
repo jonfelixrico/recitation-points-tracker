@@ -1,5 +1,10 @@
 <template>
-  <div class="row no-wrap q-gutter-x-xs">
+  <div
+    class="row no-wrap q-gutter-x-xs"
+    :style="{
+      '--tile-size': `${tileSize}px`,
+    }"
+  >
     <div
       v-for="(seatCount, colNo) of arrangement"
       :key="colNo"
@@ -44,6 +49,11 @@ const props = defineProps({
     type: Array as PropType<SeatOccupant[]>,
     default: () => [],
   },
+
+  tileSize: {
+    type: Number,
+    default: () => 20,
+  },
 })
 
 const indexedOccupants = computed(() => {
@@ -63,10 +73,8 @@ const indexedOccupants = computed(() => {
 
 <style scoped lang="scss">
 .seat {
-  $size: 10px;
-
-  width: $size;
-  height: $size;
+  width: var(--tile-size);
+  height: var(--tile-size);
 
   background-color: $grey;
 
