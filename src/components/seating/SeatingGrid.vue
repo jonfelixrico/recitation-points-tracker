@@ -18,7 +18,7 @@
         :data-row-no="rowNo"
         :data-col-no="colNo"
       >
-        <slot name="seat" :rowNo="rowNo" :colNo="colNo">
+        <slot :rowNo="rowNo" :colNo="colNo">
           <div class="bg-grey" />
         </slot>
       </div>
