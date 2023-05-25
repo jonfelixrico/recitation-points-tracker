@@ -6,13 +6,16 @@
       No students
     </div>
     <q-scroll-area class="col">
-      <!-- TODO add seating grid component -->
+      <div class="flex flex-center grid-container">
+        <SeatingGrid :columns="columns" />
+      </div>
     </q-scroll-area>
   </div>
 </template>
 
 <script setup lang="ts">
 import { PropType } from 'vue'
+import SeatingGrid from 'components/seating/SeatingGrid.vue'
 
 defineProps({
   columns: {
@@ -25,5 +28,10 @@ defineProps({
 <style lang="scss" scoped>
 .side-panel {
   width: 200px;
+}
+
+.grid-container {
+  width: 100%;
+  height: 500px;
 }
 </style>
