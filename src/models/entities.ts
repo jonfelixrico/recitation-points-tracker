@@ -1,9 +1,21 @@
 export interface ClassEntity {
   id: string
   name: string
-  seatColumns: number
-  seatRows: number
   tags: string[]
+  seatingArrangement: SeatingArrangement | null
+}
+
+/**
+ * Index 0 is for the column
+ * Index 1 is for the seat in the row
+ */
+type SeatCoordinates = [number, number]
+
+export interface SeatingArrangement {
+  columns: number[]
+  occupants: {
+    [occupantId: string]: SeatCoordinates
+  }
 }
 
 export interface StudentEntity {
