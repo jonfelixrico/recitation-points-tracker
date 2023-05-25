@@ -41,31 +41,36 @@ import { defineComponent, ref, onBeforeMount } from 'vue'
 import { useRouter } from 'vue-router'
 
 function useCreateClassDialog() {
-  const $q = useQuasar()
+  const { dialog, loading } = useQuasar()
   const { createClass } = useClassesAPI()
   const router = useRouter()
 
   return {
     async showDialog() {
-      $q.dialog({
+      dialog({
         // TODO use the one under create-class
         component: CreateClassDialog,
       }).onOk(async ({ name, seatArrangement }: CreatedClass) => {
-        const { id } = await createClass({
-          name,
-          tags: [],
-          seatingArrangement: {
-            columns: seatArrangement,
-            occupants: {},
-          },
-        })
+        loading.show()
+        try {
+          const { id } = await createClass({
+            name,
+            tags: [],
+            seatingArrangement: {
+              columns: seatArrangement,
+              occupants: {},
+            },
+          })
 
-        await router.push({
-          name: 'classDetails',
-          params: {
-            classId: id,
-          },
-        })
+          await router.push({
+            name: 'classDetails',
+            params: {
+              classId: id,
+            },
+          })
+        } finally {
+          loading.hide()
+        }
       })
     },
   }
