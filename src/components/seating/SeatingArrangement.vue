@@ -4,12 +4,12 @@
       <div
         v-if="!indexedOccupants[colNo]?.[rowNo]"
         data-empty
-        class="bg-grey"
+        class="bg-grey fit"
       />
 
       <div
         v-else
-        class="bg-green"
+        class="bg-green fit"
         :data-occupant-id="indexedOccupants[colNo][rowNo].id"
         data-occupied
       />
