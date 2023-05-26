@@ -1,12 +1,7 @@
 <template>
-  <q-dialog ref="dialogRef" @hide="onDialogHide">
+  <q-dialog ref="dialogRef" @hide="onDialogHide" maximized>
     <q-card class="q-dialog-plugin">
-      <!--
-        ...content
-        ... use q-card-section for it?
-      -->
-
-      <!-- buttons example -->
+      <q-card-section class="text-h5"> Edit Seat Plan </q-card-section>
       <q-card-actions align="right">
         <q-btn color="primary" label="OK" @click="onDialogOK" />
         <q-btn color="primary" label="Cancel" v-close-popup />
@@ -17,9 +12,20 @@
 
 <script setup lang="ts">
 import { useDialogPluginComponent } from 'quasar'
+import { StudentEntity } from 'src/models/entities'
+import { SeatingArrangement } from 'src/models/entities'
+import { PropType } from 'vue'
 
-const props = defineProps({
-  // ...your custom props
+defineProps({
+  modelValue: {
+    required: true,
+    type: Object as PropType<SeatingArrangement>,
+  },
+
+  students: {
+    required: true,
+    type: Array as PropType<StudentEntity[]>,
+  },
 })
 
 defineEmits([
