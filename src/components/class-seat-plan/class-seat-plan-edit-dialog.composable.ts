@@ -14,7 +14,8 @@ export function useClassSeatPlanEdit() {
         component: ClassSeatPlanEditDialog,
         componentProps: {
           students,
-          seatingArrangement,
+          columns: seatingArrangement.columns,
+          occupants: seatingArrangement.occupants,
         },
       })
     },

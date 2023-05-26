@@ -17,8 +17,12 @@
           </div>
         </div>
 
-        <div class="col bg-grey-2">
-          <!-- TODO add visualizer -->
+        <div class="col bg-grey-2 flex flex-center">
+          <SeatPlanVisualizer
+            :columns="columns"
+            :occupants="occupants"
+            :students="students"
+          />
         </div>
       </div>
     </div>
@@ -30,11 +34,17 @@ import { useDialogPluginComponent } from 'quasar'
 import { StudentEntity } from 'src/models/entities'
 import { SeatingArrangement } from 'src/models/entities'
 import { PropType } from 'vue'
+import SeatPlanVisualizer from './SeatPlanVisualizer.vue'
 
 defineProps({
-  modelValue: {
+  columns: {
     required: true,
-    type: Object as PropType<SeatingArrangement>,
+    type: Object as PropType<SeatingArrangement['columns']>,
+  },
+
+  occupants: {
+    required: true,
+    type: Object as PropType<SeatingArrangement['occupants']>,
   },
 
   students: {

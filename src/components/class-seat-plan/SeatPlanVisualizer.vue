@@ -1,16 +1,21 @@
 <template>
-  <SeatingGrid :columns="modelValue" />
+  <SeatingGrid :columns="columns" />
 </template>
 
 <script setup lang="ts">
-import SeatingGrid from 'component/seating/SeatingGrid.vue'
+import SeatingGrid from 'components/seating/SeatingGrid.vue'
 import { SeatingArrangement, StudentEntity } from 'src/models/entities'
 import { PropType } from 'vue'
 
 defineProps({
-  modelValue: {
+  columns: {
     required: true,
-    type: Object as PropType<SeatingArrangement>,
+    type: Object as PropType<SeatingArrangement['columns']>,
+  },
+
+  occupants: {
+    required: true,
+    type: Object as PropType<SeatingArrangement['occupants']>,
   },
 
   students: {
