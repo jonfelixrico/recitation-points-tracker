@@ -1,13 +1,22 @@
 <template>
-  <SeatingGrid :columns="columns" :tile-size="50" />
+  <SeatingGrid :columns="columns" :tile-size="50">
+    <template v-slot="{ colNo, rowNo }">
+      <div v-if="inverseOccupantMap[colNo][rowNo]" class="bg-green fit">
+        <!-- TODO do something -->
+      </div>
+
+      <div v-else class="fit bg-grey" />
+    </template>
+  </SeatingGrid>
 </template>
 
 <script setup lang="ts">
 import SeatingGrid from 'components/seating/SeatingGrid.vue'
+import { set } from 'lodash'
 import { SeatingArrangement, StudentEntity } from 'src/models/entities'
-import { PropType } from 'vue'
+import { PropType, computed } from 'vue'
 
-defineProps({
+const props = defineProps({
   columns: {
     required: true,
     type: Object as PropType<SeatingArrangement['columns']>,
@@ -22,5 +31,14 @@ defineProps({
     required: true,
     type: Array as PropType<StudentEntity[]>,
   },
+})
+
+const inverseOccupantMap = computed(() => {
+  const map: Record<number, Record<number, string>> = {}
+  for (const [studentId, [colNo, rowNo]] of Object.entries(props.occupants)) {
+    set(map, [colNo, rowNo], studentId)
+  }
+
+  return map
 })
 </script>
