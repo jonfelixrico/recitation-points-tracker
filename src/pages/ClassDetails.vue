@@ -35,9 +35,15 @@
         </q-card>
 
         <q-card>
-          <q-card-section class="text-h5">
+          <q-card-section class="row justify-between">
             <!-- TODO i18nize -->
-            Seat Plan
+            <div class="text-h5">Seat Plan</div>
+            <q-btn color="primary" unelevated no-caps>
+              <div class="row q-gutter-x-sm items-center">
+                <q-icon name="edit" />
+                <div>Edit seat plan</div>
+              </div>
+            </q-btn>
           </q-card-section>
 
           <q-separator />
