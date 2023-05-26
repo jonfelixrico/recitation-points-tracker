@@ -1,14 +1,17 @@
 <template>
   <SeatingGrid :columns="columns" :tile-size="50">
-    <template v-slot="{ colIdx, rowIdx }">
+    <template v-slot="{ colIdx, rowIdx, seatIdx }">
       <div
         v-if="inverseOccupantMap[colIdx]?.[rowIdx]"
-        class="bg-green fit cursor-pointer"
+        class="bg-green fit cursor-pointer flex flex-center"
         @dblclick="emit('remove', inverseOccupantMap[colIdx][rowIdx].id)"
-      />
+      >
+        <div>{{ seatIdx + 1 }}</div>
+      </div>
 
       <SeatPlanVisualizerEmptyTile
         v-else
+        :seatNo="seatIdx + 1"
         @drop="(id) => assignSeat(id, colIdx, rowIdx)"
       />
     </template>

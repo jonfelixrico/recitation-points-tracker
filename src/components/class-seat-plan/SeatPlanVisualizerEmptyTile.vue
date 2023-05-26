@@ -1,15 +1,24 @@
 <template>
   <div
-    class="fit tile"
+    class="fit tile flex flex-center"
     :class="{ hovered: isHovered }"
     @drop="emitDrop"
     @dragover.prevent="isHovered = true"
     @dragleave="isHovered = false"
-  />
+  >
+    <div>{{ seatNo }}</div>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
+
+defineProps({
+  seatNo: {
+    type: Number,
+    required: true,
+  },
+})
 
 const emit = defineEmits<{
   (e: 'drop', id: string): void
