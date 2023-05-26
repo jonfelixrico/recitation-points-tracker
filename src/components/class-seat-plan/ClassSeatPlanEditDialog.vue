@@ -1,12 +1,14 @@
 <template>
   <q-dialog ref="dialogRef" @hide="onDialogHide" maximized>
-    <q-card class="q-dialog-plugin">
-      <q-card-section class="text-h5"> Edit Seat Plan </q-card-section>
-      <q-card-actions align="right">
-        <q-btn color="primary" label="OK" @click="onDialogOK" />
-        <q-btn color="primary" label="Cancel" v-close-popup />
-      </q-card-actions>
-    </q-card>
+    <div class="bg-white fit column">
+      <q-bar class="justify-between bg-primary text-white">
+        <div>Edit Seat Plan</div>
+        <q-btn icon="close" flat round dense v-close-popup />
+      </q-bar>
+      <div class="col">
+        <!-- TODO add content -->
+      </div>
+    </div>
   </q-dialog>
 </template>
 
