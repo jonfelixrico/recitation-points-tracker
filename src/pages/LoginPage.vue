@@ -7,16 +7,24 @@
             :label="t('session.loginForm.username')"
             v-model="credentials.username"
             outlined
+            data-cy="username"
           />
           <q-input
             :label="t('session.loginForm.password')"
             type="password"
             v-model="credentials.password"
             outlined
+            data-cy="password"
           />
-          <q-btn unelevated type="submit" color="primary" no-caps>{{
-            t('session.loginForm.buttonLabel')
-          }}</q-btn>
+          <q-btn
+            unelevated
+            type="submit"
+            color="primary"
+            no-caps
+            data-cy="submit"
+          >
+            {{ t('session.loginForm.buttonLabel') }}
+          </q-btn>
         </q-card-section>
       </q-card>
     </q-form>
