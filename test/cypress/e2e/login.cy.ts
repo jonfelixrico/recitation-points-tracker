@@ -1,6 +1,7 @@
 describe('login', () => {
   it('should log in', () => {
     cy.visit('/')
+    // TODO use a proper way to store credentials
     cy.dataCy('username').type('user1@jrico.dev')
     cy.dataCy('password').type('p@ssw0rd')
     cy.dataCy('submit')
