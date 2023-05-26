@@ -1,8 +1,8 @@
 <template>
   <SeatingGrid :columns="arrangement" :tile-size="tileSize">
-    <template v-slot="{ colNo, rowNo }">
+    <template v-slot="{ colIdx, rowIdx }">
       <div
-        v-if="!indexedOccupants[colNo]?.[rowNo]"
+        v-if="!indexedOccupants[colIdx]?.[rowIdx]"
         data-empty
         class="bg-grey fit"
       />
@@ -10,7 +10,7 @@
       <div
         v-else
         class="bg-green fit"
-        :data-occupant-id="indexedOccupants[colNo][rowNo].id"
+        :data-occupant-id="indexedOccupants[colIdx][rowIdx].id"
         data-occupied
       />
     </template>
