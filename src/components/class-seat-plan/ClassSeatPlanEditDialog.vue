@@ -13,6 +13,7 @@
           <SeatPlanStudentList
             :students="students"
             :seats-occupied="occupantsModel"
+            @remove="removeStudentSeat"
           />
         </div>
 

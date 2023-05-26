@@ -42,7 +42,14 @@
           </div>
         </q-item-section>
         <q-item-section side>
-          <q-btn no-caps color="negative" dense unelevated size="sm">
+          <q-btn
+            no-caps
+            color="negative"
+            dense
+            unelevated
+            size="sm"
+            @click="emit('remove', student.id)"
+          >
             Remove seat
           </q-btn>
         </q-item-section>
@@ -67,6 +74,10 @@ defineProps({
     type: Object as PropType<SeatingArrangement['occupants']>,
   },
 })
+
+const emit = defineEmits<{
+  (e: 'remove', id: string): void
+}>()
 
 function setDragData(event: DragEvent, id: string) {
   if (!event.dataTransfer) {
