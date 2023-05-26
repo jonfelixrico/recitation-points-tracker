@@ -11,4 +11,12 @@ describe('login', () => {
         })
       })
   })
+
+  it('should prevent unauthenticated access', () => {
+    cy.visit('/classes').then(() => {
+      cy.location().should((location) => {
+        expect(location.pathname).contain('login')
+      })
+    })
+  })
 })
