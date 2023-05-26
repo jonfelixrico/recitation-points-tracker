@@ -23,7 +23,7 @@
         <slot
           :rowIdx="rowIdx"
           :colIdx="colIdx"
-          :seatIdx="seatCountCache[colIdx] + rowIdx"
+          :seatIdx="beginningCountPerIndex[colIdx] + rowIdx"
         >
           <div class="bg-grey fit" />
         </slot>
@@ -47,11 +47,10 @@ const props = defineProps({
   },
 })
 
-const seatCountCache = computed(() => {
-  return props.columns.reduce((acc: number[], val, index) => {
-    const prevColumnVal = index === 0 ? 0 : acc[index - 1]
-    acc.push(prevColumnVal + val)
-    return acc
+const beginningCountPerIndex = computed(() => {
+  return props.columns.reduce((cache: number[], _, index) => {
+    cache.push(props.columns.slice(0, index).reduce((acc, val) => acc + val, 0))
+    return cache
   }, [])
 })
 </script>

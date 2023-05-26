@@ -96,17 +96,16 @@ function setDragData(event: DragEvent, id: string) {
 
 const { t } = useI18n()
 
-const seatCountCache = computed(() => {
-  return props.columns.reduce((acc: number[], val, index) => {
-    const prevColumnVal = index === 0 ? 0 : acc[index - 1]
-    acc.push(prevColumnVal + val)
-    return acc
+const beginningCountPerIndex = computed(() => {
+  return props.columns.reduce((cache: number[], _, index) => {
+    cache.push(props.columns.slice(0, index).reduce((acc, val) => acc + val, 0))
+    return cache
   }, [])
 })
 
 const seatIdxMap = computed(() => {
   return mapValues(props.seatsOccupied, ([colIdx, rowIdx]) => {
-    return seatCountCache.value[colIdx] + rowIdx
+    return beginningCountPerIndex.value[colIdx] + rowIdx
   })
 })
 </script>
