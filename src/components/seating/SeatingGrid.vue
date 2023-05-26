@@ -12,6 +12,12 @@
       class="column q-gutter-y-xs"
       data-cy="column"
     >
+      <!--
+        SeatingGridColumn only existed because we want to cache the value of the
+        accumulated seat count.
+
+        It would be very expensive to do the colums.slice.reduce + colSeatIdx.
+      -->
       <SeatingGridColumn
         :seat-count="seatCount"
         :accumulator="
