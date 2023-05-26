@@ -20,6 +20,12 @@ import { SeatingArrangement, StudentEntity } from 'src/models/entities'
 import { PropType, computed } from 'vue'
 import SeatPlanVisualizerEmptyTile from './SeatPlanVisualizerEmptyTile.vue'
 
+interface AssignPayload {
+  colNo: number
+  rowNo: number
+  id: string
+}
+
 const props = defineProps({
   columns: {
     required: true,
@@ -37,6 +43,10 @@ const props = defineProps({
   },
 })
 
+const emit = defineEmits<{
+  (e: 'assign', value: AssignPayload): void
+}>()
+
 const inverseOccupantMap = computed(() => {
   const map: Record<number, Record<number, string>> = {}
   for (const [studentId, [colNo, rowNo]] of Object.entries(props.occupants)) {
@@ -47,6 +57,10 @@ const inverseOccupantMap = computed(() => {
 })
 
 function assignSeat(id: string, colNo: number, rowNo: number) {
-  console.log(id, colNo, rowNo)
+  emit('assign', {
+    colNo,
+    rowNo,
+    id,
+  })
 }
 </script>
