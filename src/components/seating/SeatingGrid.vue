@@ -12,39 +12,30 @@
       class="column q-gutter-y-xs"
       data-cy="column"
     >
-      <!--
-        SeatingGridColumn only existed because we want to cache the value of the
-        accumulated seat count.
-
-        It would be very expensive to do the colums.slice.reduce + colSeatIdx.
-      -->
-      <SeatingGridColumn
-        :seat-count="seatCount"
-        :accumulator="
-          columns.slice(0, colIdx + 1).reduce((acc, val) => acc + val)
-        "
-        v-slot="{ rowIdx: rowNo, seatNo }"
+      <div
+        v-for="(_, rowIdx) of seatCount"
+        :key="rowIdx"
+        data-cy="seat"
+        :data-row-idx="rowIdx"
+        :data-col-idx="colIdx"
+        class="tile"
       >
-        <div
-          data-cy="seat"
-          :data-row-idx="rowNo"
-          :data-col-idx="colIdx"
-          class="tile"
+        <slot
+          :rowIdx="rowIdx"
+          :colIdx="colIdx"
+          :seatIdx="seatCountCache[colIdx] + rowIdx"
         >
-          <slot :rowIdx="rowNo" :colIdx="colIdx" :seatIdx="seatNo">
-            <div class="bg-grey fit" />
-          </slot>
-        </div>
-      </SeatingGridColumn>
+          <div class="bg-grey fit" />
+        </slot>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { PropType } from 'vue'
-import SeatingGridColumn from './SeatingGridColumn.vue'
+import { PropType, computed } from 'vue'
 
-defineProps({
+const props = defineProps({
   columns: {
     required: true,
     type: Array as PropType<number[]>,
@@ -54,6 +45,14 @@ defineProps({
     type: Number,
     default: () => 20,
   },
+})
+
+const seatCountCache = computed(() => {
+  return props.columns.reduce((acc: number[], val, index) => {
+    const prevColumnVal = index === 0 ? 0 : acc[index - 1]
+    acc.push(prevColumnVal + val)
+    return acc
+  }, [])
 })
 </script>
 
