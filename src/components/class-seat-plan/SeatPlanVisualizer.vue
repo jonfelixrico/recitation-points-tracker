@@ -3,7 +3,7 @@
     <template v-slot="{ colNo, rowNo }">
       <div
         v-if="inverseOccupantMap[colNo]?.[rowNo]"
-        class="bg-green fit"
+        class="bg-green fit cursor-pointer"
         @dblclick="emit('remove', inverseOccupantMap[colNo][rowNo].id)"
       />
 
