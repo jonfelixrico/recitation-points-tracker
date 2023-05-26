@@ -38,7 +38,7 @@
           </div>
           <div class="text-caption">
             <!-- TODO specify which seat -->
-            Seat #
+            Seat #{{ seatIdxMap[student.id] + 1 }}
           </div>
         </q-item-section>
         <q-item-section side>
@@ -59,11 +59,12 @@
 </template>
 
 <script setup lang="ts">
+import { mapValues } from 'lodash'
 import { SeatingArrangement, StudentEntity } from 'src/models/entities'
-import { PropType } from 'vue'
+import { PropType, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-defineProps({
+const props = defineProps({
   students: {
     required: true,
     type: Array as PropType<StudentEntity[]>,
@@ -94,4 +95,18 @@ function setDragData(event: DragEvent, id: string) {
 }
 
 const { t } = useI18n()
+
+const seatCountCache = computed(() => {
+  return props.columns.reduce((acc: number[], val, index) => {
+    const prevColumnVal = index === 0 ? 0 : acc[index - 1]
+    acc.push(prevColumnVal + val)
+    return acc
+  }, [])
+})
+
+const seatIdxMap = computed(() => {
+  return mapValues(props.seatsOccupied, ([colIdx, rowIdx]) => {
+    return seatCountCache.value[colIdx] + rowIdx
+  })
+})
 </script>
