@@ -1,9 +1,11 @@
 <template>
   <SeatingGrid :columns="columns" :tile-size="50">
     <template v-slot="{ colNo, rowNo }">
-      <div v-if="inverseOccupantMap[colNo]?.[rowNo]" class="bg-green fit">
-        <!-- TODO do something -->
-      </div>
+      <div
+        v-if="inverseOccupantMap[colNo]?.[rowNo]"
+        class="bg-green fit"
+        @dblclick="emit('remove', inverseOccupantMap[colNo][rowNo].id)"
+      />
 
       <SeatPlanVisualizerEmptyTile
         v-else
@@ -15,7 +17,7 @@
 
 <script setup lang="ts">
 import SeatingGrid from 'components/seating/SeatingGrid.vue'
-import { set } from 'lodash'
+import { keyBy, set } from 'lodash'
 import { SeatingArrangement, StudentEntity } from 'src/models/entities'
 import { PropType, computed } from 'vue'
 import SeatPlanVisualizerEmptyTile from './SeatPlanVisualizerEmptyTile.vue'
@@ -44,9 +46,14 @@ const emit = defineEmits<{
 }>()
 
 const inverseOccupantMap = computed(() => {
-  const map: Record<number, Record<number, string>> = {}
+  const indexedStudents = keyBy(props.students, ({ id }) => id)
+
+  const map: Record<number, Record<number, StudentEntity>> = {}
   for (const [studentId, [colNo, rowNo]] of Object.entries(props.occupants)) {
-    set(map, [colNo, rowNo], studentId)
+    const student = indexedStudents[studentId]
+    if (student) {
+      set(map, [colNo, rowNo], student)
+    }
   }
 
   return map
