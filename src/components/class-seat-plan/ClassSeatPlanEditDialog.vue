@@ -5,8 +5,21 @@
         <div>Edit Seat Plan</div>
         <q-btn icon="close" flat round dense v-close-popup />
       </q-bar>
-      <div class="col">
-        <!-- TODO add content -->
+      <div class="col row">
+        <div v-if="!students.length" class="students-drawer flex flex-center">
+          No Students
+        </div>
+        <div v-else class="students-drawer">
+          <div class="q-gutter-y-sm column">
+            <div v-for="student in students" :key="student.id">
+              {{ student }}
+            </div>
+          </div>
+        </div>
+
+        <div class="col bg-grey-2">
+          <!-- TODO add visualizer -->
+        </div>
       </div>
     </div>
   </q-dialog>
@@ -36,5 +49,11 @@ defineEmits([
   ...useDialogPluginComponent.emits,
 ])
 
-const { dialogRef, onDialogHide, onDialogOK } = useDialogPluginComponent()
+const { dialogRef, onDialogHide } = useDialogPluginComponent()
 </script>
+
+<style scoped lang="scss">
+.students-drawer {
+  width: 350px;
+}
+</style>
