@@ -5,30 +5,38 @@
       '--tile-size': `${tileSize}px`,
     }"
   >
+    <!-- colIdx is base 0 -->
     <div
-      v-for="(seatCount, colNo) of columns"
-      :key="colNo"
+      v-for="(seatCount, colIdx) of columns"
+      :key="colIdx"
       class="column q-gutter-y-xs"
       data-cy="column"
     >
-      <div
-        v-for="rowNo in seatCount"
-        :key="rowNo"
-        data-cy="seat"
-        :data-row-no="rowNo"
-        :data-col-no="colNo"
-        class="tile"
+      <SeatingGridColumn
+        :seat-count="seatCount"
+        :accumulator="
+          columns.slice(0, colIdx + 1).reduce((acc, val) => acc + val)
+        "
+        v-slot="{ rowIdx: rowNo, seatNo }"
       >
-        <slot :rowNo="rowNo" :colNo="colNo">
-          <div class="bg-grey fit" />
-        </slot>
-      </div>
+        <div
+          data-cy="seat"
+          :data-row-idx="rowNo"
+          :data-col-idx="colIdx"
+          class="tile"
+        >
+          <slot :rowIdx="rowNo" :colIdx="colIdx" :seatIdx="seatNo">
+            <div class="bg-grey fit" />
+          </slot>
+        </div>
+      </SeatingGridColumn>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { PropType } from 'vue'
+import SeatingGridColumn from './SeatingGridColumn.vue'
 
 defineProps({
   columns: {
