@@ -1,5 +1,10 @@
 <template>
-  <div v-for="student in students" :key="student.id" draggable="true">
+  <div
+    v-for="student in students"
+    :key="student.id"
+    draggable="true"
+    @dragstart="($event) => setDragData($event, student.id)"
+  >
     {{ student }}
   </div>
 </template>
@@ -14,4 +19,13 @@ defineProps({
     type: Array as PropType<StudentEntity[]>,
   },
 })
+
+function setDragData(event: DragEvent, id: string) {
+  if (!event.dataTransfer) {
+    // TODO warn log
+    return
+  }
+
+  event.dataTransfer.setData('text', id)
+}
 </script>

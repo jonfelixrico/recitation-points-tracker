@@ -5,7 +5,12 @@
         <!-- TODO do something -->
       </div>
 
-      <div v-else class="fit bg-grey" />
+      <div
+        v-else
+        class="fit bg-grey"
+        @dragover.prevent
+        @drop="($event) => assignSeat($event, colNo, rowNo)"
+      />
     </template>
   </SeatingGrid>
 </template>
@@ -41,4 +46,14 @@ const inverseOccupantMap = computed(() => {
 
   return map
 })
+
+function assignSeat(event: DragEvent, colNo: number, rowNo: number) {
+  const id = event.dataTransfer?.getData('text')
+  if (!id || typeof id !== 'string') {
+    // TODO add warn log
+    return
+  }
+
+  console.log(id, colNo, rowNo)
+}
 </script>
