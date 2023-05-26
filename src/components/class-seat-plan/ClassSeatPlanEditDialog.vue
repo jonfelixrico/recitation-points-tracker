@@ -10,9 +10,10 @@
           No Students
         </div>
         <div v-else class="students-drawer">
-          <div class="q-gutter-y-sm column">
-            <SeatPlanStudentList :students="students" />
-          </div>
+          <SeatPlanStudentList
+            :students="students"
+            :seats-occupied="occupantsModel"
+          />
         </div>
 
         <div class="col bg-grey-2 flex flex-center">
