@@ -19,12 +19,7 @@ import { set } from 'lodash'
 import { SeatingArrangement, StudentEntity } from 'src/models/entities'
 import { PropType, computed } from 'vue'
 import SeatPlanVisualizerEmptyTile from './SeatPlanVisualizerEmptyTile.vue'
-
-interface AssignPayload {
-  colNo: number
-  rowNo: number
-  id: string
-}
+import { AssignPayload } from './class-seat-plan-typings'
 
 const props = defineProps({
   columns: {
