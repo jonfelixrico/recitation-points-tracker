@@ -11,9 +11,7 @@
         </div>
         <div v-else class="students-drawer">
           <div class="q-gutter-y-sm column">
-            <div v-for="student in students" :key="student.id">
-              {{ student }}
-            </div>
+            <SeatPlanStudentList :students="students" />
           </div>
         </div>
 
@@ -35,6 +33,7 @@ import { StudentEntity } from 'src/models/entities'
 import { SeatingArrangement } from 'src/models/entities'
 import { PropType } from 'vue'
 import SeatPlanVisualizer from './SeatPlanVisualizer.vue'
+import SeatPlanStudentList from './SeatPlanStudentList.vue'
 
 defineProps({
   columns: {
