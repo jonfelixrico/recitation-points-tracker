@@ -1,7 +1,7 @@
 <template>
   <SeatingGrid :columns="columns" :tile-size="50">
     <template v-slot="{ colNo, rowNo }">
-      <div v-if="inverseOccupantMap[colNo][rowNo]" class="bg-green fit">
+      <div v-if="inverseOccupantMap[colNo]?.[rowNo]" class="bg-green fit">
         <!-- TODO do something -->
       </div>
 
