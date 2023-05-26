@@ -1,7 +1,7 @@
 <template>
   <div
-    class="fit bg-grey"
-    :class="{ 'bg-blue': isHovered }"
+    class="fit tile"
+    :class="{ hovered: isHovered }"
     @drop="emitDrop"
     @dragover.prevent="isHovered = true"
     @dragleave="isHovered = false"
@@ -22,7 +22,20 @@ function emitDrop(event: DragEvent) {
   }
 
   emit('drop', event.dataTransfer.getData('text'))
+  isHovered.value = false
 }
 
 const isHovered = ref(false)
 </script>
+
+<style lang="scss">
+.tile {
+  background-color: $grey;
+
+  &.hovered {
+    background-color: $red;
+  }
+
+  transition: background-color 0.15s;
+}
+</style>
