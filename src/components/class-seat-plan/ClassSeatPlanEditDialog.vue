@@ -21,6 +21,7 @@
             :occupants="occupantsModel"
             :students="students"
             @assign="assignStudentToSeat"
+            @remove="removeStudentSeat"
           />
         </div>
       </div>
@@ -68,6 +69,10 @@ watch(
 
 function assignStudentToSeat({ colNo, rowNo, id }: AssignPayload) {
   occupantsModel.value[id] = [colNo, rowNo]
+}
+
+function removeStudentSeat(id: string) {
+  delete occupantsModel.value[id]
 }
 
 defineEmits([

@@ -40,6 +40,7 @@ const props = defineProps({
 
 const emit = defineEmits<{
   (e: 'assign', value: AssignPayload): void
+  (e: 'remove', value: string): void
 }>()
 
 const inverseOccupantMap = computed(() => {
