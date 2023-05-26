@@ -18,8 +18,9 @@
         <div class="col bg-grey-2 flex flex-center">
           <SeatPlanVisualizer
             :columns="columns"
-            :occupants="occupants"
+            :occupants="occupantsModel"
             :students="students"
+            @assign="assignStudentToSeat"
           />
         </div>
       </div>
@@ -31,11 +32,13 @@
 import { useDialogPluginComponent } from 'quasar'
 import { StudentEntity } from 'src/models/entities'
 import { SeatingArrangement } from 'src/models/entities'
-import { PropType } from 'vue'
+import { PropType, ref, watch } from 'vue'
 import SeatPlanVisualizer from './SeatPlanVisualizer.vue'
 import SeatPlanStudentList from './SeatPlanStudentList.vue'
+import { cloneDeep } from 'lodash'
+import { AssignPayload } from './class-seat-plan-typings'
 
-defineProps({
+const props = defineProps({
   columns: {
     required: true,
     type: Object as PropType<SeatingArrangement['columns']>,
@@ -51,6 +54,21 @@ defineProps({
     type: Array as PropType<StudentEntity[]>,
   },
 })
+
+const occupantsModel = ref<SeatingArrangement['occupants']>({})
+watch(
+  props.occupants,
+  (val) => {
+    occupantsModel.value = cloneDeep(val)
+  },
+  {
+    immediate: true,
+  }
+)
+
+function assignStudentToSeat({ colNo, rowNo, id }: AssignPayload) {
+  occupantsModel.value[id] = [colNo, rowNo]
+}
 
 defineEmits([
   // REQUIRED; need to specify some events that your
