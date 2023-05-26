@@ -38,7 +38,7 @@
           <q-card-section class="row justify-between">
             <!-- TODO i18nize -->
             <div class="text-h5">Seat Plan</div>
-            <q-btn color="primary" unelevated no-caps>
+            <q-btn color="primary" unelevated no-caps @click="editSeatPlan">
               <div class="row q-gutter-x-sm items-center">
                 <q-icon name="edit" />
                 <div>Edit seat plan</div>
@@ -66,6 +66,7 @@ import AddStudentsDialog from 'src/components/class-details/AddStudentsDialog.vu
 import ClassSeatingArrangement from 'src/components/class-details/ClassSeatingArrangement.vue'
 import StudentList from 'src/components/class-details/StudentList.vue'
 import { DraftStudent } from 'src/components/class-details/draft-student.inteface'
+import { useClassSeatPlanEdit } from 'src/components/class-seat-plan/class-seat-plan-edit-dialog.composable'
 import { useClassesAPI } from 'src/composables/classes-api.composable'
 import { useStudentAPI } from 'src/composables/student-api.composable'
 import { ClassEntity, StudentEntity } from 'src/models/entities'
@@ -164,6 +165,8 @@ export default defineComponent({
 
     const { t } = useI18n()
 
+    const { openEditDialog } = useClassSeatPlanEdit()
+
     onMounted(async () => {
       loading.show()
       try {
@@ -183,6 +186,17 @@ export default defineComponent({
       showAddStudentsDialog: studentsList.showAddDialog,
       processStudentDelete: studentsList.processDelete,
       t,
+      editSeatPlan() {
+        if (!classData.value?.seatingArrangement || !studentsList.data.value) {
+          // TODO add logging
+          return
+        }
+
+        openEditDialog(
+          classData.value.seatingArrangement,
+          studentsList.data.value
+        )
+      },
     }
   },
 })
