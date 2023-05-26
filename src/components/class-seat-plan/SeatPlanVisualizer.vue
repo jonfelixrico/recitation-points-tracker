@@ -5,11 +5,9 @@
         <!-- TODO do something -->
       </div>
 
-      <div
+      <SeatPlanVisualizerEmptyTile
         v-else
-        class="fit bg-grey"
-        @dragover.prevent
-        @drop="($event) => assignSeat($event, colNo, rowNo)"
+        @drop="(id) => assignSeat(id, colNo, rowNo)"
       />
     </template>
   </SeatingGrid>
@@ -20,6 +18,7 @@ import SeatingGrid from 'components/seating/SeatingGrid.vue'
 import { set } from 'lodash'
 import { SeatingArrangement, StudentEntity } from 'src/models/entities'
 import { PropType, computed } from 'vue'
+import SeatPlanVisualizerEmptyTile from './SeatPlanVisualizerEmptyTile.vue'
 
 const props = defineProps({
   columns: {
@@ -47,13 +46,7 @@ const inverseOccupantMap = computed(() => {
   return map
 })
 
-function assignSeat(event: DragEvent, colNo: number, rowNo: number) {
-  const id = event.dataTransfer?.getData('text')
-  if (!id || typeof id !== 'string') {
-    // TODO add warn log
-    return
-  }
-
+function assignSeat(id: string, colNo: number, rowNo: number) {
   console.log(id, colNo, rowNo)
 }
 </script>
