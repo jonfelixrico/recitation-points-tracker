@@ -1,5 +1,5 @@
 <template>
-  <SeatingGrid :columns="columns" />
+  <SeatingGrid :columns="columns" :tile-size="50" />
 </template>
 
 <script setup lang="ts">
