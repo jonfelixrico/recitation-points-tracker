@@ -73,6 +73,11 @@ defineProps({
     required: true,
     type: Object as PropType<SeatingArrangement['occupants']>,
   },
+
+  columns: {
+    required: true,
+    type: Object as PropType<SeatingArrangement['columns']>,
+  },
 })
 
 const emit = defineEmits<{
