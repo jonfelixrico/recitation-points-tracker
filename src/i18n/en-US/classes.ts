@@ -55,4 +55,9 @@ export default {
   notifs: {
     studentDeleteSuccess: 'Student {name} has been removed',
   },
+
+  noSeat: 'No seat yet',
+  seatNo: 'Seat no. {seatNo}',
+  removeSeat: 'Remove seat',
+  editSeatPlan: 'Edit seat plan',
 }
