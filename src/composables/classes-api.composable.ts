@@ -51,16 +51,18 @@ export function useClassesAPI() {
       return await setClass(nanoid(), input)
     },
 
-    async setSeatingArrangement(
+    async setSeatOccupants(
       id: string,
-      arrangement: SeatingArrangement
+      occupants: SeatingArrangement['occupants']
     ): Promise<ClassEntity> {
       const data = await getClass(id)
       if (!data) {
         throw new Error('Class not found')
+      } else if (!data.seatingArrangement) {
+        throw new Error('No arrangement yet')
       }
 
-      data.seatingArrangement = arrangement
+      data.seatingArrangement.occupants = occupants
       return await setClass(id, data)
     },
   }
