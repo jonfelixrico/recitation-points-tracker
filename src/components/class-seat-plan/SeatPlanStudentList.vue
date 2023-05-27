@@ -7,40 +7,19 @@
         @dragstart="($event) => setDragData($event, student.id)"
         class="cursor-grab"
       >
-        <q-item>
-          <q-item-section>
-            <div class="text-weight-bold">
-              {{
-                t('common.nameFormat', {
-                  firstName: student.firstName,
-                  lastName: student.lastName,
-                })
-              }}
-            </div>
-            <div class="text-caption">{{ t('classes.noSeat') }}</div>
-          </q-item-section>
-
-          <q-item-section side>
+        <SeatPlanStudentListItemLayout :student="student">
+          <template #side>
             <q-icon name="drag_handle" />
-          </q-item-section>
-        </q-item>
+          </template>
+        </SeatPlanStudentListItemLayout>
       </div>
 
-      <q-item v-else>
-        <q-item-section>
-          <div class="text-weight-bold">
-            {{
-              t('common.nameFormat', {
-                firstName: student.firstName,
-                lastName: student.lastName,
-              })
-            }}
-          </div>
-          <div class="text-caption">
-            {{ t('classes.seatNo', { seatNo: seatIdxMap[student.id] + 1 }) }}
-          </div>
-        </q-item-section>
-        <q-item-section side>
+      <SeatPlanStudentListItemLayout
+        v-else
+        :student="student"
+        :seat-no="seatIdxMap[student.id] + 1"
+      >
+        <template #side>
           <q-btn
             no-caps
             color="negative"
@@ -51,8 +30,8 @@
           >
             {{ t('classes.removeSeat') }}
           </q-btn>
-        </q-item-section>
-      </q-item>
+        </template>
+      </SeatPlanStudentListItemLayout>
     </template>
   </div>
 </template>
@@ -63,6 +42,7 @@ import { SeatingArrangement, StudentEntity } from 'src/models/entities'
 import { computeStartingSeatIndexPerColumn } from 'src/utils/seating-utils'
 import { PropType, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import SeatPlanStudentListItemLayout from './SeatPlanStudentListItemLayout.vue'
 
 const props = defineProps({
   students: {
