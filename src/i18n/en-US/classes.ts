@@ -59,7 +59,7 @@ export default {
 
   noSeat: 'No seat yet',
   seatNo: 'Seat no. {seatNo}',
-  removeSeat: 'Remove seat',
+  removeSeat: 'Remove Seat',
   editSeatPlan: 'Edit seat plan',
   seatPlan: 'Seat plan',
 }
