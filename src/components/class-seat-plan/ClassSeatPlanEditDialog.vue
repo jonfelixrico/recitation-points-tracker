@@ -28,6 +28,7 @@
               class="full-width"
               unelevated
               no-caps
+              @click="emitChanges"
             >
               {{ t('classes.dialogs.editSeatPlan.save') }}
             </q-btn>
@@ -112,8 +113,13 @@ function removeStudentSeat(id: string) {
 
 defineEmits([...useDialogPluginComponent.emits])
 
-const { dialogRef, onDialogHide } = useDialogPluginComponent()
+const { dialogRef, onDialogHide, onDialogOK } = useDialogPluginComponent()
 const { t } = useI18n()
+
+function emitChanges() {
+  // TODO add confirmation dialog
+  onDialogOK(occupantsModel.value)
+}
 </script>
 
 <style scoped lang="scss">
