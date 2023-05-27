@@ -9,13 +9,21 @@
         <div v-if="!students.length" class="students-drawer flex flex-center">
           {{ t('classes.emptyStudents') }}
         </div>
-        <div v-else class="students-drawer">
-          <SeatPlanStudentList
-            :students="students"
-            :seats-occupied="occupantsModel"
-            :columns="columns"
-            @remove="removeStudentSeat"
-          />
+        <div v-else class="students-drawer column">
+          <q-scroll-area class="col">
+            <SeatPlanStudentList
+              :students="students"
+              :seats-occupied="occupantsModel"
+              :columns="columns"
+              @remove="removeStudentSeat"
+            />
+          </q-scroll-area>
+
+          <div class="q-pa-sm">
+            <q-btn color="primary" class="full-width" unelevated no-caps>
+              {{ t('classes.dialogs.editSeatPlan.save') }}
+            </q-btn>
+          </div>
         </div>
 
         <div class="col bg-grey-2 flex flex-center">

@@ -44,6 +44,7 @@ export default {
 
     editSeatPlan: {
       title: 'Edit seat plan',
+      save: 'Save Changes',
     },
   },
 
