@@ -18,6 +18,8 @@ describe('SeatingArrangement', () => {
 
     cy.dataCy('seat').should('have.length', 44)
     cy.get('[data-empty]').should('have.length', 43)
-    cy.get('[data-col-no="5"][data-row-no="6"] [data-occupied]').should('exist')
+    cy.get('[data-col-idx="5"][data-row-idx="6"] [data-occupied]').should(
+      'exist'
+    )
   })
 })

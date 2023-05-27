@@ -41,6 +41,10 @@ export default {
         nameLabel: 'Name',
       },
     },
+
+    editSeatPlan: {
+      title: 'Edit seat plan',
+    },
   },
 
   addStudents: 'Add students',
@@ -51,4 +55,10 @@ export default {
   notifs: {
     studentDeleteSuccess: 'Student {name} has been removed',
   },
+
+  noSeat: 'No seat yet',
+  seatNo: 'Seat no. {seatNo}',
+  removeSeat: 'Remove seat',
+  editSeatPlan: 'Edit seat plan',
+  seatPlan: 'Seat plan',
 }
