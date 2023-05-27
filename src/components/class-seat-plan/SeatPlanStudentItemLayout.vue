@@ -21,7 +21,7 @@
       </div>
     </q-item-section>
 
-    <q-item-section side>
+    <q-item-section side v-if="!noSideSection">
       <slot name="side" />
     </q-item-section>
   </q-item>
@@ -41,6 +41,7 @@ defineProps({
   },
 
   seatNo: Number,
+  noSideSection: Boolean,
 })
 
 const { t } = useI18n()
