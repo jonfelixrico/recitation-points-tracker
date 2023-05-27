@@ -7,14 +7,14 @@
         @dragstart="($event) => setDragData($event, student.id)"
         class="cursor-grab"
       >
-        <SeatPlanStudentListItemLayout :student="student">
+        <SeatPlanStudentItemLayout :student="student">
           <template #side>
             <q-icon name="drag_handle" />
           </template>
-        </SeatPlanStudentListItemLayout>
+        </SeatPlanStudentItemLayout>
       </div>
 
-      <SeatPlanStudentListItemLayout
+      <SeatPlanStudentItemLayout
         v-else
         :student="student"
         :seat-no="seatIdxMap[student.id] + 1"
@@ -31,7 +31,7 @@
             {{ t('classes.removeSeat') }}
           </q-btn>
         </template>
-      </SeatPlanStudentListItemLayout>
+      </SeatPlanStudentItemLayout>
     </template>
   </div>
 </template>
@@ -42,7 +42,7 @@ import { SeatingArrangement, StudentEntity } from 'src/models/entities'
 import { computeStartingSeatIndexPerColumn } from 'src/utils/seating-utils'
 import { PropType, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import SeatPlanStudentListItemLayout from './SeatPlanStudentListItemLayout.vue'
+import SeatPlanStudentItemLayout from './SeatPlanStudentItemLayout.vue'
 
 const props = defineProps({
   students: {
