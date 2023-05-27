@@ -79,11 +79,7 @@ function removeStudentSeat(id: string) {
   delete occupantsModel.value[id]
 }
 
-defineEmits([
-  // REQUIRED; need to specify some events that your
-  // component will emit through useDialogPluginComponent()
-  ...useDialogPluginComponent.emits,
-])
+defineEmits([...useDialogPluginComponent.emits])
 
 const { dialogRef, onDialogHide } = useDialogPluginComponent()
 const { t } = useI18n()
