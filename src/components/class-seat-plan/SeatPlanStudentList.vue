@@ -17,7 +17,7 @@
                 })
               }}
             </div>
-            <div class="text-caption">No seat yet</div>
+            <div class="text-caption">{{ t('classes.noSeat') }}</div>
           </q-item-section>
 
           <q-item-section side>
@@ -49,7 +49,7 @@
             size="sm"
             @click="emit('remove', student.id)"
           >
-            {{ t('classes.noSeat') }}
+            {{ t('classes.removeSeat') }}
           </q-btn>
         </q-item-section>
       </q-item>
