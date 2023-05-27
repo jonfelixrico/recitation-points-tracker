@@ -8,6 +8,14 @@ export function useClassesAPI() {
   const { firestore } = useFirestore()
   const uid = useSessionUserId()
 
+  async function setClass(id: string, data: Omit<ClassEntity, 'id'>) {
+    await setDoc(doc(firestore, `users/${uid}/classes`, id), data)
+    return {
+      id,
+      ...data,
+    }
+  }
+
   return {
     async getClassList() {
       const docs = await getDocs(collection(firestore, `users/${uid}/classes`))
@@ -38,12 +46,9 @@ export function useClassesAPI() {
     },
 
     async createClass(input: Omit<ClassEntity, 'id'>): Promise<ClassEntity> {
-      const id = nanoid()
-      await setDoc(doc(firestore, `users/${uid}/classes`, id), input)
-      return {
-        id,
-        ...input,
-      }
+      return await setClass(nanoid(), input)
     },
+
+    updateClass: setClass,
   }
 }
