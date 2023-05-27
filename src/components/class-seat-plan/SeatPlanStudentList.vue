@@ -37,8 +37,7 @@
             }}
           </div>
           <div class="text-caption">
-            <!-- TODO specify which seat -->
-            Seat #{{ seatIdxMap[student.id] + 1 }}
+            {{ t('classes.seatNo', { seatNo: seatIdxMap[student.id] + 1 }) }}
           </div>
         </q-item-section>
         <q-item-section side>
@@ -50,7 +49,7 @@
             size="sm"
             @click="emit('remove', student.id)"
           >
-            Remove seat
+            {{ t('classes.noSeat') }}
           </q-btn>
         </q-item-section>
       </q-item>
