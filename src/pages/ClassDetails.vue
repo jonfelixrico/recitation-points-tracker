@@ -41,7 +41,7 @@
             <q-btn color="primary" unelevated no-caps @click="editSeatPlan">
               <div class="row q-gutter-x-sm items-center">
                 <q-icon name="edit" />
-                <div>Edit seat plan</div>
+                <div>{{ t('classes.editSeatPlan') }}</div>
               </div>
             </q-btn>
           </q-card-section>
