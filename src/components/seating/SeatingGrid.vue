@@ -33,7 +33,7 @@
 </template>
 
 <script setup lang="ts">
-import { computeStartingSeatCountPerColumn } from 'src/utils/seating-utils'
+import { computeStartingSeatIndexPerColumn } from 'src/utils/seating-utils'
 import { PropType, computed } from 'vue'
 
 const props = defineProps({
@@ -49,7 +49,7 @@ const props = defineProps({
 })
 
 const startingSeatCountPerColumn = computed(() =>
-  computeStartingSeatCountPerColumn(props.columns)
+  computeStartingSeatIndexPerColumn(props.columns)
 )
 </script>
 

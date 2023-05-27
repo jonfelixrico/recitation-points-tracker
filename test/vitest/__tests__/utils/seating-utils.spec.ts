@@ -1,9 +1,9 @@
-import { computeStartingSeatCountPerColumn } from 'src/utils/seating-utils'
+import { computeStartingSeatIndexPerColumn } from 'src/utils/seating-utils'
 import { expect, describe, it } from 'vitest'
 
 describe('starting seat count', () => {
   it('should provide correct starting seat count data per column', () => {
-    const startingPerColumn = computeStartingSeatCountPerColumn([5, 4, 3, 2])
+    const startingPerColumn = computeStartingSeatIndexPerColumn([5, 4, 3, 2])
 
     expect(startingPerColumn[0]).toBe(0)
     expect(startingPerColumn[1]).toBe(5)

@@ -1,23 +1,29 @@
 /**
- * Helper for computing the seat index.
+ * Helper for computing the "global seat index" by determining the "column seat index"
+ * of the first seat in the column.
  *
- * HOW TO USE:
- * Determine column index.
- * Determine row index within the column.
- * seat index will be seatCountPerColumn[columnIndex] + rowIndex
+ * Using the first "column seat index", you can compute the "global seat index" of the other
+ * seats in the same column.
+ *
+ * Global seat index = seat index relative to the ENTIRE seating arrangement
+ * Column seat index = seat index relative to the column a seat falls under
  *
  * @param columns
- * @returns Index in `columns` is directly mapped with the index in the return value.
+ * @returns
  */
-export function computeStartingSeatCountPerColumn(columns: number[]): number[] {
+export function computeStartingSeatIndexPerColumn(columns: number[]): number[] {
   const startingSeatCountPerColumn: number[] = []
 
   for (let index = 0; index < columns.length; index++) {
-    const totalSeatCountOfPreviousColumns = columns
-      .slice(0, index)
-      .reduce((acc, val) => acc + val, 0)
+    if (index === 0) {
+      startingSeatCountPerColumn.push(0)
+      continue
+    }
 
-    startingSeatCountPerColumn.push(totalSeatCountOfPreviousColumns)
+    const prevColStartingSeatCount = startingSeatCountPerColumn[index - 1]
+    const prevColSeatCount = columns[index - 1]
+
+    startingSeatCountPerColumn.push(prevColStartingSeatCount + prevColSeatCount)
   }
 
   return startingSeatCountPerColumn

@@ -61,7 +61,7 @@
 <script setup lang="ts">
 import { mapValues } from 'lodash'
 import { SeatingArrangement, StudentEntity } from 'src/models/entities'
-import { computeStartingSeatCountPerColumn } from 'src/utils/seating-utils'
+import { computeStartingSeatIndexPerColumn } from 'src/utils/seating-utils'
 import { PropType, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 
@@ -98,7 +98,7 @@ function setDragData(event: DragEvent, id: string) {
 const { t } = useI18n()
 
 const startingSeatCountPerColumn = computed(() =>
-  computeStartingSeatCountPerColumn(props.columns)
+  computeStartingSeatIndexPerColumn(props.columns)
 )
 
 const seatIdxMap = computed(() => {
