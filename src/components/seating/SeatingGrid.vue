@@ -23,7 +23,7 @@
         <slot
           :rowIdx="rowIdx"
           :colIdx="colIdx"
-          :seatIdx="beginningCountPerIndex[colIdx] + rowIdx"
+          :seatIdx="startingSeatCountPerColumn[colIdx] + rowIdx"
         >
           <div class="bg-grey fit" />
         </slot>
@@ -33,6 +33,7 @@
 </template>
 
 <script setup lang="ts">
+import { computeStartingSeatCountPerColumn } from 'src/utils/seating-utils'
 import { PropType, computed } from 'vue'
 
 const props = defineProps({
@@ -47,12 +48,9 @@ const props = defineProps({
   },
 })
 
-const beginningCountPerIndex = computed(() => {
-  return props.columns.reduce((cache: number[], _, index) => {
-    cache.push(props.columns.slice(0, index).reduce((acc, val) => acc + val, 0))
-    return cache
-  }, [])
-})
+const startingSeatCountPerColumn = computed(() =>
+  computeStartingSeatCountPerColumn(props.columns)
+)
 </script>
 
 <style scoped lang="scss">
