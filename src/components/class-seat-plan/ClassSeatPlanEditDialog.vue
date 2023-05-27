@@ -1,5 +1,11 @@
 <template>
-  <q-dialog ref="dialogRef" @hide="onDialogHide" maximized>
+  <q-dialog
+    ref="dialogRef"
+    @hide="onDialogHide"
+    maximized
+    transition-hide="slide-down"
+    transition-show="slide-up"
+  >
     <div class="bg-white fit column">
       <q-bar class="justify-between bg-primary text-white">
         <div>{{ t('classes.dialogs.editSeatPlan.title') }}</div>
