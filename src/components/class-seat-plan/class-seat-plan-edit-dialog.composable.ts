@@ -13,37 +13,43 @@ export function useClassSeatPlanEdit() {
   const { dialog, loading } = useQuasar()
   const { setSeatOccupants } = useClassesAPI()
 
-  async function uploadSeatChanges(id: string, occupants: Occupants) {
-    loading.show()
-    try {
-      await setSeatOccupants(id, occupants)
-      // TODO show some sort of notification
-    } catch (e) {
-      console.error(e)
-      // TODO show some sort of error
-    } finally {
-      loading.hide()
-    }
-  }
-
   return {
     openEditDialog(
       { seatingArrangement, id }: ClassEntity,
       students: StudentEntity[]
-    ) {
+    ): Promise<boolean> {
       if (!seatingArrangement) {
         throw new Error('No seating arrangement')
       }
 
-      return dialog({
-        component: ClassSeatPlanEditDialog,
-        componentProps: {
-          students,
-          columns: seatingArrangement.columns,
-          occupants: seatingArrangement.occupants,
-        },
-      }).onOk((data: Occupants) => {
-        uploadSeatChanges(id, data)
+      return new Promise(async (resolve) => {
+        dialog({
+          component: ClassSeatPlanEditDialog,
+          componentProps: {
+            students,
+            columns: seatingArrangement.columns,
+            occupants: seatingArrangement.occupants,
+          },
+        })
+          .onOk(async (data: Occupants) => {
+            loading.show()
+            try {
+              await setSeatOccupants(id, data)
+              // TODO show some sort of notification
+              resolve(true)
+              return
+            } catch (e) {
+              console.error(e)
+              // TODO show some sort of error
+              resolve(false)
+              return
+            } finally {
+              loading.hide()
+            }
+          })
+          .onCancel(() => {
+            resolve(false)
+          })
       })
     },
   }
