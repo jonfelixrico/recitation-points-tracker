@@ -2,7 +2,7 @@ export interface ClassEntity {
   id: string
   name: string
   tags: string[]
-  seatingArrangement: SeatingArrangement | null
+  seatingArrangement: SeatingArrangement
 }
 
 /**
