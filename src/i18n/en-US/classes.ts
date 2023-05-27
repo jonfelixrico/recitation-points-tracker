@@ -43,15 +43,15 @@ export default {
     },
 
     editSeatPlan: {
-      title: 'Edit seat plan',
+      title: 'Edit Seat Plan',
       save: 'Save Changes',
     },
   },
 
-  addStudents: 'Add students',
+  addStudents: 'Add Students',
   emptyStudents: 'No students to show',
 
-  studentList: 'Students',
+  studentList: 'Class List',
 
   notifs: {
     studentDeleteSuccess: 'Student {name} has been removed',
@@ -60,6 +60,6 @@ export default {
   noSeat: 'No seat yet',
   seatNo: 'Seat no. {seatNo}',
   removeSeat: 'Remove Seat',
-  editSeatPlan: 'Edit seat plan',
-  seatPlan: 'Seat plan',
+  editSeatPlan: 'Edit Seat Plan',
+  seatPlan: 'Seat Plan',
 }
