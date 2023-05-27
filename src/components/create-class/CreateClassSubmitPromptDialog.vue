@@ -46,7 +46,10 @@
           </div>
         </div>
         <div class="col row justify-center">
-          <SeatingArrangement :arrangement="modelValue.seatArrangement" />
+          <SeatingArrangement
+            :arrangement="modelValue.seatArrangement"
+            :tile-size="15"
+          />
         </div>
       </q-card-section>
 

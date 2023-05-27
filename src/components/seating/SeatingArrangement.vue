@@ -1,38 +1,26 @@
 <template>
-  <div class="row no-wrap q-gutter-x-xs">
-    <div
-      v-for="(seatCount, colNo) of arrangement"
-      :key="colNo"
-      class="column q-gutter-y-xs"
-      data-cy="column"
-    >
-      <template v-for="rowNo in seatCount" :key="rowNo">
-        <div
-          v-if="!indexedOccupants[colNo]?.[rowNo]"
-          data-cy="seat"
-          data-empty
-          class="seat"
-          :data-row-no="rowNo"
-          :data-col-no="colNo"
-        />
+  <SeatingGrid :columns="arrangement" :tile-size="tileSize">
+    <template v-slot="{ colNo, rowNo }">
+      <div
+        v-if="!indexedOccupants[colNo]?.[rowNo]"
+        data-empty
+        class="bg-grey fit"
+      />
 
-        <div
-          v-else
-          data-cy="seat"
-          class="seat occupied"
-          :data-occupant-id="indexedOccupants[colNo][rowNo].id"
-          data-occupied
-          :data-row-no="rowNo"
-          :data-col-no="colNo"
-        />
-      </template>
-    </div>
-  </div>
+      <div
+        v-else
+        class="bg-green fit"
+        :data-occupant-id="indexedOccupants[colNo][rowNo].id"
+        data-occupied
+      />
+    </template>
+  </SeatingGrid>
 </template>
 
 <script setup lang="ts">
 import { PropType, computed } from 'vue'
 import { SeatOccupant } from './seating-types'
+import SeatingGrid from './SeatingGrid.vue'
 
 const props = defineProps({
   arrangement: {
@@ -44,6 +32,8 @@ const props = defineProps({
     type: Array as PropType<SeatOccupant[]>,
     default: () => [],
   },
+
+  tileSize: Number,
 })
 
 const indexedOccupants = computed(() => {
@@ -60,18 +50,3 @@ const indexedOccupants = computed(() => {
   return map
 })
 </script>
-
-<style scoped lang="scss">
-.seat {
-  $size: 10px;
-
-  width: $size;
-  height: $size;
-
-  background-color: $grey;
-
-  &.occupied {
-    background-color: $green;
-  }
-}
-</style>
