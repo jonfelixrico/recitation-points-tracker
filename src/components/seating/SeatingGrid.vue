@@ -5,7 +5,6 @@
       '--tile-size': `${tileSize}px`,
     }"
   >
-    <!-- colIdx is base 0 -->
     <div
       v-for="(seatCount, colIdx) of columns"
       :key="colIdx"
