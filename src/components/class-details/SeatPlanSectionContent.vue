@@ -33,6 +33,7 @@
             :students="students"
             :columns="seatingArrangement.columns"
             :occupants="seatingArrangement.occupants"
+            read-only
           />
         </div>
       </q-scroll-area>
