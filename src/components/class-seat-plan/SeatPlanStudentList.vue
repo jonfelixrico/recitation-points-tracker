@@ -1,0 +1,88 @@
+<template>
+  <div class="column q-gutter-y-md">
+    <template v-for="student in students" :key="student.id">
+      <div
+        v-if="!seatsOccupied[student.id]"
+        draggable="true"
+        @dragstart="($event) => setDragData($event, student.id)"
+        class="cursor-grab"
+      >
+        <SeatPlanStudentItemLayout :student="student">
+          <template #side>
+            <q-icon name="drag_handle" />
+          </template>
+        </SeatPlanStudentItemLayout>
+      </div>
+
+      <SeatPlanStudentItemLayout
+        v-else
+        :student="student"
+        :seat-no="seatIdxMap[student.id] + 1"
+      >
+        <template #side>
+          <q-btn
+            no-caps
+            color="negative"
+            dense
+            unelevated
+            size="sm"
+            @click="emit('remove', student.id)"
+          >
+            {{ t('classes.removeSeat') }}
+          </q-btn>
+        </template>
+      </SeatPlanStudentItemLayout>
+    </template>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { mapValues } from 'lodash'
+import { SeatingArrangement, StudentEntity } from 'src/models/entities'
+import { computeStartingSeatIndexPerColumn } from 'src/utils/seating-utils'
+import { PropType, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+import SeatPlanStudentItemLayout from './SeatPlanStudentItemLayout.vue'
+
+const props = defineProps({
+  students: {
+    required: true,
+    type: Array as PropType<StudentEntity[]>,
+  },
+
+  seatsOccupied: {
+    required: true,
+    type: Object as PropType<SeatingArrangement['occupants']>,
+  },
+
+  columns: {
+    required: true,
+    type: Object as PropType<SeatingArrangement['columns']>,
+  },
+})
+
+const emit = defineEmits<{
+  (e: 'remove', id: string): void
+}>()
+
+function setDragData(event: DragEvent, id: string) {
+  if (!event.dataTransfer) {
+    // TODO warn log
+    return
+  }
+
+  event.dataTransfer.setData('text', id)
+}
+
+const { t } = useI18n()
+
+const startingSeatCountPerColumn = computed(() =>
+  computeStartingSeatIndexPerColumn(props.columns)
+)
+
+const seatIdxMap = computed(() => {
+  return mapValues(props.seatsOccupied, ([colIdx, rowIdx]) => {
+    return startingSeatCountPerColumn.value[colIdx] + rowIdx
+  })
+})
+</script>

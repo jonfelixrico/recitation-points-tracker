@@ -1,9 +1,10 @@
 <template>
   <q-page class="column page-width q-mx-auto">
     <div class="row justify-end q-pa-sm border-bottom">
-      <q-btn no-caps color="primary" unelevated @click="showCreateDialog"
-        >Add Class</q-btn
-      >
+      <q-btn no-caps color="primary" unelevated @click="showCreateDialog">
+        <!-- TODO i18nize this -->
+        Add Class
+      </q-btn>
     </div>
 
     <div class="col flex flex-center" v-if="isLoading">
@@ -24,6 +25,7 @@
     </div>
 
     <div v-else-if="!data.length" class="col flex flex-center">
+      <!-- TODO i18nize this -->
       No classes to show
     </div>
   </q-page>
@@ -31,30 +33,44 @@
 
 <script lang="ts">
 import { useQuasar } from 'quasar'
-import ClassCreationDialog from 'src/components/ClassCreationDialog.vue'
+import CreateClassDialog from 'src/components/create-class/CreateClassDialog.vue'
+import { CreatedClass } from 'src/components/create-class/create-class-typings'
 import { useClassesAPI } from 'src/composables/classes-api.composable'
 import { ClassEntity } from 'src/models/entities'
 import { defineComponent, ref, onBeforeMount } from 'vue'
 import { useRouter } from 'vue-router'
 
-function useClassCreationDialog() {
-  const $q = useQuasar()
+function useCreateClassDialog() {
+  const { dialog, loading } = useQuasar()
   const { createClass } = useClassesAPI()
   const router = useRouter()
 
   return {
     async showDialog() {
-      $q.dialog({
-        component: ClassCreationDialog,
-      }).onOk(async (data: Omit<ClassEntity, 'id'>) => {
-        const { id } = await createClass(data)
+      dialog({
+        // TODO use the one under create-class
+        component: CreateClassDialog,
+      }).onOk(async ({ name, seatArrangement }: CreatedClass) => {
+        loading.show()
+        try {
+          const { id } = await createClass({
+            name,
+            tags: [],
+            seatingArrangement: {
+              columns: seatArrangement,
+              occupants: {},
+            },
+          })
 
-        await router.push({
-          name: 'classDetails',
-          params: {
-            classId: id,
-          },
-        })
+          await router.push({
+            name: 'classDetails',
+            params: {
+              classId: id,
+            },
+          })
+        } finally {
+          loading.hide()
+        }
       })
     },
   }
@@ -85,7 +101,7 @@ function useClassList() {
 
 export default defineComponent({
   setup() {
-    const { showDialog: showCreateDialog } = useClassCreationDialog()
+    const { showDialog: showCreateDialog } = useCreateClassDialog()
 
     const router = useRouter()
 

@@ -1,9 +1,21 @@
 export interface ClassEntity {
   id: string
   name: string
-  seatColumns: number
-  seatRows: number
   tags: string[]
+  seatingArrangement: SeatingArrangement
+}
+
+/**
+ * Index 0 is for the column
+ * Index 1 is for the seat in the row
+ */
+type SeatCoordinates = [number, number]
+
+export interface SeatingArrangement {
+  columns: number[]
+  occupants: {
+    [occupantId: string]: SeatCoordinates
+  }
 }
 
 export interface StudentEntity {
@@ -11,10 +23,6 @@ export interface StudentEntity {
 
   firstName: string
   lastName: string
-
-  // TODO use a tighter typing here
-  seatColumn?: number
-  seatRow?: number
 }
 
 export interface RecitationEntity {

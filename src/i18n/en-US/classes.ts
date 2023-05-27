@@ -16,14 +16,50 @@ export default {
       message: 'Are you sure you want to remove {name} from the student list?',
       okLabel: "Yes, I'm sure",
     },
+
+    createClass: {
+      title: 'Create Class',
+      columns: 'Columns',
+
+      input: {
+        // TODO rmeove
+        rowsLabel: 'Rows',
+        // TODO remove
+        columnsLabel: 'Columns',
+
+        nameLabel: 'Name',
+        seatCountLabel: 'Seat count for column {colNo}',
+      },
+    },
+
+    createClassSubmitPrompt: {
+      title: 'Create Class',
+      message: 'Please confirm that the details are correct before submitting.',
+      columnCount: '{count} column | {count} columns',
+      seatCount: '{count} seat | {count} seats',
+      input: {
+        nameLabel: 'Name',
+      },
+    },
+
+    editSeatPlan: {
+      title: 'Edit Seat Plan',
+      save: 'Save Changes',
+    },
   },
 
-  addStudents: 'Add students',
+  addStudents: 'Add Students',
   emptyStudents: 'No students to show',
 
-  studentList: 'Students',
+  studentList: 'Class List',
 
   notifs: {
     studentDeleteSuccess: 'Student {name} has been removed',
   },
+
+  noSeat: 'No seat yet',
+  seatNo: 'Seat no. {seatNo}',
+  removeSeat: 'Remove Seat',
+  editSeatPlan: 'Edit Seat Plan',
+  seatPlan: 'Seat Plan',
 }

@@ -33,6 +33,26 @@
             />
           </q-card-section>
         </q-card>
+
+        <q-card>
+          <q-card-section class="row justify-between">
+            <div class="text-h5">{{ t('classes.seatPlan') }}</div>
+            <q-btn color="primary" unelevated no-caps @click="editSeatPlan">
+              <div class="row q-gutter-x-sm items-center">
+                <q-icon name="edit" />
+                <div>{{ t('classes.editSeatPlan') }}</div>
+              </div>
+            </q-btn>
+          </q-card-section>
+
+          <q-separator />
+
+          <SeatPlanSectionContent
+            class="seating-visualizer"
+            :seating-arrangement="classData.seatingArrangement"
+            :students="students"
+          />
+        </q-card>
       </div>
     </template>
   </q-page>
@@ -42,8 +62,10 @@
 import { orderBy } from 'lodash'
 import { useQuasar } from 'quasar'
 import AddStudentsDialog from 'src/components/class-details/AddStudentsDialog.vue'
+import SeatPlanSectionContent from 'src/components/class-details/SeatPlanSectionContent.vue'
 import StudentList from 'src/components/class-details/StudentList.vue'
 import { DraftStudent } from 'src/components/class-details/draft-student.inteface'
+import { useClassSeatPlanEdit } from 'src/components/class-seat-plan/class-seat-plan-edit-dialog.composable'
 import { useClassesAPI } from 'src/composables/classes-api.composable'
 import { useStudentAPI } from 'src/composables/student-api.composable'
 import { ClassEntity, StudentEntity } from 'src/models/entities'
@@ -118,7 +140,7 @@ function useStudentsList(classId: Ref<string>) {
 }
 
 export default defineComponent({
-  components: { StudentList },
+  components: { StudentList, SeatPlanSectionContent },
 
   async beforeRouteEnter(to) {
     const { getClass } = useClassesAPI()
@@ -142,10 +164,16 @@ export default defineComponent({
 
     const { t } = useI18n()
 
+    const { openEditDialog } = useClassSeatPlanEdit()
+
+    async function loadClassData() {
+      classData.value = await getClass(classId.value)
+    }
+
     onMounted(async () => {
       loading.show()
       try {
-        classData.value = await getClass(classId.value)
+        await loadClassData()
         await studentsList.load()
       } catch (e) {
         // TODO improve logging
@@ -161,7 +189,38 @@ export default defineComponent({
       showAddStudentsDialog: studentsList.showAddDialog,
       processStudentDelete: studentsList.processDelete,
       t,
+      async editSeatPlan() {
+        if (!classData.value?.seatingArrangement || !studentsList.data.value) {
+          // TODO add logging
+          return
+        }
+
+        const wereChangesUploaded = await openEditDialog(
+          classData.value,
+          studentsList.data.value
+        )
+
+        if (!wereChangesUploaded) {
+          return
+        }
+
+        loading.show()
+        try {
+          await loadClassData()
+        } catch (e) {
+          // TODO improve logging and add notif
+          console.error(e)
+        } finally {
+          loading.hide()
+        }
+      },
     }
   },
 })
 </script>
+
+<style lang="scss" scoped>
+.seating-visualizer {
+  height: 600px;
+}
+</style>
