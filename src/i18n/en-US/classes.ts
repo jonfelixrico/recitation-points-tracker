@@ -60,4 +60,5 @@ export default {
   seatNo: 'Seat no. {seatNo}',
   removeSeat: 'Remove seat',
   editSeatPlan: 'Edit seat plan',
+  seatPlan: 'Seat plan',
 }

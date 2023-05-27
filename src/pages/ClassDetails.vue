@@ -36,8 +36,7 @@
 
         <q-card>
           <q-card-section class="row justify-between">
-            <!-- TODO i18nize -->
-            <div class="text-h5">Seat Plan</div>
+            <div class="text-h5">{{ t('classes.seatPlan') }}</div>
             <q-btn color="primary" unelevated no-caps @click="editSeatPlan">
               <div class="row q-gutter-x-sm items-center">
                 <q-icon name="edit" />
