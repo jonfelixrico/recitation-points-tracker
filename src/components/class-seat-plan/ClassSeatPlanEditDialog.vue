@@ -16,17 +16,6 @@
           {{ t('classes.emptyStudents') }}
         </div>
         <div v-else class="students-drawer column">
-          <q-scroll-area class="col">
-            <SeatPlanStudentList
-              :students="students"
-              :seats-occupied="occupantsModel"
-              :columns="columns"
-              @remove="removeStudentSeat"
-            />
-          </q-scroll-area>
-
-          <q-separator />
-
           <div class="q-pa-sm">
             <q-btn
               v-if="hasChanges"
@@ -50,6 +39,17 @@
               {{ t('classes.dialogs.editSeatPlan.save') }}
             </q-btn>
           </div>
+
+          <q-separator />
+
+          <q-scroll-area class="col">
+            <SeatPlanStudentList
+              :students="students"
+              :seats-occupied="occupantsModel"
+              :columns="columns"
+              @remove="removeStudentSeat"
+            />
+          </q-scroll-area>
         </div>
 
         <div class="col bg-grey-2 flex flex-center">
