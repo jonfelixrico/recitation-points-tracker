@@ -28,14 +28,16 @@
 </template>
 
 <script setup lang="ts">
-import { StudentEntity } from 'src/models/entities'
 import { PropType } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 defineProps({
   student: {
     required: true,
-    type: Object as PropType<StudentEntity>,
+    type: Object as PropType<{
+      firstName: string
+      lastName: string
+    }>,
   },
 
   seatNo: Number,
