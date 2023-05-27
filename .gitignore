@@ -39,3 +39,4 @@ coverage/
 *-debug.log
 
 .env
+firebase-export-*/

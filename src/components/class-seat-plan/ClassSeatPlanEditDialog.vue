@@ -9,13 +9,41 @@
         <div v-if="!students.length" class="students-drawer flex flex-center">
           {{ t('classes.emptyStudents') }}
         </div>
-        <div v-else class="students-drawer">
-          <SeatPlanStudentList
-            :students="students"
-            :seats-occupied="occupantsModel"
-            :columns="columns"
-            @remove="removeStudentSeat"
-          />
+        <div v-else class="students-drawer column">
+          <q-scroll-area class="col">
+            <SeatPlanStudentList
+              :students="students"
+              :seats-occupied="occupantsModel"
+              :columns="columns"
+              @remove="removeStudentSeat"
+            />
+          </q-scroll-area>
+
+          <q-separator />
+
+          <div class="q-pa-sm">
+            <q-btn
+              v-if="hasChanges"
+              color="primary"
+              class="full-width"
+              unelevated
+              no-caps
+              @click="emitChanges"
+            >
+              {{ t('classes.dialogs.editSeatPlan.save') }}
+            </q-btn>
+
+            <q-btn
+              v-else
+              color="grey"
+              class="full-width"
+              unelevated
+              no-caps
+              disabled
+            >
+              {{ t('classes.dialogs.editSeatPlan.save') }}
+            </q-btn>
+          </div>
         </div>
 
         <div class="col bg-grey-2 flex flex-center">
@@ -36,10 +64,10 @@
 import { useDialogPluginComponent } from 'quasar'
 import { StudentEntity } from 'src/models/entities'
 import { SeatingArrangement } from 'src/models/entities'
-import { PropType, ref, watch } from 'vue'
+import { PropType, computed, ref, watch } from 'vue'
 import SeatPlanVisualizer from './SeatPlanVisualizer.vue'
 import SeatPlanStudentList from './SeatPlanStudentList.vue'
-import { cloneDeep } from 'lodash'
+import { cloneDeep, isEqual } from 'lodash'
 import { AssignPayload } from './class-seat-plan-typings'
 import { useI18n } from 'vue-i18n'
 
@@ -71,6 +99,10 @@ watch(
   }
 )
 
+const hasChanges = computed(
+  () => !isEqual(props.occupants, occupantsModel.value)
+)
+
 function assignStudentToSeat({ colNo, rowNo, id }: AssignPayload) {
   occupantsModel.value[id] = [colNo, rowNo]
 }
@@ -81,8 +113,13 @@ function removeStudentSeat(id: string) {
 
 defineEmits([...useDialogPluginComponent.emits])
 
-const { dialogRef, onDialogHide } = useDialogPluginComponent()
+const { dialogRef, onDialogHide, onDialogOK } = useDialogPluginComponent()
 const { t } = useI18n()
+
+function emitChanges() {
+  // TODO add confirmation dialog
+  onDialogOK(occupantsModel.value)
+}
 </script>
 
 <style scoped lang="scss">

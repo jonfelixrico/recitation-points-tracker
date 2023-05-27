@@ -166,10 +166,14 @@ export default defineComponent({
 
     const { openEditDialog } = useClassSeatPlanEdit()
 
+    async function loadClassData() {
+      classData.value = await getClass(classId.value)
+    }
+
     onMounted(async () => {
       loading.show()
       try {
-        classData.value = await getClass(classId.value)
+        await loadClassData()
         await studentsList.load()
       } catch (e) {
         // TODO improve logging
@@ -185,16 +189,30 @@ export default defineComponent({
       showAddStudentsDialog: studentsList.showAddDialog,
       processStudentDelete: studentsList.processDelete,
       t,
-      editSeatPlan() {
+      async editSeatPlan() {
         if (!classData.value?.seatingArrangement || !studentsList.data.value) {
           // TODO add logging
           return
         }
 
-        openEditDialog(
-          classData.value.seatingArrangement,
+        const wereChangesUploaded = await openEditDialog(
+          classData.value,
           studentsList.data.value
         )
+
+        if (!wereChangesUploaded) {
+          return
+        }
+
+        loading.show()
+        try {
+          await loadClassData()
+        } catch (e) {
+          // TODO improve logging and add notif
+          console.error(e)
+        } finally {
+          loading.hide()
+        }
       },
     }
   },
