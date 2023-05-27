@@ -16,7 +16,11 @@
         }"
       >
         <div class="flex flex-center grid-container">
-          <SeatingGrid :columns="columns" :tile-size="30" />
+          <SeatPlanVisualizer
+            :students="students"
+            :columns="seatingArrangement.columns"
+            :occupants="seatingArrangement.occupants"
+          />
         </div>
       </q-scroll-area>
     </div>
@@ -25,11 +29,17 @@
 
 <script setup lang="ts">
 import { PropType, ref } from 'vue'
-import SeatingGrid from 'components/seating/SeatingGrid.vue'
+import { ClassEntity, StudentEntity } from 'src/models/entities'
+import SeatPlanVisualizer from 'components/class-seat-plan/SeatPlanVisualizer.vue'
 
 defineProps({
-  columns: {
-    type: Array as PropType<number[]>,
+  seatingArrangement: {
+    type: Object as PropType<ClassEntity['seatingArrangement']>,
+    required: true,
+  },
+
+  students: {
+    type: Array as PropType<StudentEntity[]>,
     required: true,
   },
 })

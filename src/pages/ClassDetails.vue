@@ -49,8 +49,8 @@
 
           <SeatPlanSectionContent
             class="seating-visualizer"
-            v-if="classData?.seatingArrangement?.columns"
-            :columns="classData.seatingArrangement.columns"
+            :seating-arrangement="classData.seatingArrangement"
+            :students="students"
           />
         </q-card>
       </div>
