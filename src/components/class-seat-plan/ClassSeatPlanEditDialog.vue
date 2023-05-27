@@ -7,7 +7,7 @@
       </q-bar>
       <div class="col row">
         <div v-if="!students.length" class="students-drawer flex flex-center">
-          No Students
+          {{ t('classes.emptyStudents') }}
         </div>
         <div v-else class="students-drawer">
           <SeatPlanStudentList
