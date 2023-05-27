@@ -47,7 +47,7 @@
 
           <q-separator />
 
-          <ClassSeatingArrangement
+          <SeatPlanSectionContent
             class="seating-visualizer"
             v-if="classData?.seatingArrangement?.columns"
             :columns="classData.seatingArrangement.columns"
@@ -62,7 +62,7 @@
 import { orderBy } from 'lodash'
 import { useQuasar } from 'quasar'
 import AddStudentsDialog from 'src/components/class-details/AddStudentsDialog.vue'
-import ClassSeatingArrangement from 'src/components/class-details/ClassSeatingArrangement.vue'
+import SeatPlanSectionContent from 'src/components/class-details/SeatPlanSectionContent.vue'
 import StudentList from 'src/components/class-details/StudentList.vue'
 import { DraftStudent } from 'src/components/class-details/draft-student.inteface'
 import { useClassSeatPlanEdit } from 'src/components/class-seat-plan/class-seat-plan-edit-dialog.composable'
@@ -140,7 +140,7 @@ function useStudentsList(classId: Ref<string>) {
 }
 
 export default defineComponent({
-  components: { StudentList, ClassSeatingArrangement },
+  components: { StudentList, SeatPlanSectionContent },
 
   async beforeRouteEnter(to) {
     const { getClass } = useClassesAPI()
