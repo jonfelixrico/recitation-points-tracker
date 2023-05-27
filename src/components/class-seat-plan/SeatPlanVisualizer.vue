@@ -1,5 +1,11 @@
 <template>
-  <SeatingGrid :columns="columns" :tile-size="50">
+  <SeatingGrid
+    :columns="columns"
+    :tile-size="50"
+    :class="{
+      'no-pointer-events': readOnly,
+    }"
+  >
     <template v-slot="{ colIdx, rowIdx, seatIdx }">
       <div
         v-if="inverseOccupantMap[colIdx]?.[rowIdx]"
@@ -41,6 +47,8 @@ const props = defineProps({
     required: true,
     type: Array as PropType<StudentEntity[]>,
   },
+
+  readOnly: Boolean,
 })
 
 const emit = defineEmits<{
