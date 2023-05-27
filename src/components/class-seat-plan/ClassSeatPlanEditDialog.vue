@@ -41,6 +41,7 @@ import SeatPlanVisualizer from './SeatPlanVisualizer.vue'
 import SeatPlanStudentList from './SeatPlanStudentList.vue'
 import { cloneDeep } from 'lodash'
 import { AssignPayload } from './class-seat-plan-typings'
+import { useI18n } from 'vue-i18n'
 
 const props = defineProps({
   columns: {
@@ -85,6 +86,7 @@ defineEmits([
 ])
 
 const { dialogRef, onDialogHide } = useDialogPluginComponent()
+const { t } = useI18n()
 </script>
 
 <style scoped lang="scss">
