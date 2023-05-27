@@ -16,6 +16,28 @@
           {{ t('classes.emptyStudents') }}
         </div>
         <div v-else class="students-drawer column">
+          <div class="q-pa-sm row">
+            <template v-if="hasChanges">
+              <q-btn
+                color="primary"
+                class="col"
+                unelevated
+                no-caps
+                @click="emitChanges"
+              >
+                {{ t('classes.dialogs.editSeatPlan.save') }}
+              </q-btn>
+            </template>
+
+            <template v-else>
+              <q-btn color="grey" class="col" unelevated no-caps disabled>
+                {{ t('classes.dialogs.editSeatPlan.save') }}
+              </q-btn>
+            </template>
+          </div>
+
+          <q-separator />
+
           <q-scroll-area class="col">
             <SeatPlanStudentList
               :students="students"
@@ -24,32 +46,6 @@
               @remove="removeStudentSeat"
             />
           </q-scroll-area>
-
-          <q-separator />
-
-          <div class="q-pa-sm">
-            <q-btn
-              v-if="hasChanges"
-              color="primary"
-              class="full-width"
-              unelevated
-              no-caps
-              @click="emitChanges"
-            >
-              {{ t('classes.dialogs.editSeatPlan.save') }}
-            </q-btn>
-
-            <q-btn
-              v-else
-              color="grey"
-              class="full-width"
-              unelevated
-              no-caps
-              disabled
-            >
-              {{ t('classes.dialogs.editSeatPlan.save') }}
-            </q-btn>
-          </div>
         </div>
 
         <div class="col bg-grey-2 flex flex-center">
