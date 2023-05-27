@@ -1,9 +1,22 @@
 <template>
   <div class="row">
     <!-- TODO adjust side panel UI -->
-    <div class="side-panel flex flex-center">
-      <!-- TODO i18nize this -->
-      No students with seats yet
+    <div class="side-panel flex flex-center" v-if="!students.length">
+      {{ t('classes.emptyStudents') }}
+    </div>
+
+    <div v-else class="side-panel">
+      <SeatPlanStudentItemLayout
+        v-for="student in students"
+        :key="student.id"
+        :student="student"
+        no-side-section
+        :seat-no="
+          seatIdxMap[student.id] !== undefined
+            ? seatIdxMap[student.id] + 1
+            : undefined
+        "
+      />
     </div>
 
     <div class="col bg-grey-2 relative-position">
@@ -28,11 +41,15 @@
 </template>
 
 <script setup lang="ts">
-import { PropType, ref } from 'vue'
+import { PropType, computed, ref } from 'vue'
 import { ClassEntity, StudentEntity } from 'src/models/entities'
 import SeatPlanVisualizer from 'components/class-seat-plan/SeatPlanVisualizer.vue'
+import { useI18n } from 'vue-i18n'
+import SeatPlanStudentItemLayout from 'components/class-seat-plan/SeatPlanStudentItemLayout.vue'
+import { mapValues } from 'lodash'
+import { computeStartingSeatIndexPerColumn } from 'src/utils/seating-utils'
 
-defineProps({
+const props = defineProps({
   seatingArrangement: {
     type: Object as PropType<ClassEntity['seatingArrangement']>,
     required: true,
@@ -47,6 +64,18 @@ defineProps({
 const dimensions = ref({
   width: 0,
   height: 0,
+})
+
+const { t } = useI18n()
+
+const startingSeatCountPerColumn = computed(() =>
+  computeStartingSeatIndexPerColumn(props.seatingArrangement.columns)
+)
+
+const seatIdxMap = computed(() => {
+  return mapValues(props.seatingArrangement.occupants, ([colIdx, rowIdx]) => {
+    return startingSeatCountPerColumn.value[colIdx] + rowIdx
+  })
 })
 </script>
 
