@@ -1,7 +1,7 @@
 import { collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore'
 import { useFirestore } from './firestore.composable'
 import { useSessionUserId } from './session-user.composable'
-import { ClassEntity } from 'src/models/entities'
+import { ClassEntity, SeatingArrangement } from 'src/models/entities'
 import { nanoid } from 'nanoid'
 
 export function useClassesAPI() {
@@ -14,6 +14,20 @@ export function useClassesAPI() {
       id,
       ...data,
     }
+  }
+
+  async function getClass(id: string) {
+    const docRef = doc(firestore, `users/${uid}/classes`, id)
+    const docSnap = await getDoc(docRef)
+
+    if (!docSnap.exists) {
+      return null
+    }
+
+    return {
+      ...docSnap.data(),
+      id: docSnap.id,
+    } as ClassEntity
   }
 
   return {
@@ -31,24 +45,23 @@ export function useClassesAPI() {
       return output
     },
 
-    async getClass(id: string) {
-      const docRef = doc(firestore, `users/${uid}/classes`, id)
-      const docSnap = await getDoc(docRef)
-
-      if (!docSnap.exists) {
-        return null
-      }
-
-      return {
-        ...docSnap.data(),
-        id: docSnap.id,
-      } as ClassEntity
-    },
+    getClass,
 
     async createClass(input: Omit<ClassEntity, 'id'>): Promise<ClassEntity> {
       return await setClass(nanoid(), input)
     },
 
-    updateClass: setClass,
+    async setSeatingArrangement(
+      id: string,
+      arrangement: SeatingArrangement
+    ): Promise<ClassEntity> {
+      const data = await getClass(id)
+      if (!data) {
+        throw new Error('Class not found')
+      }
+
+      data.seatingArrangement = arrangement
+      return await setClass(id, data)
+    },
   }
 }
