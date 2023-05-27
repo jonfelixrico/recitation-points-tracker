@@ -19,8 +19,27 @@
             />
           </q-scroll-area>
 
+          <q-separator />
+
           <div class="q-pa-sm">
-            <q-btn color="primary" class="full-width" unelevated no-caps>
+            <q-btn
+              v-if="hasChanges"
+              color="primary"
+              class="full-width"
+              unelevated
+              no-caps
+            >
+              {{ t('classes.dialogs.editSeatPlan.save') }}
+            </q-btn>
+
+            <q-btn
+              v-else
+              color="grey"
+              class="full-width"
+              unelevated
+              no-caps
+              disabled
+            >
               {{ t('classes.dialogs.editSeatPlan.save') }}
             </q-btn>
           </div>
@@ -44,10 +63,10 @@
 import { useDialogPluginComponent } from 'quasar'
 import { StudentEntity } from 'src/models/entities'
 import { SeatingArrangement } from 'src/models/entities'
-import { PropType, ref, watch } from 'vue'
+import { PropType, computed, ref, watch } from 'vue'
 import SeatPlanVisualizer from './SeatPlanVisualizer.vue'
 import SeatPlanStudentList from './SeatPlanStudentList.vue'
-import { cloneDeep } from 'lodash'
+import { cloneDeep, isEqual } from 'lodash'
 import { AssignPayload } from './class-seat-plan-typings'
 import { useI18n } from 'vue-i18n'
 
@@ -77,6 +96,10 @@ watch(
   {
     immediate: true,
   }
+)
+
+const hasChanges = computed(
+  () => !isEqual(props.occupants, occupantsModel.value)
 )
 
 function assignStudentToSeat({ colNo, rowNo, id }: AssignPayload) {
