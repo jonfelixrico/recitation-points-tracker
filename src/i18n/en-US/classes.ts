@@ -31,6 +31,16 @@ export default {
         seatCountLabel: 'Seat count for column {colNo}',
       },
     },
+
+    createClassSubmitPrompt: {
+      title: 'Create Class',
+      message: 'Please confirm that the details are correct before submitting.',
+      columnCount: '{count} column | {count} columns',
+      seatCount: '{count} seat | {count} seats',
+      input: {
+        nameLabel: 'Name',
+      },
+    },
   },
 
   addStudents: 'Add students',

@@ -1,26 +1,38 @@
-<script lang="ts">
-import { Dialog } from 'quasar'
-import { defineComponent } from 'vue'
+<script setup lang="ts">
+import { useQuasar } from 'quasar'
 
-export default defineComponent({
-  name: 'DialogWrapper',
-  props: {
-    component: {
-      type: Object,
-      required: true,
-    },
-    componentProps: {
-      type: Object,
-      default: () => ({}),
-    },
+const { dialog } = useQuasar()
+
+const props = defineProps({
+  component: {
+    type: Object,
+    required: true,
   },
-  setup(props) {
-    Dialog.create({
-      component: props.component,
-
-      // props forwarded to your custom component
-      componentProps: props.componentProps,
-    })
+  componentProps: {
+    type: Object,
+    default: () => ({}),
   },
 })
+
+const emit = defineEmits<{
+  (e: 'ok', value: unknown): void
+  (e: 'cancel'): void
+  (e: 'dismiss'): void
+}>()
+
+dialog({
+  component: props.component,
+
+  // props forwarded to your custom component
+  componentProps: props.componentProps,
+})
+  .onOk((value?: unknown) => {
+    emit('ok', value)
+  })
+  .onCancel(() => {
+    emit('cancel')
+  })
+  .onDismiss(() => {
+    emit('dismiss')
+  })
 </script>

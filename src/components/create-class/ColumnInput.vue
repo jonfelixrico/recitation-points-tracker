@@ -10,7 +10,7 @@
     outlined
     :label="
       t('classes.dialogs.createClass.input.seatCountLabel', {
-        colNo: colIndex + 1,
+        colNo,
       })
     "
   />
@@ -29,7 +29,7 @@ const props = defineProps({
     required: true,
   },
 
-  colIndex: {
+  colNo: {
     type: Number,
     required: true,
   },
@@ -41,13 +41,13 @@ const emit = defineEmits<{
 
 const model = computed({
   get() {
-    return props.modelValue[props.colIndex] ?? null
+    return props.modelValue[props.colNo - 1] ?? null
   },
 
   set(value: number) {
     emit('update:modelValue', {
       ...props.modelValue,
-      [props.colIndex]: value,
+      [props.colNo - 1]: value,
     })
   },
 })

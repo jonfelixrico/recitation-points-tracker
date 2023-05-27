@@ -38,6 +38,7 @@
             type="submit"
             unelevated
             no-caps
+            data-cy="submit-button"
           />
         </q-card-actions>
       </q-form>
@@ -46,27 +47,38 @@
 </template>
 
 <script setup lang="ts">
-import { useDialogPluginComponent } from 'quasar'
+import { useDialogPluginComponent, useQuasar } from 'quasar'
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { ColumnSeatCountMap } from './create-class-typings'
+import { ColumnSeatCountMap, CreatedClass } from './create-class-typings'
 import ColumnSection from './ColumnSection.vue'
+import CreateClassSubmitPromptDialog from './CreateClassSubmitPromptDialog.vue'
 
 defineEmits([...useDialogPluginComponent.emits])
 const { dialogRef, onDialogHide, onDialogOK } = useDialogPluginComponent()
 const { t } = useI18n()
+const { dialog } = useQuasar()
 
 const name = ref<string>('')
 const seatCountData = ref<ColumnSeatCountMap>({})
 const colCount = ref<number>(0)
 
 function submitData() {
-  onDialogOK({
+  const value: CreatedClass = {
     name: name.value,
     seatArrangement: Array.from(
       { length: colCount.value },
       (_, index) => seatCountData.value[index]
     ),
+  }
+
+  dialog({
+    component: CreateClassSubmitPromptDialog,
+    componentProps: {
+      modelValue: value,
+    },
+  }).onOk(() => {
+    onDialogOK(value)
   })
 }
 </script>

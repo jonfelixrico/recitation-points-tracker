@@ -2,6 +2,58 @@ import DialogWrapper from 'app/test/cypress/wrappers/DialogWrapper.vue'
 import CreateClassDialog from 'components/create-class/CreateClassDialog.vue'
 
 describe('CreateClassDialog', () => {
+  it('should emit the proper seat arrangement', () => {
+    const okSpy = cy.spy()
+    cy.mount(DialogWrapper, {
+      props: {
+        component: CreateClassDialog,
+        onOk: okSpy,
+      },
+    })
+
+    cy.withinDialog((el) => {
+      cy.wrap(el)
+        .dataCy('add-button')
+        .click()
+        .then(() => {
+          cy.wrap(el).dataCy('column-item').eq(0).dataCy('input').type('5')
+        })
+
+      cy.wrap(el)
+        .dataCy('add-button')
+        .click()
+        .then(() => {
+          cy.wrap(el).dataCy('column-item').eq(1).dataCy('input').type('6')
+        })
+
+      cy.wrap(el)
+        .dataCy('add-button')
+        .click()
+        .then(() => {
+          cy.wrap(el).dataCy('column-item').eq(2).dataCy('input').type('7')
+        })
+
+      cy.wrap(el)
+        .dataCy('submit-button')
+        .click()
+        .then(() => {
+          cy.withinDialog({
+            dataCy: 'prompt',
+            fn: (inner) => {
+              cy.wrap(inner)
+                .dataCy('submit-button')
+                .click()
+                .then(() => {
+                  expect(okSpy.firstCall.args[0].seatArrangement).deep.equal([
+                    5, 6, 7,
+                  ])
+                })
+            },
+          })
+        })
+    })
+  })
+
   it('should handle adding and removing of columns, and input should stay in place', () => {
     cy.mount(DialogWrapper, {
       props: {

@@ -33,31 +33,44 @@
 
 <script lang="ts">
 import { useQuasar } from 'quasar'
-import CreateClassDialog from 'src/components/class-list/CreateClassDialog.vue'
+import CreateClassDialog from 'src/components/create-class/CreateClassDialog.vue'
+import { CreatedClass } from 'src/components/create-class/create-class-typings'
 import { useClassesAPI } from 'src/composables/classes-api.composable'
 import { ClassEntity } from 'src/models/entities'
 import { defineComponent, ref, onBeforeMount } from 'vue'
 import { useRouter } from 'vue-router'
 
 function useCreateClassDialog() {
-  const $q = useQuasar()
+  const { dialog, loading } = useQuasar()
   const { createClass } = useClassesAPI()
   const router = useRouter()
 
   return {
     async showDialog() {
-      $q.dialog({
+      dialog({
         // TODO use the one under create-class
         component: CreateClassDialog,
-      }).onOk(async (data: Omit<ClassEntity, 'id'>) => {
-        const { id } = await createClass(data)
+      }).onOk(async ({ name, seatArrangement }: CreatedClass) => {
+        loading.show()
+        try {
+          const { id } = await createClass({
+            name,
+            tags: [],
+            seatingArrangement: {
+              columns: seatArrangement,
+              occupants: {},
+            },
+          })
 
-        await router.push({
-          name: 'classDetails',
-          params: {
-            classId: id,
-          },
-        })
+          await router.push({
+            name: 'classDetails',
+            params: {
+              classId: id,
+            },
+          })
+        } finally {
+          loading.hide()
+        }
       })
     },
   }
