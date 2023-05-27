@@ -2,7 +2,7 @@
   <q-dialog ref="dialogRef" @hide="onDialogHide" maximized>
     <div class="bg-white fit column">
       <q-bar class="justify-between bg-primary text-white">
-        <div>Edit Seat Plan</div>
+        <div>{{ t('classes.dialogs.editSeatPlan.title') }}</div>
         <q-btn icon="close" flat round dense v-close-popup />
       </q-bar>
       <div class="col row">

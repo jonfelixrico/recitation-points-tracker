@@ -41,6 +41,10 @@ export default {
         nameLabel: 'Name',
       },
     },
+
+    editSeatPlan: {
+      title: 'Edit seat plan',
+    },
   },
 
   addStudents: 'Add students',
