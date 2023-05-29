@@ -13,9 +13,7 @@ type SeatCoordinates = [number, number]
 
 export interface SeatingArrangement {
   columns: number[]
-  occupants: {
-    [occupantId: string]: SeatCoordinates
-  }
+  occupants: Map<string, SeatCoordinates>
 }
 
 export interface StudentEntity {
