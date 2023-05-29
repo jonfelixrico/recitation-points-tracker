@@ -1,5 +1,6 @@
 import { Type, plainToInstance } from 'class-transformer'
 import {
+  IsNotEmpty,
   Length,
   MinLength,
   ValidateNested,
@@ -18,19 +19,23 @@ class SeatingArrangementTransformer implements SeatingArrangement {
 }
 
 class ClassEntityTransformer implements ClassEntity {
+  @IsNotEmpty()
   id!: string
+
+  @IsNotEmpty()
   name!: string
+
+  @IsNotEmpty()
   tags!: string[]
 
+  @IsNotEmpty()
   @ValidateNested()
   @Type(() => SeatingArrangementTransformer)
   seatingArrangement!: SeatingArrangement
 }
 
 export async function toClassEntity(toConvert: unknown): Promise<ClassEntity> {
-  const converted = plainToInstance(ClassEntityTransformer, toConvert, {
-    excludeExtraneousValues: true,
-  })
+  const converted = plainToInstance(ClassEntityTransformer, toConvert)
 
   await validateOrReject(converted)
 
