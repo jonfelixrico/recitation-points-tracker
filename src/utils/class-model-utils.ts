@@ -3,7 +3,6 @@ import {
   Length,
   MinLength,
   ValidateNested,
-  validate,
   validateOrReject,
 } from 'class-validator'
 import { ClassEntity, SeatingArrangement } from 'src/models/entities'
