@@ -36,4 +36,51 @@ describe('toClassEntity', () => {
       })
     ).resolves.toBeTruthy()
   })
+
+  it('reject incorrect input', async () => {
+    await expect(
+      toClassEntity({
+        id: 'test',
+        name: 'test',
+        tags: [],
+        seatingArrangement: {
+          columns: [],
+          // no seating arrangement yet
+          occupants: {
+            student1: [1, 2],
+          },
+        },
+      })
+    ).rejects.toThrow()
+
+    await expect(
+      toClassEntity({
+        id: 'test',
+        name: 'test',
+        tags: [],
+        seatingArrangement: {
+          columns: [1],
+          // no seating arrangement yet
+          occupants: {
+            student1: [1],
+          },
+        },
+      })
+    ).rejects.toThrow()
+
+    await expect(
+      toClassEntity({
+        id: 'test',
+        name: 'test',
+        tags: [],
+        seatingArrangement: {
+          columns: [1],
+          // no seating arrangement yet
+          occupants: {
+            student1: true,
+          },
+        },
+      })
+    ).rejects.toThrow()
+  })
 })
