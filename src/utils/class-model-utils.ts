@@ -1,20 +1,30 @@
-import { Type, plainToInstance } from 'class-transformer'
+import { Transform, Type, plainToInstance } from 'class-transformer'
 import {
+  ArrayMaxSize,
+  ArrayMinSize,
   IsNotEmpty,
-  Length,
-  MinLength,
   ValidateNested,
   validateOrReject,
 } from 'class-validator'
 import { ClassEntity, SeatingArrangement } from 'src/models/entities'
 
 class SeatingArrangementTransformer implements SeatingArrangement {
-  @MinLength(1)
+  @IsNotEmpty()
+  @ArrayMinSize(1)
   columns!: number[]
 
-  @Length(2, undefined, {
+  @IsNotEmpty()
+  @ArrayMinSize(2, {
     each: true,
   })
+  @ArrayMaxSize(2, {
+    each: true,
+  })
+  /*
+   * Transforming to an obj is necessary to evaluate the value.
+   * @See https://stackoverflow.com/a/72554754
+   */
+  @Transform(({ value }) => new Map(Object.entries(value)))
   occupants!: SeatingArrangement['occupants']
 }
 
