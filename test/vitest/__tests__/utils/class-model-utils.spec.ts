@@ -1,8 +1,39 @@
 import { toClassEntity } from 'src/utils/class-model-utils'
-import { describe, it, expect } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
 describe('toClassEntity', () => {
-  it('should not allow invalid data through', async () => {
+  it('rejects empty input', async () => {
     await expect(toClassEntity({})).rejects.toThrow()
+    await expect(toClassEntity(null)).rejects.toThrow()
+    await expect(toClassEntity(undefined)).rejects.toThrow()
+  })
+
+  it('accepts the correct input', async () => {
+    await expect(
+      toClassEntity({
+        id: 'test',
+        name: 'test',
+        tags: [],
+        seatingArrangement: {
+          columns: [1],
+          // no seating arrangement yet
+          occupants: {},
+        },
+      })
+    ).resolves.toBeTruthy()
+
+    await expect(
+      toClassEntity({
+        id: 'test',
+        name: 'test',
+        tags: [],
+        seatingArrangement: {
+          columns: [1],
+          occupants: {
+            student1: [1, 2],
+          },
+        },
+      })
+    ).resolves.toBeTruthy()
   })
 })
