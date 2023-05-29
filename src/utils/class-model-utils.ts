@@ -1,8 +1,9 @@
 import { Type, plainToInstance } from 'class-transformer'
-import { Length, ValidateNested, validate } from 'class-validator'
+import { Length, MinLength, ValidateNested, validate } from 'class-validator'
 import { ClassEntity, SeatingArrangement } from 'src/models/entities'
 
 class SeatingArrangementTransformer implements SeatingArrangement {
+  @MinLength(1)
   columns!: number[]
 
   @Length(2, undefined, {
