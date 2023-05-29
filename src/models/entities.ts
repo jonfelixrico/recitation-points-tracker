@@ -5,15 +5,9 @@ export interface ClassEntity {
   seatingArrangement: SeatingArrangement
 }
 
-/**
- * Index 0 is for the column
- * Index 1 is for the seat in the row
- */
-type SeatCoordinates = [number, number]
-
 export interface SeatingArrangement {
   columns: number[]
-  occupants: Map<string, SeatCoordinates>
+  occupants: Map<string, [number, number]>
 }
 
 export interface StudentEntity {
