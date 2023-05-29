@@ -1,17 +1,16 @@
-import { validateAndCovertToClassEntity } from 'src/utils/class-model-utils'
+import { validateAndCovertClassEntityBody } from 'src/utils/class-model-utils'
 import { describe, expect, it } from 'vitest'
 
 describe('toClassEntity', () => {
   it('rejects empty input', async () => {
-    await expect(validateAndCovertToClassEntity({})).rejects.toThrow()
-    await expect(validateAndCovertToClassEntity(null)).rejects.toThrow()
-    await expect(validateAndCovertToClassEntity(undefined)).rejects.toThrow()
+    await expect(validateAndCovertClassEntityBody({})).rejects.toThrow()
+    await expect(validateAndCovertClassEntityBody(null)).rejects.toThrow()
+    await expect(validateAndCovertClassEntityBody(undefined)).rejects.toThrow()
   })
 
   it('accepts the correct input', async () => {
     await expect(
-      validateAndCovertToClassEntity({
-        id: 'test',
+      validateAndCovertClassEntityBody({
         name: 'test',
         tags: [],
         seatingArrangement: {
@@ -23,8 +22,7 @@ describe('toClassEntity', () => {
     ).resolves.toBeTruthy()
 
     await expect(
-      validateAndCovertToClassEntity({
-        id: 'test',
+      validateAndCovertClassEntityBody({
         name: 'test',
         tags: [],
         seatingArrangement: {
@@ -39,8 +37,7 @@ describe('toClassEntity', () => {
 
   it('reject incorrect input', async () => {
     await expect(
-      validateAndCovertToClassEntity({
-        id: 'test',
+      validateAndCovertClassEntityBody({
         name: 'test',
         tags: [],
         seatingArrangement: {
@@ -54,8 +51,7 @@ describe('toClassEntity', () => {
     ).rejects.toThrow()
 
     await expect(
-      validateAndCovertToClassEntity({
-        id: 'test',
+      validateAndCovertClassEntityBody({
         name: 'test',
         tags: [],
         seatingArrangement: {
@@ -69,8 +65,7 @@ describe('toClassEntity', () => {
     ).rejects.toThrow()
 
     await expect(
-      validateAndCovertToClassEntity({
-        id: 'test',
+      validateAndCovertClassEntityBody({
         name: 'test',
         tags: [],
         seatingArrangement: {

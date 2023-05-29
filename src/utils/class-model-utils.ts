@@ -28,10 +28,9 @@ class SeatingArrangementTransformer implements SeatingArrangement {
   occupants!: SeatingArrangement['occupants']
 }
 
-class ClassEntityTransformer implements ClassEntity {
-  @IsNotEmpty()
-  id!: string
+type ClassEntityBody = Omit<ClassEntity, 'id'>
 
+class ClassEntityTransformer implements ClassEntityBody {
   @IsNotEmpty()
   name!: string
 
@@ -44,9 +43,9 @@ class ClassEntityTransformer implements ClassEntity {
   seatingArrangement!: SeatingArrangement
 }
 
-export async function validateAndCovertToClassEntity(
+export async function validateAndCovertClassEntityBody(
   toConvert: unknown
-): Promise<ClassEntity> {
+): Promise<ClassEntityBody> {
   const converted = plainToInstance(ClassEntityTransformer, toConvert)
 
   await validateOrReject(converted)
