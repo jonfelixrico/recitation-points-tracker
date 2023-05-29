@@ -55,7 +55,6 @@ export async function validateAndCovertClassEntityBody(
     excludeExtraneousValues: true,
   })
 
-  console.log(converted)
   await validateOrReject(converted)
 
   return converted
