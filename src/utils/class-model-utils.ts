@@ -1,4 +1,4 @@
-import { Transform, Type, plainToInstance } from 'class-transformer'
+import { Expose, Transform, Type, plainToInstance } from 'class-transformer'
 import {
   ArrayMaxSize,
   ArrayMinSize,
@@ -9,10 +9,12 @@ import {
 import { ClassEntity, SeatingArrangement } from 'src/models/entities'
 
 class SeatingArrangementTransformer implements SeatingArrangement {
+  @Expose()
   @IsNotEmpty()
   @ArrayMinSize(1)
   columns!: number[]
 
+  @Expose()
   @IsNotEmpty()
   @ArrayMinSize(2, {
     each: true,
@@ -31,12 +33,15 @@ class SeatingArrangementTransformer implements SeatingArrangement {
 type ClassEntityBody = Omit<ClassEntity, 'id'>
 
 class ClassEntityTransformer implements ClassEntityBody {
+  @Expose()
   @IsNotEmpty()
   name!: string
 
+  @Expose()
   @IsNotEmpty()
   tags!: string[]
 
+  @Expose()
   @IsNotEmpty()
   @ValidateNested()
   @Type(() => SeatingArrangementTransformer)
@@ -46,8 +51,11 @@ class ClassEntityTransformer implements ClassEntityBody {
 export async function validateAndCovertClassEntityBody(
   toConvert: unknown
 ): Promise<ClassEntityBody> {
-  const converted = plainToInstance(ClassEntityTransformer, toConvert)
+  const converted = plainToInstance(ClassEntityTransformer, toConvert, {
+    excludeExtraneousValues: true,
+  })
 
+  console.log(converted)
   await validateOrReject(converted)
 
   return converted
