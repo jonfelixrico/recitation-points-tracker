@@ -1,5 +1,11 @@
 import { Type, plainToInstance } from 'class-transformer'
-import { Length, MinLength, ValidateNested, validate } from 'class-validator'
+import {
+  Length,
+  MinLength,
+  ValidateNested,
+  validate,
+  validateOrReject,
+} from 'class-validator'
 import { ClassEntity, SeatingArrangement } from 'src/models/entities'
 
 class SeatingArrangementTransformer implements SeatingArrangement {
@@ -27,7 +33,7 @@ export async function toClassEntity(toConvert: unknown): Promise<ClassEntity> {
     excludeExtraneousValues: true,
   })
 
-  await validate(converted)
+  await validateOrReject(converted)
 
   return converted
 }
