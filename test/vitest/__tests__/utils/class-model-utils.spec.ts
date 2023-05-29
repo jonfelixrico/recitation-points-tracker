@@ -1,3 +1,4 @@
+import { ClassEntity } from 'src/models/entities'
 import { validateAndCovertClassEntityBody } from 'src/utils/class-model-utils'
 import { describe, expect, it } from 'vitest'
 
@@ -33,6 +34,27 @@ describe('toClassEntity', () => {
         },
       })
     ).resolves.toBeTruthy()
+  })
+
+  it('omits extra properties', async () => {
+    const converted = await validateAndCovertClassEntityBody({
+      id: 'test',
+      name: 'test',
+      tags: [],
+      seatingArrangement: {
+        columns: [1],
+        // no seating arrangement yet
+        occupants: {
+          student1: [1, 2],
+        },
+      },
+    })
+
+    expect(converted).toEqual(
+      expect.not.objectContaining({
+        id: expect.anything(),
+      })
+    )
   })
 
   it('reject incorrect input', async () => {
