@@ -44,7 +44,9 @@ class ClassEntityTransformer implements ClassEntity {
   seatingArrangement!: SeatingArrangement
 }
 
-export async function toClassEntity(toConvert: unknown): Promise<ClassEntity> {
+export async function validateAndCovertToClassEntity(
+  toConvert: unknown
+): Promise<ClassEntity> {
   const converted = plainToInstance(ClassEntityTransformer, toConvert)
 
   await validateOrReject(converted)

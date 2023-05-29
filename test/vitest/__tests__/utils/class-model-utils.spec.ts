@@ -1,16 +1,16 @@
-import { toClassEntity } from 'src/utils/class-model-utils'
+import { validateAndCovertToClassEntity } from 'src/utils/class-model-utils'
 import { describe, expect, it } from 'vitest'
 
 describe('toClassEntity', () => {
   it('rejects empty input', async () => {
-    await expect(toClassEntity({})).rejects.toThrow()
-    await expect(toClassEntity(null)).rejects.toThrow()
-    await expect(toClassEntity(undefined)).rejects.toThrow()
+    await expect(validateAndCovertToClassEntity({})).rejects.toThrow()
+    await expect(validateAndCovertToClassEntity(null)).rejects.toThrow()
+    await expect(validateAndCovertToClassEntity(undefined)).rejects.toThrow()
   })
 
   it('accepts the correct input', async () => {
     await expect(
-      toClassEntity({
+      validateAndCovertToClassEntity({
         id: 'test',
         name: 'test',
         tags: [],
@@ -23,7 +23,7 @@ describe('toClassEntity', () => {
     ).resolves.toBeTruthy()
 
     await expect(
-      toClassEntity({
+      validateAndCovertToClassEntity({
         id: 'test',
         name: 'test',
         tags: [],
@@ -39,7 +39,7 @@ describe('toClassEntity', () => {
 
   it('reject incorrect input', async () => {
     await expect(
-      toClassEntity({
+      validateAndCovertToClassEntity({
         id: 'test',
         name: 'test',
         tags: [],
@@ -54,7 +54,7 @@ describe('toClassEntity', () => {
     ).rejects.toThrow()
 
     await expect(
-      toClassEntity({
+      validateAndCovertToClassEntity({
         id: 'test',
         name: 'test',
         tags: [],
@@ -69,7 +69,7 @@ describe('toClassEntity', () => {
     ).rejects.toThrow()
 
     await expect(
-      toClassEntity({
+      validateAndCovertToClassEntity({
         id: 'test',
         name: 'test',
         tags: [],
