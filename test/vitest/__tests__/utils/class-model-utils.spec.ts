@@ -1,16 +1,16 @@
-import { validateAndCovertClassEntityBody } from 'src/utils/class-model-utils'
+import { validateAndCleanClassEntityBody } from 'src/utils/class-model-utils'
 import { describe, expect, it } from 'vitest'
 
 describe('toClassEntity', () => {
   it('rejects empty input', async () => {
-    await expect(validateAndCovertClassEntityBody({})).rejects.toThrow()
-    await expect(validateAndCovertClassEntityBody(null)).rejects.toThrow()
-    await expect(validateAndCovertClassEntityBody(undefined)).rejects.toThrow()
+    await expect(validateAndCleanClassEntityBody({})).rejects.toThrow()
+    await expect(validateAndCleanClassEntityBody(null)).rejects.toThrow()
+    await expect(validateAndCleanClassEntityBody(undefined)).rejects.toThrow()
   })
 
   it('accepts the correct input', async () => {
     await expect(
-      validateAndCovertClassEntityBody({
+      validateAndCleanClassEntityBody({
         name: 'test',
         tags: [],
         seatingArrangement: {
@@ -22,7 +22,7 @@ describe('toClassEntity', () => {
     ).resolves.toBeTruthy()
 
     await expect(
-      validateAndCovertClassEntityBody({
+      validateAndCleanClassEntityBody({
         name: 'test',
         tags: [],
         seatingArrangement: {
@@ -44,7 +44,7 @@ describe('toClassEntity', () => {
   })
 
   it('omits extra properties', async () => {
-    const converted = await validateAndCovertClassEntityBody({
+    const converted = await validateAndCleanClassEntityBody({
       id: 'test',
       name: 'test',
       tags: [],
@@ -66,7 +66,7 @@ describe('toClassEntity', () => {
 
   it('reject incorrect input', async () => {
     await expect(
-      validateAndCovertClassEntityBody({
+      validateAndCleanClassEntityBody({
         name: 'test',
         tags: [],
         seatingArrangement: {
@@ -80,7 +80,7 @@ describe('toClassEntity', () => {
     ).rejects.toThrow()
 
     await expect(
-      validateAndCovertClassEntityBody({
+      validateAndCleanClassEntityBody({
         name: 'test',
         tags: [],
         seatingArrangement: {
@@ -94,7 +94,7 @@ describe('toClassEntity', () => {
     ).rejects.toThrow()
 
     await expect(
-      validateAndCovertClassEntityBody({
+      validateAndCleanClassEntityBody({
         name: 'test',
         tags: [],
         seatingArrangement: {

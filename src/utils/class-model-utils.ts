@@ -60,7 +60,7 @@ class ClassEntityTransformer implements ClassEntityBody {
   seatingArrangement!: SeatingArrangement
 }
 
-export async function validateAndCovertClassEntityBody(
+export async function validateAndCleanClassEntityBody(
   toConvert: unknown
 ): Promise<ClassEntityBody> {
   const converted = plainToInstance(ClassEntityTransformer, toConvert, {
