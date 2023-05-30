@@ -1,16 +1,16 @@
-import { validateClassEntity } from 'src/utils/class-model-utils'
+import { validateAndCovertClassEntityBody } from 'src/utils/class-model-utils'
 import { describe, expect, it } from 'vitest'
 
 describe('toClassEntity', () => {
   it('rejects empty input', async () => {
-    await expect(validateClassEntity({})).rejects.toThrow()
-    await expect(validateClassEntity(null)).rejects.toThrow()
-    await expect(validateClassEntity(undefined)).rejects.toThrow()
+    await expect(validateAndCovertClassEntityBody({})).rejects.toThrow()
+    await expect(validateAndCovertClassEntityBody(null)).rejects.toThrow()
+    await expect(validateAndCovertClassEntityBody(undefined)).rejects.toThrow()
   })
 
   it('accepts the correct input', async () => {
     await expect(
-      validateClassEntity({
+      validateAndCovertClassEntityBody({
         name: 'test',
         tags: [],
         seatingArrangement: {
@@ -19,10 +19,10 @@ describe('toClassEntity', () => {
           occupants: {},
         },
       })
-    ).resolves.toBeUndefined()
+    ).resolves.toBeTruthy()
 
     await expect(
-      validateClassEntity({
+      validateAndCovertClassEntityBody({
         name: 'test',
         tags: [],
         seatingArrangement: {
@@ -32,12 +32,41 @@ describe('toClassEntity', () => {
           },
         },
       })
-    ).resolves.toBeUndefined()
+    ).resolves.toEqual(
+      expect.objectContaining({
+        seatingArrangement: expect.objectContaining({
+          occupants: expect.objectContaining({
+            student1: expect.anything(),
+          }),
+        }),
+      })
+    )
+  })
+
+  it('omits extra properties', async () => {
+    const converted = await validateAndCovertClassEntityBody({
+      id: 'test',
+      name: 'test',
+      tags: [],
+      seatingArrangement: {
+        columns: [1],
+        // no seating arrangement yet
+        occupants: {
+          student1: [1, 2],
+        },
+      },
+    })
+
+    expect(converted).toEqual(
+      expect.not.objectContaining({
+        id: expect.arrayContaining([1, 2]),
+      })
+    )
   })
 
   it('reject incorrect input', async () => {
     await expect(
-      validateClassEntity({
+      validateAndCovertClassEntityBody({
         name: 'test',
         tags: [],
         seatingArrangement: {
@@ -51,7 +80,7 @@ describe('toClassEntity', () => {
     ).rejects.toThrow()
 
     await expect(
-      validateClassEntity({
+      validateAndCovertClassEntityBody({
         name: 'test',
         tags: [],
         seatingArrangement: {
@@ -65,7 +94,7 @@ describe('toClassEntity', () => {
     ).rejects.toThrow()
 
     await expect(
-      validateClassEntity({
+      validateAndCovertClassEntityBody({
         name: 'test',
         tags: [],
         seatingArrangement: {
