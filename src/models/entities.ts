@@ -7,7 +7,9 @@ export interface ClassEntity {
 
 export interface SeatingArrangement {
   columns: number[]
-  occupants: Map<string, [number, number]>
+  occupants: {
+    [occupantId: string]: [number, number]
+  }
 }
 
 export interface StudentEntity {
