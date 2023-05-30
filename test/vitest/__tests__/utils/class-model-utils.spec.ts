@@ -1,7 +1,7 @@
 import { validateAndCleanClassEntityBody } from 'src/utils/class-model-utils'
 import { describe, expect, it } from 'vitest'
 
-describe('toClassEntity', () => {
+describe('ClassModelUtils', () => {
   it('rejects empty input', async () => {
     await expect(validateAndCleanClassEntityBody({})).rejects.toThrow()
     await expect(validateAndCleanClassEntityBody(null)).rejects.toThrow()
