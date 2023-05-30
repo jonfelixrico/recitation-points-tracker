@@ -1,5 +1,5 @@
 import { Expose, instanceToPlain, plainToInstance } from 'class-transformer'
-import { IsNotEmpty, validate } from 'class-validator'
+import { IsNotEmpty, validateOrReject } from 'class-validator'
 import { StudentEntity } from 'src/models/entities'
 
 type StudentEntityBody = Omit<StudentEntity, 'id'>
@@ -21,7 +21,7 @@ export async function validateAndCleanStudentEntityBody(
     excludeExtraneousValues: true,
   })
 
-  await validate(converted)
+  await validateOrReject(converted)
 
-  return instanceToPlain(value) as StudentEntityBody
+  return instanceToPlain(converted) as StudentEntityBody
 }
