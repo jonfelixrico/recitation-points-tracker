@@ -1,4 +1,10 @@
-import { Expose, Transform, Type, plainToInstance } from 'class-transformer'
+import {
+  Expose,
+  Transform,
+  Type,
+  instanceToPlain,
+  plainToInstance,
+} from 'class-transformer'
 import {
   ArrayMaxSize,
   ArrayMinSize,
@@ -26,7 +32,13 @@ class SeatingArrangementTransformer implements SeatingArrangement {
    * Transforming to an obj is necessary to evaluate the value.
    * @See https://stackoverflow.com/a/72554754
    */
-  @Transform(({ value }) => new Map(Object.entries(value)))
+  @Transform(({ value }) => new Map(Object.entries(value)), {
+    toClassOnly: true,
+  })
+  // Without this, instanceToPlain will turn this into an empty obj
+  @Transform(({ value }) => Object.fromEntries(value), {
+    toPlainOnly: true,
+  })
   occupants!: SeatingArrangement['occupants']
 }
 
@@ -57,5 +69,5 @@ export async function validateAndCovertClassEntityBody(
 
   await validateOrReject(converted)
 
-  return converted
+  return instanceToPlain(converted) as ClassEntityBody
 }
