@@ -5,16 +5,10 @@ export interface ClassEntity {
   seatingArrangement: SeatingArrangement
 }
 
-/**
- * Index 0 is for the column
- * Index 1 is for the seat in the row
- */
-type SeatCoordinates = [number, number]
-
 export interface SeatingArrangement {
   columns: number[]
   occupants: {
-    [occupantId: string]: SeatCoordinates
+    [occupantId: string]: [number, number]
   }
 }
 

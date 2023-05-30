@@ -9,6 +9,7 @@ import { useFirestore } from './firestore.composable'
 import { useSessionUserId } from './session-user.composable'
 import { StudentEntity } from 'src/models/entities'
 import { nanoid } from 'nanoid'
+import { validateAndCleanStudentEntityBody } from 'src/utils/student-model-utils'
 
 export function useStudentAPI() {
   const { firestore } = useFirestore()
@@ -45,11 +46,13 @@ export function useStudentAPI() {
       for (const student of students) {
         const id = nanoid()
 
+        const cleanedStudent = await validateAndCleanStudentEntityBody(student)
+
         const docRef = doc(firestore, path, id)
-        batch.set(docRef, student)
+        batch.set(docRef, cleanedStudent)
 
         insertedStudents.push({
-          ...student,
+          ...cleanedStudent,
           id,
         })
       }
