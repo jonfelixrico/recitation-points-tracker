@@ -44,20 +44,20 @@ describe('ClassModelUtils', () => {
   })
 
   it('omits extra properties', async () => {
-    const converted = await validateAndCleanClassEntityBody({
-      id: 'test',
-      name: 'test',
-      tags: [],
-      seatingArrangement: {
-        columns: [1],
-        // no seating arrangement yet
-        occupants: {
-          student1: [1, 2],
+    await expect(
+      validateAndCleanClassEntityBody({
+        id: 'test',
+        name: 'test',
+        tags: [],
+        seatingArrangement: {
+          columns: [1],
+          // no seating arrangement yet
+          occupants: {
+            student1: [1, 2],
+          },
         },
-      },
-    })
-
-    expect(converted).toEqual(
+      })
+    ).resolves.toEqual(
       expect.not.objectContaining({
         id: expect.arrayContaining([1, 2]),
       })

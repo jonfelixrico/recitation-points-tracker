@@ -23,15 +23,15 @@ describe('StudentModelUtils', () => {
   })
 
   it('omits extra properties', async () => {
-    const converted = await validateAndCleanStudentEntityBody({
-      val1: 1,
-      val2: 2,
-      val3: 3,
-      firstName: 'First name',
-      lastName: 'Last name',
-    })
-
-    expect(converted).toEqual(
+    await expect(
+      validateAndCleanStudentEntityBody({
+        val1: 1,
+        val2: 2,
+        val3: 3,
+        firstName: 'First name',
+        lastName: 'Last name',
+      })
+    ).resolves.toEqual(
       expect.not.objectContaining({
         val1: 1,
         val2: 2,
