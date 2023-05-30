@@ -22,6 +22,5 @@ export async function validateAndCleanStudentEntityBody(
   })
 
   await validateOrReject(converted)
-
-  return instanceToPlain(converted) as StudentEntityBody
+  return converted
 }
