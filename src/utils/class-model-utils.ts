@@ -69,5 +69,9 @@ export async function validateAndCleanClassEntityBody(
 
   await validateOrReject(converted)
 
+  /*
+   * We want to do instanceToPlain because we want to return `seatingArrangement.occupants` back to a plain object.
+   * We can't return it as-is since it's a map, and you can't access attributes from a map like an object (i.e. sampleObject.propertyA)
+   */
   return instanceToPlain(converted) as ClassEntityBody
 }
