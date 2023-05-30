@@ -1,4 +1,3 @@
-import { ClassEntity } from 'src/models/entities'
 import { validateAndCovertClassEntityBody } from 'src/utils/class-model-utils'
 import { describe, expect, it } from 'vitest'
 
@@ -33,7 +32,15 @@ describe('toClassEntity', () => {
           },
         },
       })
-    ).resolves.toBeTruthy()
+    ).resolves.toEqual(
+      expect.objectContaining({
+        seatingArrangement: expect.objectContaining({
+          occupants: expect.objectContaining({
+            student1: expect.anything(),
+          }),
+        }),
+      })
+    )
   })
 
   it('omits extra properties', async () => {
@@ -52,7 +59,7 @@ describe('toClassEntity', () => {
 
     expect(converted).toEqual(
       expect.not.objectContaining({
-        id: expect.anything(),
+        id: expect.arrayContaining([1, 2]),
       })
     )
   })
