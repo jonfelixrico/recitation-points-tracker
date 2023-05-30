@@ -1,4 +1,4 @@
-import { Expose, instanceToPlain, plainToInstance } from 'class-transformer'
+import { Expose, plainToInstance } from 'class-transformer'
 import { IsNotEmpty, validateOrReject } from 'class-validator'
 import { StudentEntity } from 'src/models/entities'
 
