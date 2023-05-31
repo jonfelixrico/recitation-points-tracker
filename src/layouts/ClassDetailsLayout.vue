@@ -38,11 +38,16 @@
           </q-tabs>
         </div>
       </div>
-      <router-view v-model:classData="classData" v-model:students="students" />
+      <router-view
+        v-if="loaded"
+        v-model:classData="classData"
+        v-model:students="students"
+      />
     </div>
   </q-page>
 </template>
 
+<!-- We're not using `script setup` because we need `beforeRouteEnter`. -->
 <script lang="ts">
 import { useQuasar } from 'quasar'
 import { useClassesAPI } from 'src/composables/classes-api.composable'
@@ -70,6 +75,7 @@ export default defineComponent({
 
     const classData = ref<ClassEntity | null>(null)
     const students = ref<StudentEntity[]>([])
+    const isLoaded = ref(false)
 
     onBeforeMount(async () => {
       loading.show()
@@ -80,12 +86,14 @@ export default defineComponent({
         students.value = await getStudentList(id)
       } finally {
         loading.hide()
+        isLoaded.value = true
       }
     })
 
     return {
       classData,
       students,
+      isLoaded,
     }
   },
 })
