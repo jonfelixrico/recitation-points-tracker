@@ -1,61 +1,52 @@
 <template>
-  <q-page class="q-pt-md relative-position">
-    <template v-if="classData">
-      <div class="page-width q-mx-auto column q-gutter-y-md">
-        <div class="row items-center q-gutter-x-lg">
-          <q-btn icon="arrow_back" round flat dense @click="$router.back()" />
-          <div class="text-h4">{{ classData.name }}</div>
-        </div>
+  <div class="column q-gutter-y-md">
+    <!-- display card data -->
 
-        <!-- TODO display card data -->
+    <q-card>
+      <q-card-section class="row items-center justify-between">
+        <span class="text-h5"> {{ t('classes.studentList') }} </span>
+        <q-btn
+          unelevated
+          no-caps
+          color="primary"
+          @click="showAddStudentsDialog"
+        >
+          <div class="row q-gutter-x-sm items-center">
+            <q-icon name="add" />
+            <div>{{ t('classes.addStudents') }}</div>
+          </div>
+        </q-btn>
+      </q-card-section>
+      <q-separator />
+      <q-card-section>
+        <StudentList
+          :students="studentsModel"
+          @add-click="showAddStudentsDialog"
+          @delete="processStudentDelete"
+        />
+      </q-card-section>
+    </q-card>
 
-        <q-card>
-          <q-card-section class="row items-center justify-between">
-            <span class="text-h5"> {{ t('classes.studentList') }} </span>
-            <q-btn
-              unelevated
-              no-caps
-              color="primary"
-              @click="showAddStudentsDialog"
-            >
-              <div class="row q-gutter-x-sm items-center">
-                <q-icon name="add" />
-                <div>{{ t('classes.addStudents') }}</div>
-              </div>
-            </q-btn>
-          </q-card-section>
-          <q-separator />
-          <q-card-section>
-            <StudentList
-              :students="students"
-              @add-click="showAddStudentsDialog"
-              @delete="processStudentDelete"
-            />
-          </q-card-section>
-        </q-card>
+    <q-card>
+      <q-card-section class="row justify-between">
+        <div class="text-h5">{{ t('classes.seatPlan') }}</div>
+        <q-btn color="primary" unelevated no-caps @click="editSeatPlan">
+          <div class="row q-gutter-x-sm items-center">
+            <q-icon name="edit" />
+            <div>{{ t('classes.editSeatPlan') }}</div>
+          </div>
+        </q-btn>
+      </q-card-section>
 
-        <q-card>
-          <q-card-section class="row justify-between">
-            <div class="text-h5">{{ t('classes.seatPlan') }}</div>
-            <q-btn color="primary" unelevated no-caps @click="editSeatPlan">
-              <div class="row q-gutter-x-sm items-center">
-                <q-icon name="edit" />
-                <div>{{ t('classes.editSeatPlan') }}</div>
-              </div>
-            </q-btn>
-          </q-card-section>
+      <q-separator />
 
-          <q-separator />
-
-          <SeatPlanSectionContent
-            class="seating-visualizer"
-            :seating-arrangement="classData.seatingArrangement"
-            :students="students"
-          />
-        </q-card>
-      </div>
-    </template>
-  </q-page>
+      <SeatPlanSectionContent
+        class="seating-visualizer"
+        :seating-arrangement="classDataModel.seatingArrangement"
+        :students="studentsModel"
+      />
+    </q-card>
+  </div>
 </template>
 
 <script lang="ts">
@@ -69,16 +60,14 @@ import { useClassSeatPlanEdit } from 'src/components/class-seat-plan/class-seat-
 import { useClassesAPI } from 'src/composables/classes-api.composable'
 import { useStudentAPI } from 'src/composables/student-api.composable'
 import { ClassEntity, StudentEntity } from 'src/models/entities'
-import { Ref, computed, defineComponent, onMounted, ref } from 'vue'
+import { PropType, Ref, computed, defineComponent, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useRoute } from 'vue-router'
 
-function useStudentsList(classId: Ref<string>) {
+function useStudentsList(classId: Ref<string>, data: Ref<StudentEntity[]>) {
   const { dialog, loading, notify } = useQuasar()
   const { t } = useI18n()
 
   const { getStudentList, createStudents, deleteStudent } = useStudentAPI()
-  const data = ref<StudentEntity[]>([])
 
   async function load() {
     data.value = await getStudentList(classId.value)
@@ -142,53 +131,67 @@ function useStudentsList(classId: Ref<string>) {
 export default defineComponent({
   components: { StudentList, SeatPlanSectionContent },
 
-  async beforeRouteEnter(to) {
-    const { getClass } = useClassesAPI()
-    try {
-      await getClass(String(to.params.classId))
-    } catch (e) {
-      return false
-    }
+  emits: ['update:classData', 'update:students'],
+
+  props: {
+    classData: {
+      type: Object as PropType<ClassEntity>,
+      required: true,
+    },
+
+    students: {
+      type: Array as PropType<StudentEntity[]>,
+      required: true,
+    },
   },
 
-  setup() {
-    const route = useRoute()
-    const classId = computed(() => String(route.params.classId))
-
+  setup(props, { emit }) {
     const { loading } = useQuasar()
 
     const classData = ref<ClassEntity | null>(null)
-    const studentsList = useStudentsList(classId)
 
+    const studentsModel = computed({
+      get() {
+        return props.students
+      },
+      set(value) {
+        emit('update:students', value)
+      },
+    })
+    const studentsList = useStudentsList(
+      computed(() => props.classData.id),
+      studentsModel
+    )
+
+    const classDataModel = computed({
+      get() {
+        return props.classData
+      },
+
+      set(value) {
+        emit('update:classData', value)
+      },
+    })
     const { getClass } = useClassesAPI()
+    async function reloadClassData() {
+      const fetched = await getClass(props.classData.id)
+      if (!fetched) {
+        return
+      }
+
+      classDataModel.value = fetched
+    }
 
     const { t } = useI18n()
 
     const { openEditDialog } = useClassSeatPlanEdit()
 
-    async function loadClassData() {
-      classData.value = await getClass(classId.value)
-    }
-
-    onMounted(async () => {
-      loading.show()
-      try {
-        await loadClassData()
-        await studentsList.load()
-      } catch (e) {
-        // TODO improve logging
-        console.error(e)
-      } finally {
-        loading.hide()
-      }
-    })
-
     return {
-      classData,
-      students: studentsList.data,
       showAddStudentsDialog: studentsList.showAddDialog,
       processStudentDelete: studentsList.processDelete,
       t,
+      studentsModel,
+      classDataModel,
       async editSeatPlan() {
         if (!classData.value?.seatingArrangement || !studentsList.data.value) {
           // TODO add logging
@@ -206,7 +209,7 @@ export default defineComponent({
 
         loading.show()
         try {
-          await loadClassData()
+          await reloadClassData()
         } catch (e) {
           // TODO improve logging and add notif
           console.error(e)
