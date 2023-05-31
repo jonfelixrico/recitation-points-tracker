@@ -1,4 +1,4 @@
-import { Expose, plainToInstance } from 'class-transformer'
+import { Expose, instanceToPlain, plainToInstance } from 'class-transformer'
 import { IsNotEmpty, validateOrReject } from 'class-validator'
 import { StudentEntity } from 'src/models/entities'
 
@@ -22,5 +22,5 @@ export async function validateAndCleanStudentEntityBody(
   })
 
   await validateOrReject(converted)
-  return converted
+  return instanceToPlain(converted) as StudentEntityBody
 }
