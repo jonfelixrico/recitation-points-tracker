@@ -38,17 +38,55 @@
           </q-tabs>
         </div>
       </div>
-      <router-view />
+      <router-view v-model:classData="classData" v-model:students="students" />
     </div>
   </q-page>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { useQuasar } from 'quasar'
+import { useClassesAPI } from 'src/composables/classes-api.composable'
+import { useStudentAPI } from 'src/composables/student-api.composable'
+import { ClassEntity, StudentEntity } from 'src/models/entities'
+import { defineComponent, onBeforeMount, ref } from 'vue'
+import { RouteLocation, useRoute } from 'vue-router'
 
 export default defineComponent({
-  beforeRouteEnter() {
-    console.log('hi')
+  async beforeRouteEnter({ params }: RouteLocation) {
+    const { getClass } = useClassesAPI()
+    try {
+      await getClass(String(params.classId))
+    } catch (e) {
+      return false
+    }
+  },
+
+  setup() {
+    const { loading } = useQuasar()
+    const route = useRoute()
+
+    const { getClass } = useClassesAPI()
+    const { getStudentList } = useStudentAPI()
+
+    const classData = ref<ClassEntity | null>(null)
+    const students = ref<StudentEntity[]>([])
+
+    onBeforeMount(async () => {
+      loading.show()
+      const id = String(route.params.classId)
+
+      try {
+        classData.value = await getClass(id)
+        students.value = await getStudentList(id)
+      } finally {
+        loading.hide()
+      }
+    })
+
+    return {
+      classData,
+      students,
+    }
   },
 })
 </script>
