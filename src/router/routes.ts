@@ -28,8 +28,14 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: '/classes/:classId',
-        name: 'classDetails',
-        component: () => import('pages/ClassDetails.vue'),
+        component: () => import('layouts/ClassDetailsLayout.vue'),
+        children: [
+          {
+            path: '/',
+            name: 'classDetails',
+            component: () => import('pages/ClassDetails.vue'),
+          },
+        ],
       },
     ],
   },
