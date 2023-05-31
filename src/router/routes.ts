@@ -31,7 +31,7 @@ const routes: RouteRecordRaw[] = [
         component: () => import('layouts/ClassDetailsLayout.vue'),
         children: [
           {
-            path: '/',
+            path: '',
             name: 'classDetails',
             component: () => import('pages/ClassDetails.vue'),
           },
