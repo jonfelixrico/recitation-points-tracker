@@ -193,14 +193,14 @@ export default defineComponent({
       studentsModel,
       classDataModel,
       async editSeatPlan() {
-        if (!classData.value?.seatingArrangement || !studentsList.data.value) {
+        if (!props.classData.seatingArrangement || !props.students) {
           // TODO add logging
           return
         }
 
         const wereChangesUploaded = await openEditDialog(
-          classData.value,
-          studentsList.data.value
+          props.classData,
+          props.students
         )
 
         if (!wereChangesUploaded) {
