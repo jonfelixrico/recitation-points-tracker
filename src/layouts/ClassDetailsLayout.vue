@@ -1,10 +1,14 @@
 <template>
   <q-page class="q-pt-md relative-position">
     <div class="page-width q-mx-auto column q-gutter-y-md">
-      <div class="row items-center q-gutter-x-lg">
+      <div class="row items-center q-gutter-x-lg q-mb-sm">
         <q-btn icon="arrow_back" round flat dense @click="$router.back()" />
-        <div class="text-h4">Test</div>
 
+        <!-- class name -->
+        <div v-if="classData?.name" class="text-h4">{{ classData.name }}</div>
+        <q-skeleton v-else class="col-3 self-stretch" />
+
+        <!-- navigation -->
         <div class="col row justify-end">
           <q-tabs
             active-color="primary"
@@ -38,6 +42,8 @@
           </q-tabs>
         </div>
       </div>
+
+      <!-- content -->
       <router-view
         v-if="isLoaded"
         v-model:classData="classData"
