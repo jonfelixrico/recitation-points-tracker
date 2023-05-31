@@ -60,7 +60,7 @@ import { useClassSeatPlanEdit } from 'src/components/class-seat-plan/class-seat-
 import { useClassesAPI } from 'src/composables/classes-api.composable'
 import { useStudentAPI } from 'src/composables/student-api.composable'
 import { ClassEntity, StudentEntity } from 'src/models/entities'
-import { PropType, Ref, computed, defineComponent, ref } from 'vue'
+import { PropType, Ref, computed, defineComponent } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 function useStudentsList(classId: Ref<string>, data: Ref<StudentEntity[]>) {
