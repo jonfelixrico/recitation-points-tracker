@@ -148,8 +148,6 @@ export default defineComponent({
   setup(props, { emit }) {
     const { loading } = useQuasar()
 
-    const classData = ref<ClassEntity | null>(null)
-
     const studentsModel = computed({
       get() {
         return props.students
