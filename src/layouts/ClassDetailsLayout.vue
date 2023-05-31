@@ -39,7 +39,7 @@
         </div>
       </div>
       <router-view
-        v-if="loaded"
+        v-if="isLoaded"
         v-model:classData="classData"
         v-model:students="students"
       />
