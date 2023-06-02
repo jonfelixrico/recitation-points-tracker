@@ -25,8 +25,7 @@
               exact
               replace
             >
-              <!-- TODO i18nize -->
-              Overview
+              {{ t('classes.tabs.overview') }}
             </q-route-tab>
 
             <q-route-tab
@@ -37,7 +36,7 @@
               exact
               replace
             >
-              Recitations
+              {{ t('classes.tabs.recitations') }}
             </q-route-tab>
           </q-tabs>
         </div>
@@ -60,6 +59,7 @@ import { useClassesAPI } from 'src/composables/classes-api.composable'
 import { useStudentAPI } from 'src/composables/student-api.composable'
 import { ClassEntity, StudentEntity } from 'src/models/entities'
 import { defineComponent, onBeforeMount, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { RouteLocation, useRoute } from 'vue-router'
 
 export default defineComponent({
@@ -76,6 +76,7 @@ export default defineComponent({
   setup() {
     const { loading } = useQuasar()
     const route = useRoute()
+    const { t } = useI18n()
 
     const { getClass } = useClassesAPI()
     const { getStudentList } = useStudentAPI()
@@ -101,6 +102,7 @@ export default defineComponent({
       classData,
       students,
       isLoaded,
+      t,
     }
   },
 })
