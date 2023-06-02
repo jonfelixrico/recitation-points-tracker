@@ -1,7 +1,7 @@
 <template>
   <q-card>
     <q-card-section class="row justify-end">
-      <q-btn color="primary" unelevated no-caps>
+      <q-btn color="primary" unelevated no-caps @click="startAddProcess">
         <div class="row q-gutter-x-sm items-center">
           <q-icon name="add" />
           <!-- TODO i18nize -->
@@ -30,6 +30,7 @@ import { useRecitationsAPI } from 'src/composables/recitations-api.composable'
 import { RecitationEntity } from 'src/models/entities'
 import { PropType, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
+import { useAddRecitations } from './add-recitations-composable'
 
 defineProps({
   recitations: {
@@ -46,11 +47,28 @@ const route = useRoute()
 
 const { getRecitationList } = useRecitationsAPI()
 
-onMounted(async () => {
+const { startAddRecitationFlow } = useAddRecitations(
+  String(route.params.classId)
+)
+
+async function fetchRecitationsList() {
   emit(
     'update:recitations',
     await getRecitationList(String(route.params.classId))
   )
+}
+
+async function startAddProcess() {
+  const added = await startAddRecitationFlow()
+  if (!added) {
+    return
+  }
+
+  await fetchRecitationsList()
+}
+
+onMounted(async () => {
+  await fetchRecitationsList()
 })
 </script>
 
