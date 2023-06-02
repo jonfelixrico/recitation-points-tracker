@@ -36,6 +36,7 @@ export function useAddRecitations(classId: string) {
         classId,
         name,
         tags: [],
+        recitationDt: new Date(),
       })
     },
   }

@@ -24,6 +24,7 @@ export interface RecitationEntity {
   classId: string
   name: string
   tags: string[]
+  recitationDt: Date
 }
 
 export interface RecitedStudentsEntity {

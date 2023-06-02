@@ -26,14 +26,16 @@ function useRecitationsDataConverter(
         classId: classRef.id,
         name: data.name,
         tags: data.tags,
+        recitationDt: data.recitationDt,
       }
     },
 
-    toFirestore({ classId, name, tags }) {
+    toFirestore({ classId, name, tags, recitationDt }) {
       return {
         classRef: doc(firestore, `userse/${uid}/classes/${classId}`),
         name,
         tags,
+        recitationDt,
       }
     },
   }

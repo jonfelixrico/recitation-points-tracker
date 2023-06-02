@@ -16,6 +16,10 @@ class RecitationEntityTransformer implements RecitationBody {
   @IsNotEmpty()
   @Expose()
   tags!: string[]
+
+  @IsNotEmpty()
+  @Expose()
+  recitationDt!: Date
 }
 
 export async function validateAndConvertRecitation(data: RecitationBody) {
