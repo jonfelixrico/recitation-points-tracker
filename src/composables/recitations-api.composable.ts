@@ -9,7 +9,9 @@ export function useRecitationsAPI() {
   const uid = useSessionUserId()
 
   return {
-    async createRecitation(body: Omit<RecitationEntity, 'id'>) {
+    async createRecitation(
+      body: Omit<RecitationEntity, 'id'>
+    ): Promise<RecitationEntity> {
       const id = nanoid()
       const { classId, ...others } = body
 
@@ -24,6 +26,12 @@ export function useRecitationsAPI() {
       )
 
       await setDoc(ref, others)
+
+      return {
+        id,
+        classId,
+        ...others,
+      }
     },
   }
 }
