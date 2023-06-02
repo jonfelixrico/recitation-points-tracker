@@ -1,7 +1,7 @@
 import { useQuasar } from 'quasar'
 import { useRecitationsAPI } from 'src/composables/recitations-api.composable'
 
-export function useAddRecitations() {
+export function useAddRecitations(classId: string) {
   const { dialog } = useQuasar()
   const { createRecitation } = useRecitationsAPI()
 
@@ -24,7 +24,7 @@ export function useAddRecitations() {
   }
 
   return {
-    async startAddRecitationFlow(classId: string) {
+    async startAddRecitationFlow() {
       const name = await showDialog()
       if (!name) {
         return null
