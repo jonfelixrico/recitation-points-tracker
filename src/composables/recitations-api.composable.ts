@@ -11,8 +11,7 @@ import {
 } from 'firebase/firestore'
 import { useSessionUserId } from './session-user.composable'
 import { nanoid } from 'nanoid'
-import { Expose, instanceToPlain, plainToInstance } from 'class-transformer'
-import { IsNotEmpty, validateOrReject } from 'class-validator'
+import { validateAndConvertRecitation } from 'src/utils/recitation-model-utils'
 
 // TODO move this out
 function useRecitationsDataConverter(
@@ -41,29 +40,6 @@ function useRecitationsDataConverter(
   }
 }
 
-// TODO move this out
-class RecitationEntityTransformer implements Omit<RecitationEntity, 'id'> {
-  @IsNotEmpty()
-  @Expose()
-  classId!: string
-
-  @IsNotEmpty()
-  @Expose()
-  name!: string
-
-  @IsNotEmpty()
-  @Expose()
-  tags!: string[]
-}
-
-async function validateAndConvert(data: Omit<RecitationEntity, 'id'>) {
-  const converted = plainToInstance(RecitationEntityTransformer, data)
-  await validateOrReject(converted)
-  return instanceToPlain(converted, {
-    excludeExtraneousValues: true,
-  })
-}
-
 export function useRecitationsAPI() {
   const { firestore } = useFirestore()
   const uid = useSessionUserId()
@@ -85,7 +61,7 @@ export function useRecitationsAPI() {
         `users/${uid}/classes/${body.classId}/recitations`,
         id
       ).withConverter(converter)
-      await setDoc(recitationRef, await validateAndConvert(body))
+      await setDoc(recitationRef, await validateAndConvertRecitation(body))
 
       return newRecitation
     },
