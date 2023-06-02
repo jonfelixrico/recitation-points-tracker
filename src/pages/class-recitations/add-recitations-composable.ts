@@ -7,7 +7,9 @@ export function useAddRecitations(classId: string) {
 
   function showDialog(): Promise<string | null> {
     return new Promise((resolve) => {
+      // TODO improve dialog by using custom one
       dialog({
+        // TODO i18nize this
         title: 'Add Recitation',
         prompt: {
           model: '',
