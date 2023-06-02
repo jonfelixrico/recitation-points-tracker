@@ -62,4 +62,9 @@ export default {
   removeSeat: 'Remove Seat',
   editSeatPlan: 'Edit Seat Plan',
   seatPlan: 'Seat Plan',
+
+  tabs: {
+    overview: 'Overview',
+    recitations: 'Recitations',
+  },
 }
