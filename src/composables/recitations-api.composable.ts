@@ -1,6 +1,6 @@
 import { RecitationEntity } from 'src/models/entities'
 import { useFirestore } from './firestore.composable'
-import { doc, setDoc } from 'firebase/firestore'
+import { collection, doc, getDocs, setDoc } from 'firebase/firestore'
 import { useSessionUserId } from './session-user.composable'
 import { nanoid } from 'nanoid'
 
@@ -31,6 +31,22 @@ export function useRecitationsAPI() {
         classId,
         ...others,
       }
+    },
+
+    async getRecitationList(classId: string) {
+      const recitations: RecitationEntity[] = []
+
+      const results = await getDocs(
+        collection(firestore, `users/${uid}/classes/${classId}/recitations`)
+      )
+      results.forEach((doc) => {
+        recitations.push({
+          ...doc.data(),
+          id: doc.id,
+        } as RecitationEntity)
+      })
+
+      return recitations
     },
   }
 }
