@@ -68,6 +68,7 @@ export default defineComponent({
     try {
       await getClass(String(params.classId))
     } catch (e) {
+      // TODO add dialog informing the user of the error
       return false
     }
   },
