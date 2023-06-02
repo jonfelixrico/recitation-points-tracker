@@ -43,11 +43,17 @@
       </div>
 
       <!-- content -->
-      <router-view
-        v-if="isLoaded"
-        v-model:classData="classData"
-        v-model:students="students"
-      />
+      <div>
+        <!--
+          The parent div is there to prevent any gutter classes from the children from
+          affecting the layout since we're already using the gutter classes in the parent.
+        -->
+        <router-view
+          v-if="isLoaded"
+          v-model:classData="classData"
+          v-model:students="students"
+        />
+      </div>
     </div>
   </q-page>
 </template>
