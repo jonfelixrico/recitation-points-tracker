@@ -4,7 +4,7 @@ import { doc, setDoc } from 'firebase/firestore'
 import { useSessionUserId } from './session-user.composable'
 import { nanoid } from 'nanoid'
 
-export function useRecitationApi() {
+export function useRecitationsAPI() {
   const { firestore } = useFirestore()
   const uid = useSessionUserId()
 
