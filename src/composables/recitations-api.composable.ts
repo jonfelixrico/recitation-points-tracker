@@ -15,17 +15,16 @@ export function useRecitationsAPI() {
       const id = nanoid()
       const { classId, ...others } = body
 
-      const ref = doc(
+      const recitationRef = doc(
         firestore,
-        'users',
-        String(uid),
-        'classes',
-        classId,
-        'recitations',
+        `users/${uid}/classes/${classId}/recitations`,
         id
       )
 
-      await setDoc(ref, others)
+      await setDoc(recitationRef, {
+        ...others,
+        classRef: doc(firestore, `users/${uid}/classes`, classId),
+      })
 
       return {
         id,
