@@ -13,7 +13,6 @@ import { useSessionUserId } from './session-user.composable'
 import { nanoid } from 'nanoid'
 import { validateAndConvertRecitation } from 'src/utils/recitation-model-utils'
 
-// TODO move this out
 function useRecitationsDataConverter(
   firestore: Firestore,
   uid: string
