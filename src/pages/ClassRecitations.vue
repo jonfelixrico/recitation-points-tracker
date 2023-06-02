@@ -19,6 +19,35 @@
   </q-card>
 </template>
 
+<script setup lang="ts">
+import { useRecitationsAPI } from 'src/composables/recitations-api.composable'
+import { RecitationEntity } from 'src/models/entities'
+import { PropType, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
+
+defineProps({
+  recitations: {
+    type: Array as PropType<RecitationEntity[]>,
+    required: true,
+  },
+})
+
+const emit = defineEmits<{
+  (e: 'update:recitations', recitations: RecitationEntity[]): void
+}>()
+
+const route = useRoute()
+
+const { getRecitationList } = useRecitationsAPI()
+
+onMounted(async () => {
+  emit(
+    'update:recitations',
+    await getRecitationList(String(route.params.classId))
+  )
+})
+</script>
+
 <style lang="scss">
 .empty-section {
   height: 500px;
