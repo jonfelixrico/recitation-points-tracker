@@ -12,7 +12,13 @@
 
     <q-separator />
 
-    <q-card-section class="empty-section flex flex-center">
+    <q-card-section v-if="recitations.length">
+      <div v-for="recitation of recitations" :key="recitation.id">
+        {{ recitation }}
+      </div>
+    </q-card-section>
+
+    <q-card-section v-else class="empty-section flex flex-center">
       <!-- TODO add more features to this screen -->
       No recitations
     </q-card-section>
