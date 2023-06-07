@@ -46,6 +46,10 @@ export default {
       title: 'Edit Seat Plan',
       save: 'Save Changes',
     },
+
+    addRecitation: {
+      title: 'Add Recitation',
+    },
   },
 
   addStudents: 'Add Students',
