@@ -85,11 +85,12 @@ export function useRecitationsAPI() {
     },
 
     async getRecitation(
+      classId: string,
       recitationId: string
     ): Promise<RecitationEntity | null> {
       const ref = doc(
         firestore,
-        `users/${uid}/classes/*/recitations/${recitationId}`
+        `users/${uid}/classes/${classId}/recitations/${recitationId}`
       ).withConverter(converter)
 
       const retrieved = await getDoc(ref)
