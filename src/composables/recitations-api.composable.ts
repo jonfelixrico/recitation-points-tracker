@@ -26,7 +26,7 @@ function useRecitationsDataConverter(
         classId: classRef.id,
         name: data.name,
         tags: data.tags,
-        recitationDt: data.recitationDt,
+        recitationDt: data.recitationDt.toDate(),
       }
     },
 
