@@ -21,14 +21,13 @@ export interface StudentEntity {
 
 export interface RecitationEntity {
   id: string
-  classId: string
+
   name: string
+
   tags: string[]
-  recitationDt: Date
 }
 
 export interface RecitedStudentsEntity {
   id: string
-  recitationId: string
   points: number
 }

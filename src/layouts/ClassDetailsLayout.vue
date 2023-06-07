@@ -43,18 +43,11 @@
       </div>
 
       <!-- content -->
-      <div>
-        <!--
-          The parent div is there to prevent any gutter classes from the children from
-          affecting the layout since we're already using the gutter classes in the parent.
-        -->
-        <router-view
-          v-if="isLoaded"
-          v-model:classData="classData"
-          v-model:students="students"
-          v-model:recitations="recitations"
-        />
-      </div>
+      <router-view
+        v-if="isLoaded"
+        v-model:classData="classData"
+        v-model:students="students"
+      />
     </div>
   </q-page>
 </template>
@@ -64,11 +57,7 @@
 import { useQuasar } from 'quasar'
 import { useClassesAPI } from 'src/composables/classes-api.composable'
 import { useStudentAPI } from 'src/composables/student-api.composable'
-import {
-  ClassEntity,
-  RecitationEntity,
-  StudentEntity,
-} from 'src/models/entities'
+import { ClassEntity, StudentEntity } from 'src/models/entities'
 import { defineComponent, onBeforeMount, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { RouteLocation, useRoute } from 'vue-router'
@@ -94,7 +83,6 @@ export default defineComponent({
 
     const classData = ref<ClassEntity | null>(null)
     const students = ref<StudentEntity[]>([])
-    const recitations = ref<RecitationEntity[]>([])
     const isLoaded = ref(false)
 
     onBeforeMount(async () => {
@@ -113,7 +101,6 @@ export default defineComponent({
     return {
       classData,
       students,
-      recitations,
       isLoaded,
       t,
     }
