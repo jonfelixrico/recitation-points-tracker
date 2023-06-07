@@ -68,6 +68,6 @@ export default {
     recitations: 'Recitations',
   },
 
-  addRecitations: 'Add Recitations',
+  addRecitation: 'Add Recitation',
   emptyRecitations: 'No recitations yet',
 }

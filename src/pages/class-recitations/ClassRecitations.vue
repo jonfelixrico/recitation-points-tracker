@@ -4,7 +4,7 @@
       <q-btn color="primary" unelevated no-caps @click="startAddProcess">
         <div class="row q-gutter-x-sm items-center">
           <q-icon name="add" />
-          <div>{{ t('classes.addRecitations') }}</div>
+          <div>{{ t('classes.addRecitation') }}</div>
         </div>
       </q-btn>
     </q-card-section>
