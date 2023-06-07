@@ -12,9 +12,13 @@
     <q-separator />
 
     <q-card-section v-if="recitations.length">
-      <div v-for="recitation of recitations" :key="recitation.id">
-        {{ recitation }}
-      </div>
+      <q-list separator>
+        <RecitationItem
+          v-for="recitation of recitations"
+          :key="recitation.id"
+          :recitation="recitation"
+        />
+      </q-list>
     </q-card-section>
 
     <q-card-section v-else class="empty-section flex flex-center">
@@ -31,6 +35,7 @@ import { PropType, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useAddRecitations } from './add-recitations-composable'
 import { useI18n } from 'vue-i18n'
+import RecitationItem from 'components/class-recitations/RecitationItem.vue'
 
 defineProps({
   recitations: {
