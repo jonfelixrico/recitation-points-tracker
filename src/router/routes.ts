@@ -47,7 +47,7 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: '/recitations/:recitationId',
-        name: 'RecitationDetails',
+        name: 'recitationDetails',
         component: () => import('pages/RecitationDetails.vue'),
       },
     ],
