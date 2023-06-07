@@ -3,9 +3,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { RecitationEntity } from 'src/models/entities'
+import { PropType, defineComponent } from 'vue'
 
 export default defineComponent({
+  props: {
+    recitation: {
+      required: true,
+      type: Object as PropType<RecitationEntity>,
+    },
+  },
+
   beforeRouteEnter() {
     // TODO do something
   },
