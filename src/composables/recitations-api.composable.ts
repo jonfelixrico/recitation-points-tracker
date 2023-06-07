@@ -84,13 +84,20 @@ export function useRecitationsAPI() {
       return recitations
     },
 
-    async getRecitation(recitationId: string) {
+    async getRecitation(
+      recitationId: string
+    ): Promise<RecitationEntity | null> {
       const ref = doc(
         firestore,
         `users/${uid}/classes/*/recitations/${recitationId}`
       ).withConverter(converter)
 
-      return await getDoc(ref)
+      const retrieved = await getDoc(ref)
+      if (!retrieved.exists()) {
+        return null
+      }
+
+      return retrieved.data()
     },
   }
 }
