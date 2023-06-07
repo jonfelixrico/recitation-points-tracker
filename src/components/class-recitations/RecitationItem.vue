@@ -5,8 +5,15 @@
       <div>{{ recitation.recitationDt }}</div>
     </q-item-section>
     <q-item-section side>
-      <!-- TODO i18nize this -->
-      <q-btn>View Recitation</q-btn>
+      <q-btn
+        no-caps
+        unelevated
+        color="primary"
+        @click="emit('click', recitation.id)"
+      >
+        <!-- TODO i18nize this -->
+        View Recitation
+      </q-btn>
     </q-item-section>
   </q-item>
 </template>
@@ -21,4 +28,8 @@ defineProps({
     type: Object as PropType<RecitationEntity>,
   },
 })
+
+const emit = defineEmits<{
+  (e: 'click', id: string): void
+}>()
 </script>
