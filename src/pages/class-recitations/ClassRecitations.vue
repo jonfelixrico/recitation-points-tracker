@@ -17,6 +17,7 @@
           v-for="recitation of recitations"
           :key="recitation.id"
           :recitation="recitation"
+          @click="(id) => goToRecitationDetails(id)"
         />
       </q-list>
     </q-card-section>
@@ -32,7 +33,7 @@
 import { useRecitationsAPI } from 'src/composables/recitations-api.composable'
 import { RecitationEntity } from 'src/models/entities'
 import { PropType, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useAddRecitations } from './add-recitations-composable'
 import { useI18n } from 'vue-i18n'
 import RecitationItem from 'components/class-recitations/RecitationItem.vue'
@@ -77,6 +78,16 @@ async function startAddProcess() {
 onMounted(async () => {
   await fetchRecitationsList()
 })
+
+const router = useRouter()
+function goToRecitationDetails(recitationId: string) {
+  router.push({
+    name: 'recitationDetails',
+    params: {
+      recitationId,
+    },
+  })
+}
 </script>
 
 <style lang="scss">
