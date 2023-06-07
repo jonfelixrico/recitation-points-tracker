@@ -67,4 +67,7 @@ export default {
     overview: 'Overview',
     recitations: 'Recitations',
   },
+
+  addRecitations: 'Add Recitations',
+  emptyRecitations: 'No recitations yet',
 }
