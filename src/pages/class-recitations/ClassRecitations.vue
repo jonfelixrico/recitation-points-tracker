@@ -4,8 +4,7 @@
       <q-btn color="primary" unelevated no-caps @click="startAddProcess">
         <div class="row q-gutter-x-sm items-center">
           <q-icon name="add" />
-          <!-- TODO i18nize -->
-          <div>Add Recitations</div>
+          <div>{{ t('classes.addRecitations') }}</div>
         </div>
       </q-btn>
     </q-card-section>
@@ -20,7 +19,7 @@
 
     <q-card-section v-else class="empty-section flex flex-center">
       <!-- TODO add more features to this screen -->
-      No recitations
+      {{ t('classes.emptyRecitations') }}
     </q-card-section>
   </q-card>
 </template>
@@ -31,6 +30,7 @@ import { RecitationEntity } from 'src/models/entities'
 import { PropType, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useAddRecitations } from './add-recitations-composable'
+import { useI18n } from 'vue-i18n'
 
 defineProps({
   recitations: {
@@ -44,6 +44,8 @@ const emit = defineEmits<{
 }>()
 
 const route = useRoute()
+
+const { t } = useI18n()
 
 const { getRecitationList } = useRecitationsAPI()
 
