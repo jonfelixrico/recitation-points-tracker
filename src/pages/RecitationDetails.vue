@@ -3,19 +3,19 @@
 </template>
 
 <script lang="ts">
-import { RecitationEntity } from 'src/models/entities'
-import { PropType, defineComponent } from 'vue'
+import { useRecitationsAPI } from 'src/composables/recitations-api.composable'
+import { defineComponent } from 'vue'
 
 export default defineComponent({
-  props: {
-    recitation: {
-      required: true,
-      type: Object as PropType<RecitationEntity>,
-    },
-  },
-
-  beforeRouteEnter() {
-    // TODO do something
+  async beforeRouteEnter(to) {
+    const { getRecitation } = useRecitationsAPI()
+    try {
+      await getRecitation(String(to.params.recitationId))
+    } catch (e) {
+      console.error(e)
+      // TODO show dialog
+      return false
+    }
   },
 })
 </script>
