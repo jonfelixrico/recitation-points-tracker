@@ -35,6 +35,7 @@ export function useClassData(classId: Ref<string>) {
     await Promise.all([fetchStudents(), fetchClass()])
   }
 
+  // TODO add logging and error handling for both downstream
   onMounted(fetch)
   watch([classId], fetch)
 
