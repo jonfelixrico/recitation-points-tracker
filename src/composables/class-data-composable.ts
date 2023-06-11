@@ -35,7 +35,6 @@ export function useClassData(classId: Ref<string>) {
     await Promise.all([fetchStudents(), fetchClass()])
   }
 
-  // TODO add logging and error handling for both downstream
   onMounted(async () => {
     try {
       console.debug('%s: mount detected, fetching', classId.value)
