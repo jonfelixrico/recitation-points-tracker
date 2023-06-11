@@ -9,8 +9,14 @@ export function useRecitationData(
   const { getRecitation } = useRecitationsAPI()
 
   const data = ref<RecitationEntity | null>(null)
+  const isFetchOngoing = ref(false)
   async function fetchRecitations() {
-    data.value = await getRecitation(classId.value, recitationId.value)
+    isFetchOngoing.value = true
+    try {
+      data.value = await getRecitation(classId.value, recitationId.value)
+    } finally {
+      isFetchOngoing.value = false
+    }
   }
 
   watch([classId, recitationId], async () => {
@@ -21,5 +27,6 @@ export function useRecitationData(
   return {
     data,
     fetchRecitations,
+    isFetchOngoing,
   }
 }
