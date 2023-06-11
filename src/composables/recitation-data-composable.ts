@@ -1,6 +1,6 @@
 import { useRecitationsAPI } from 'src/composables/recitations-api.composable'
 import { RecitationEntity } from 'src/models/entities'
-import { Ref, ref, watch } from 'vue'
+import { Ref, onMounted, ref, watch } from 'vue'
 
 export function useRecitationData(
   classId: Ref<string>,
@@ -19,10 +19,9 @@ export function useRecitationData(
     }
   }
 
-  watch([classId, recitationId], async () => {
-    await fetchRecitations()
-    // TODO add logging and error handling
-  })
+  // TODO add logging and error handling for both downstream
+  watch([classId, recitationId], fetchRecitations)
+  onMounted(fetchRecitations)
 
   return {
     data,
