@@ -40,15 +40,23 @@ export function useRecitationData(
 
   onMounted(async () => {
     try {
-      console.debug('%s/%s: mount detected, fetching', classId, recitationId)
+      console.debug(
+        '%s/%s: mount detected, fetching',
+        classId.value,
+        recitationId.value
+      )
       await fetchRecitations()
-      console.log('%s/%s: reloaded data due to mount', classId, recitationId)
+      console.log(
+        '%s/%s: reloaded data due to mount',
+        classId.value,
+        recitationId.value
+      )
     } catch (e) {
       console.error(
         e,
         '%s/%s: error caught while trying to fetch data due to mount',
-        classId,
-        recitationId
+        classId.value,
+        recitationId.value
       )
     }
   })

@@ -36,8 +36,29 @@ export function useClassData(classId: Ref<string>) {
   }
 
   // TODO add logging and error handling for both downstream
-  onMounted(fetch)
-  watch([classId], fetch)
+  onMounted(async () => {
+    try {
+      console.debug('%s: mount detected, fetching', classId.value)
+      await fetch()
+      console.log('%s: fetched for mount', classId.value)
+    } catch (e) {
+      console.error(
+        e,
+        '%s: caught error while fetching for mount',
+        classId.value
+      )
+    }
+  })
+
+  watch([classId], async ([classId]) => {
+    try {
+      console.debug('%s: id change detected, fetching', classId)
+      await fetch()
+      console.log('%s: fetched for id change', classId)
+    } catch (e) {
+      console.error(e, '%s: caught error while fetching for id change', classId)
+    }
+  })
 
   return {
     data: computed<ClassData | null>(() => {
