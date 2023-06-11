@@ -17,7 +17,7 @@
           v-for="recitation of recitations"
           :key="recitation.id"
           :recitation="recitation"
-          @click="(id) => goToRecitationDetails(id)"
+          @click="goToRecitationDetails"
         />
       </q-list>
     </q-card-section>
