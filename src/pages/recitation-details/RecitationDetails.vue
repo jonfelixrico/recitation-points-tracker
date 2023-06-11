@@ -4,7 +4,9 @@
       <div class="row items-center q-gutter-x-lg">
         <q-btn icon="arrow_back" round flat dense @click="$router.back()" />
 
-        <div v-if="recitation?.name" class="text-h4">{{ recitation.name }}</div>
+        <div v-if="recitationData?.name" class="text-h4">
+          {{ recitationData.name }}
+        </div>
         <q-skeleton v-else class="col-3 self-stretch" />
       </div>
 
@@ -16,9 +18,10 @@
 </template>
 
 <script lang="ts">
+import { useClassData } from 'src/composables/class-data-composable'
+import { useRecitationData } from 'src/composables/recitation-data-composable'
 import { useRecitationsAPI } from 'src/composables/recitations-api.composable'
-import { RecitationEntity } from 'src/models/entities'
-import { defineComponent, onMounted, ref } from 'vue'
+import { computed, defineComponent } from 'vue'
 import { useRoute } from 'vue-router'
 
 export default defineComponent({
@@ -37,18 +40,16 @@ export default defineComponent({
   },
 
   setup() {
-    const { getRecitation } = useRecitationsAPI()
-    const recitation = ref<null | RecitationEntity>(null)
     const route = useRoute()
-    onMounted(async () => {
-      recitation.value = await getRecitation(
-        String(route.params.classId),
-        String(route.params.recitationId)
-      )
-    })
+    const classId = computed(() => String(route.params.classId))
+    const recitationId = computed(() => String(route.params.recitationId))
+
+    const classData = useClassData(classId)
+    const recitationData = useRecitationData(classId, recitationId)
 
     return {
-      recitation,
+      classData,
+      recitationData,
     }
   },
 })
