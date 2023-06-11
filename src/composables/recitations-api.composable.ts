@@ -6,6 +6,7 @@ import {
   FirestoreDataConverter,
   collection,
   doc,
+  getDoc,
   getDocs,
   setDoc,
 } from 'firebase/firestore'
@@ -81,6 +82,23 @@ export function useRecitationsAPI() {
       })
 
       return recitations
+    },
+
+    async getRecitation(
+      classId: string,
+      recitationId: string
+    ): Promise<RecitationEntity | null> {
+      const ref = doc(
+        firestore,
+        `users/${uid}/classes/${classId}/recitations/${recitationId}`
+      ).withConverter(converter)
+
+      const retrieved = await getDoc(ref)
+      if (!retrieved.exists()) {
+        return null
+      }
+
+      return retrieved.data()
     },
   }
 }

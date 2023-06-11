@@ -1,5 +1,6 @@
 .page-width {
-  width: $breakpoint-sm;
+  width: $breakpoint-md;
+  max-width: 100vw;
 }
 
 .border-bottom {
@@ -12,4 +13,8 @@
 
 .cursor-grab {
   cursor: grab;
+}
+
+body {
+  background-color: $grey-2;
 }
