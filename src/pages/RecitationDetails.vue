@@ -44,7 +44,7 @@ export default defineComponent({
     const classId = computed(() => String(route.params.classId))
     const recitationId = computed(() => String(route.params.recitationId))
 
-    const classData = useClassData(classId)
+    const { data: classData } = useClassData(classId)
     const recitationData = useRecitationData(classId, recitationId)
 
     return {

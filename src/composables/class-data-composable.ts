@@ -1,7 +1,7 @@
 import { useClassesAPI } from 'src/composables/classes-api.composable'
 import { useStudentAPI } from 'src/composables/student-api.composable'
 import { ClassEntity, StudentEntity } from 'src/models/entities'
-import { Ref, ref, watch } from 'vue'
+import { Ref, computed, ref, watch } from 'vue'
 
 type ClassData = ClassEntity & { students: StudentEntity[] }
 
@@ -9,19 +9,21 @@ export function useClassData(classId: Ref<string>) {
   const { getClass } = useClassesAPI()
   const { getStudentList } = useStudentAPI()
 
-  const data = ref<ClassData | null>(null)
+  const classData = ref<ClassEntity | null>(null)
+  const studentsData = ref<StudentEntity[]>([])
+
+  async function fetchStudents() {
+    studentsData.value = await getStudentList(classId.value)
+  }
+
+  async function fetchClass() {
+    classData.value = await getClass(classId.value)
+  }
 
   watch(
     [classId],
-    async ([classId]) => {
-      const getClassOutput = (await getClass(classId)) as ClassEntity // trust as not null since null checking should be done at the route guard level
-      const getStudentsOutput = await getStudentList(classId)
-
-      data.value = {
-        ...getClassOutput,
-        students: getStudentsOutput,
-      }
-
+    async () => {
+      await Promise.all([fetchStudents(), fetchClass()])
       // TODO add logging and error handling
     },
     {
@@ -29,5 +31,16 @@ export function useClassData(classId: Ref<string>) {
     }
   )
 
-  return data
+  return {
+    data: computed<ClassData | null>(() => {
+      if (!classData.value) {
+        return null
+      }
+
+      return {
+        ...classData.value,
+        students: studentsData.value,
+      }
+    }),
+  }
 }
