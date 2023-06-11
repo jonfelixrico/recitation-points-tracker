@@ -19,9 +19,39 @@ export function useRecitationData(
     }
   }
 
-  // TODO add logging and error handling for both downstream
-  watch([classId, recitationId], fetchRecitations)
-  onMounted(fetchRecitations)
+  watch([classId, recitationId], async ([classId, recitationId]) => {
+    try {
+      console.debug('%s/%s: change detected, fetching', classId, recitationId)
+      await fetchRecitations()
+      console.log(
+        '%s/%s: fetched data due to detected changes',
+        classId,
+        recitationId
+      )
+    } catch (e) {
+      console.error(
+        e,
+        '%s/%s: error caught while trying to fetch data due to changes',
+        classId,
+        recitationId
+      )
+    }
+  })
+
+  onMounted(async () => {
+    try {
+      console.debug('%s/%s: mount detected, fetching', classId, recitationId)
+      await fetchRecitations()
+      console.log('%s/%s: reloaded data due to mount', classId, recitationId)
+    } catch (e) {
+      console.error(
+        e,
+        '%s/%s: error caught while trying to fetch data due to mount',
+        classId,
+        recitationId
+      )
+    }
+  })
 
   return {
     data,
