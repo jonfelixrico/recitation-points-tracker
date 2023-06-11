@@ -1,5 +1,6 @@
 .page-width {
-  max-width: $breakpoint-sm;
+  width: $breakpoint-sm;
+  max-width: 100vw;
 }
 
 .border-bottom {
