@@ -42,5 +42,8 @@ export function useClassData(classId: Ref<string>) {
         students: studentsData.value,
       }
     }),
+
+    fetchClass,
+    fetchStudents,
   }
 }
