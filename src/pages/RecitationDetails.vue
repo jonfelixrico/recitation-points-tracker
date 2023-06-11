@@ -1,5 +1,18 @@
 <template>
-  <q-page> Test </q-page>
+  <q-page class="q-pt-md row justify-center">
+    <div class="page-width q-gutter-y-md column">
+      <div class="row items-center q-gutter-x-lg">
+        <q-btn icon="arrow_back" round flat dense @click="$router.back()" />
+
+        <div v-if="recitation?.name" class="text-h4">{{ recitation.name }}</div>
+        <q-skeleton v-else class="col-3 self-stretch" />
+      </div>
+
+      <q-card class="col">
+        <q-card-section> test </q-card-section>
+      </q-card>
+    </div>
+  </q-page>
 </template>
 
 <script lang="ts">
@@ -33,6 +46,10 @@ export default defineComponent({
         String(route.params.recitationId)
       )
     })
+
+    return {
+      recitation,
+    }
   },
 })
 </script>
