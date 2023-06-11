@@ -9,11 +9,17 @@ export function useRecitationData(
   const { getRecitation } = useRecitationsAPI()
 
   const data = ref<RecitationEntity | null>(null)
+  async function fetchRecitations() {
+    data.value = await getRecitation(classId.value, recitationId.value)
+  }
 
   watch([classId, recitationId], async () => {
-    data.value = await getRecitation(classId.value, recitationId.value)
+    await fetchRecitations()
     // TODO add logging and error handling
   })
 
-  return data
+  return {
+    data,
+    fetchRecitations,
+  }
 }
