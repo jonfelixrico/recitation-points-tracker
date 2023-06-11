@@ -74,4 +74,6 @@ export default {
 
   addRecitation: 'Add Recitation',
   emptyRecitations: 'No recitations yet',
+
+  viewRecitation: 'View Recitation',
 }

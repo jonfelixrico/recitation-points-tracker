@@ -11,8 +11,7 @@
         color="primary"
         @click="emit('click', recitation.id)"
       >
-        <!-- TODO i18nize this -->
-        View Recitation
+        {{ t('classes.viewRecitation') }}
       </q-btn>
     </q-item-section>
   </q-item>
@@ -21,6 +20,7 @@
 <script setup lang="ts">
 import { RecitationEntity } from 'src/models/entities'
 import { PropType } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 defineProps({
   recitation: {
@@ -32,4 +32,6 @@ defineProps({
 const emit = defineEmits<{
   (e: 'click', id: string): void
 }>()
+
+const { t } = useI18n()
 </script>
