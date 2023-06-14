@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import {
-  RecitedStudentsEntity,
+  RecitedStudentEntity,
   SeatingArrangement,
   StudentEntity,
 } from 'src/models/entities'
@@ -31,6 +31,6 @@ defineProps({
 })
 
 defineEmits<{
-  (e: 'student-update', value: RecitedStudentsEntity): void
+  (e: 'student-update', value: RecitedStudentEntity): void
 }>()
 </script>

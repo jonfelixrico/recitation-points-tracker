@@ -27,7 +27,7 @@ export interface RecitationEntity {
   recitationDt: Date
 }
 
-export interface RecitedStudentsEntity {
+export interface RecitedStudentEntity {
   studentId: string
   points: number
 }

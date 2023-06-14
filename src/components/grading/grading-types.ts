@@ -1,3 +1,3 @@
-import { RecitedStudentsEntity } from 'src/models/entities'
+import { RecitedStudentEntity } from 'src/models/entities'
 
-export type RecitedStudentsEntityMap = Record<string, RecitedStudentsEntity>
+export type RecitedStudentsEntityMap = Record<string, RecitedStudentEntity>
