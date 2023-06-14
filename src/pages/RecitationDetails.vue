@@ -11,7 +11,12 @@
       </div>
 
       <q-card class="col">
-        <q-card-section> test </q-card-section>
+        <GradingInterface
+          v-if="classData && recitationData"
+          :students="classData.students"
+          :seating-arrangement="classData.seatingArrangement"
+          :recited-students="recitationData.recitedStudents"
+        />
       </q-card>
     </div>
   </q-page>
@@ -23,8 +28,11 @@ import { useRecitationData } from 'src/composables/recitation-data-composable'
 import { useRecitationsAPI } from 'src/composables/recitations-api.composable'
 import { computed, defineComponent } from 'vue'
 import { useRoute } from 'vue-router'
+import GradingInterface from 'components/grading/GradingInterface.vue'
 
 export default defineComponent({
+  components: { GradingInterface },
+
   async beforeRouteEnter(to) {
     const { getRecitation } = useRecitationsAPI()
     try {
