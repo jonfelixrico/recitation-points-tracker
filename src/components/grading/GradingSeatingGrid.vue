@@ -1,10 +1,15 @@
 <template>
   <SeatingGrid
     :columns="seatingArrangement.columns"
-    v-slot="{ colIdx, rowIdx }"
+    v-slot="{ colIdx, rowIdx, seatIdx }"
   >
-    <div>
-      {{ inverseOccupantMap[colIdx]?.[rowIdx] }}
+    <div v-if="inverseOccupantMap[colIdx]?.[rowIdx]" class="cursor-pointer">
+      {{ inverseOccupantMap[colIdx][rowIdx].points }}
+    </div>
+
+    <!-- Seat is still unoccupied -->
+    <div v-else>
+      {{ seatIdx }}
     </div>
   </SeatingGrid>
 </template>
