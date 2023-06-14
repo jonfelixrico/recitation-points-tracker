@@ -15,10 +15,10 @@
 </template>
 
 <script setup lang="ts">
-import { RecitedStudentsEntity } from 'src/models/entities'
 import { SeatingArrangement, StudentEntity } from 'src/models/entities'
 import { PropType } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { RecitedStudentsEntityMap } from './grading-types'
 
 defineProps({
   seatingArrangement: {
@@ -33,12 +33,12 @@ defineProps({
 
   modelValue: {
     required: true,
-    type: Object as PropType<Record<string, RecitedStudentsEntity>>,
+    type: Object as PropType<RecitedStudentsEntityMap>,
   },
 })
 
 defineEmits<{
-  (e: 'update:modelValue', value: Record<string, RecitedStudentsEntity>): void
+  (e: 'update:modelValue', value: RecitedStudentsEntityMap): void
 }>()
 
 const { t } = useI18n()
