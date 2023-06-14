@@ -1,6 +1,10 @@
 import { useRecitationsAPI } from 'src/composables/recitations-api.composable'
-import { RecitationEntity } from 'src/models/entities'
+import { RecitationEntity, RecitedStudentEntity } from 'src/models/entities'
 import { Ref, onMounted, ref, watch } from 'vue'
+
+export interface ExtendedRecitationEntity extends RecitationEntity {
+  recitedStudents: RecitedStudentEntity[]
+}
 
 export function useRecitationData(
   classId: Ref<string>,
@@ -8,12 +12,21 @@ export function useRecitationData(
 ) {
   const { getRecitation } = useRecitationsAPI()
 
-  const data = ref<RecitationEntity | null>(null)
+  const data = ref<ExtendedRecitationEntity | null>(null)
   const isFetchOngoing = ref(false)
   async function fetchRecitations() {
     isFetchOngoing.value = true
     try {
-      data.value = await getRecitation(classId.value, recitationId.value)
+      const recitation = await getRecitation(classId.value, recitationId.value)
+
+      if (!recitation) {
+        data.value = null
+      } else {
+        data.value = {
+          ...recitation,
+          recitedStudents: [],
+        }
+      }
     } finally {
       isFetchOngoing.value = false
     }
