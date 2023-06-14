@@ -1,7 +1,12 @@
 <template>
-  <div>
-    <!-- TODO add something -->
-  </div>
+  <SeatingGrid
+    :columns="seatingArrangement.columns"
+    v-slot="{ colIdx, rowIdx }"
+  >
+    <div>
+      {{ inverseOccupantMap[colIdx]?.[rowIdx] }}
+    </div>
+  </SeatingGrid>
 </template>
 
 <script setup lang="ts">
@@ -10,10 +15,12 @@ import {
   SeatingArrangement,
   StudentEntity,
 } from 'src/models/entities'
-import { PropType } from 'vue'
+import { PropType, computed } from 'vue'
 import { RecitedStudentsEntityMap } from './grading-types'
+import SeatingGrid from 'components/seating/SeatingGrid.vue'
+import { getInverseOccupantMap } from 'src/utils/seating-utils'
 
-defineProps({
+const props = defineProps({
   seatingArrangement: {
     required: true,
     type: Object as PropType<SeatingArrangement>,
@@ -33,4 +40,8 @@ defineProps({
 defineEmits<{
   (e: 'student-update', value: RecitedStudentEntity): void
 }>()
+
+const inverseOccupantMap = computed(() =>
+  getInverseOccupantMap(props.students, props.seatingArrangement.occupants)
+)
 </script>
