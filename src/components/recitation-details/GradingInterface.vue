@@ -1,6 +1,15 @@
 <template>
   <div class="row">
-    <div class="col-3">student list</div>
+    <div class="col-3">
+      <div v-for="student of studentList" :key="student.id">
+        {{
+          t('common.nameFormat', {
+            firstName: student.firstName,
+            lastName: student.lastName,
+          })
+        }}
+      </div>
+    </div>
     <div class="col">interface</div>
   </div>
 </template>
@@ -9,6 +18,7 @@
 import { RecitedStudentsEntity } from 'src/models/entities'
 import { SeatingArrangement, StudentEntity } from 'src/models/entities'
 import { PropType } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 defineProps({
   seatingArrangement: {
@@ -16,7 +26,7 @@ defineProps({
     type: Object as PropType<SeatingArrangement>,
   },
 
-  students: {
+  studentList: {
     required: true,
     type: Array as PropType<StudentEntity[]>,
   },
@@ -30,4 +40,6 @@ defineProps({
 defineEmits<{
   (e: 'update:modelValue', value: Record<string, RecitedStudentsEntity>): void
 }>()
+
+const { t } = useI18n()
 </script>
