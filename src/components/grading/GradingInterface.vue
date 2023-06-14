@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-3">
-      <div v-for="student of studentList" :key="student.id">
+      <div v-for="student of students" :key="student.id">
         {{
           t('common.nameFormat', {
             firstName: student.firstName,
@@ -12,7 +12,7 @@
     </div>
     <GradingSeatingGrid
       class="col"
-      :student-list="studentList"
+      :students="students"
       :seating-arrangement="seatingArrangement"
       :recited-students="recitedStudents"
     />
@@ -34,7 +34,7 @@ defineProps({
     type: Object as PropType<SeatingArrangement>,
   },
 
-  studentList: {
+  students: {
     required: true,
     type: Array as PropType<StudentEntity[]>,
   },

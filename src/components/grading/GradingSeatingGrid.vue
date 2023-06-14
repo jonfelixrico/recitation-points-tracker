@@ -19,7 +19,7 @@ defineProps({
     type: Object as PropType<SeatingArrangement>,
   },
 
-  studentList: {
+  students: {
     required: true,
     type: Array as PropType<StudentEntity[]>,
   },
