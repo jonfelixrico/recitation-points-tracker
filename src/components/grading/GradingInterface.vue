@@ -1,14 +1,11 @@
 <template>
   <div class="row">
     <div class="col-3">
-      <div v-for="student of students" :key="student.id">
-        {{
-          t('common.nameFormat', {
-            firstName: student.firstName,
-            lastName: student.lastName,
-          })
-        }}
-      </div>
+      <GradingStudentList
+        :students="students"
+        :seating-arrangement="seatingArrangement"
+        :recited-students="recitedStudentsMap"
+      />
     </div>
 
     <div class="col flex flex-center">
@@ -28,12 +25,10 @@ import {
   StudentEntity,
 } from 'src/models/entities'
 import { PropType, computed } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { PointUpdateEventValue } from './grading-types'
 import GradingSeatingGrid from './GradingSeatingGrid.vue'
 import { keyBy } from 'lodash'
-
-const { t } = useI18n()
+import GradingStudentList from './GradingStudentList.vue'
 
 const props = defineProps({
   seatingArrangement: {
