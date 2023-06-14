@@ -15,25 +15,27 @@
       <GradingSeatingGrid
         :students="students"
         :seating-arrangement="seatingArrangement"
-        :recited-students="recitedStudents"
+        :recited-students="recitedStudentsMap"
       />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { SeatingArrangement, StudentEntity } from 'src/models/entities'
-import { PropType } from 'vue'
-import { useI18n } from 'vue-i18n'
 import {
-  PointUpdateEventValue,
-  RecitedStudentsEntityMap,
-} from './grading-types'
+  RecitedStudentEntity,
+  SeatingArrangement,
+  StudentEntity,
+} from 'src/models/entities'
+import { PropType, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { PointUpdateEventValue } from './grading-types'
 import GradingSeatingGrid from './GradingSeatingGrid.vue'
+import { keyBy } from 'lodash'
 
 const { t } = useI18n()
 
-defineProps({
+const props = defineProps({
   seatingArrangement: {
     required: true,
     type: Object as PropType<SeatingArrangement>,
@@ -46,11 +48,15 @@ defineProps({
 
   recitedStudents: {
     required: true,
-    type: Object as PropType<RecitedStudentsEntityMap>,
+    type: Array as PropType<RecitedStudentEntity[]>,
   },
 })
 
 defineEmits<{
   (e: 'point-update', value: PointUpdateEventValue): void
 }>()
+
+const recitedStudentsMap = computed(() =>
+  keyBy(props.recitedStudents, (item) => item.studentId)
+)
 </script>
