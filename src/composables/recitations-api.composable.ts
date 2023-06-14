@@ -1,4 +1,4 @@
-import { RecitationEntity } from 'src/models/entities'
+import { RecitationEntity, RecitedStudentEntity } from 'src/models/entities'
 import { useFirestore } from './firestore.composable'
 import {
   DocumentReference,
@@ -42,11 +42,44 @@ function useRecitationsDataConverter(
   }
 }
 
+function useRecitedStudentsDataConverter(
+  firestore: Firestore,
+  uid: string,
+  classId: string,
+  recitationId: string
+): FirestoreDataConverter<RecitedStudentEntity> {
+  return {
+    fromFirestore(snapshot) {
+      const data = snapshot.data()
+      return {
+        // this kind of entity will have the id and studentId values the same
+        studentId: snapshot.id,
+        points: data.points,
+      }
+    },
+
+    toFirestore({ points, studentId }) {
+      return {
+        points,
+        studentId,
+        classRef: doc(firestore, `users/${uid}/classes/${classId}`),
+        recitation: doc(
+          firestore,
+          `users/${uid}/classes/${classId}/recitations/${recitationId}`
+        ),
+      }
+    },
+  }
+}
+
 export function useRecitationsAPI() {
   const { firestore } = useFirestore()
   const uid = useSessionUserId()
 
-  const converter = useRecitationsDataConverter(firestore, String(uid))
+  const recitationConverter = useRecitationsDataConverter(
+    firestore,
+    String(uid)
+  )
 
   return {
     async createRecitation(
@@ -62,7 +95,7 @@ export function useRecitationsAPI() {
         firestore,
         `users/${uid}/classes/${body.classId}/recitations`,
         id
-      ).withConverter(converter)
+      ).withConverter(recitationConverter)
       await setDoc(recitationRef, await validateAndConvertRecitation(body))
 
       return newRecitation
@@ -74,7 +107,7 @@ export function useRecitationsAPI() {
       const sourceCollection = collection(
         firestore,
         `users/${uid}/classes/${classId}/recitations`
-      ).withConverter(converter)
+      ).withConverter(recitationConverter)
       const results = await getDocs(sourceCollection)
 
       results.forEach((doc) => {
@@ -84,6 +117,27 @@ export function useRecitationsAPI() {
       return recitations
     },
 
+    async getRecitedStudentList(classId: string, recitationId: string) {
+      const recitedStudentConverter = useRecitedStudentsDataConverter(
+        firestore,
+        String(uid),
+        classId,
+        recitationId
+      )
+      const sourceCollection = collection(
+        firestore,
+        `users/${uid}/classes/${classId}/recitations/${recitationId}/recitedStudents`
+      ).withConverter(recitedStudentConverter)
+      const results = await getDocs(sourceCollection)
+
+      const students: RecitedStudentEntity[] = []
+      results.forEach((doc) => {
+        students.push(doc.data())
+      })
+
+      return students
+    },
+
     async getRecitation(
       classId: string,
       recitationId: string
@@ -91,7 +145,7 @@ export function useRecitationsAPI() {
       const ref = doc(
         firestore,
         `users/${uid}/classes/${classId}/recitations/${recitationId}`
-      ).withConverter(converter)
+      ).withConverter(recitationConverter)
 
       const retrieved = await getDoc(ref)
       if (!retrieved.exists()) {
