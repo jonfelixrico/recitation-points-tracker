@@ -27,7 +27,7 @@
 <script setup lang="ts">
 import SeatingGrid from 'components/seating/SeatingGrid.vue'
 import { SeatingArrangement, StudentEntity } from 'src/models/entities'
-import { PropType } from 'vue'
+import { PropType, computed } from 'vue'
 import SeatPlanVisualizerEmptyTile from './SeatPlanVisualizerEmptyTile.vue'
 import { AssignPayload } from './class-seat-plan-typings'
 import { getInverseOccupantMap } from 'src/utils/seating-utils'
@@ -56,9 +56,8 @@ const emit = defineEmits<{
   (e: 'remove', value: string): void
 }>()
 
-const inverseOccupantMap = getInverseOccupantMap(
-  props.students,
-  props.occupants
+const inverseOccupantMap = computed(() =>
+  getInverseOccupantMap(props.students, props.occupants)
 )
 
 function assignSeat(id: string, colNo: number, rowNo: number) {
