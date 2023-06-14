@@ -10,12 +10,13 @@
         <q-skeleton v-else class="col-3 self-stretch" />
       </div>
 
-      <q-card class="col">
+      <q-card class="col column">
         <GradingInterface
           v-if="classData && recitationData"
           :students="classData.students"
           :seating-arrangement="classData.seatingArrangement"
           :recited-students="recitationData.recitedStudents"
+          class="col"
         />
       </q-card>
     </div>

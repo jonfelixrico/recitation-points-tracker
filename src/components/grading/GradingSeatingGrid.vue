@@ -1,18 +1,20 @@
 <template>
   <SeatingGrid
     :columns="seatingArrangement.columns"
+    :tile-size="50"
     v-slot="{ colIdx, rowIdx, seatIdx }"
   >
     <div
       v-if="inverseOccupantMap[colIdx]?.[rowIdx]"
       @click="emit('tile-click', inverseOccupantMap[colIdx][rowIdx].id)"
-      class="cursor-pointer"
+      class="cursor-pointer bg-green fit relative-position flex flex-center"
+      v-ripple
     >
       {{ inverseOccupantMap[colIdx][rowIdx].points }}
     </div>
 
     <!-- Seat is still unoccupied -->
-    <div v-else>
+    <div v-else class="bg-grey fit flex flex-center">
       {{ seatIdx }}
     </div>
   </SeatingGrid>
