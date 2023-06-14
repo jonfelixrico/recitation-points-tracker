@@ -10,12 +10,14 @@
         }}
       </div>
     </div>
-    <GradingSeatingGrid
-      class="col"
-      :students="students"
-      :seating-arrangement="seatingArrangement"
-      :recited-students="recitedStudents"
-    />
+
+    <div class="col flex flex-center">
+      <GradingSeatingGrid
+        :students="students"
+        :seating-arrangement="seatingArrangement"
+        :recited-students="recitedStudents"
+      />
+    </div>
   </div>
 </template>
 
