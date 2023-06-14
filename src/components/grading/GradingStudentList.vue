@@ -1,11 +1,16 @@
 <template>
   <div v-for="student of students" :key="student.id">
-    {{
-      t('common.nameFormat', {
-        firstName: student.firstName,
-        lastName: student.lastName,
-      })
-    }}
+    <div>
+      {{
+        t('common.nameFormat', {
+          firstName: student.firstName,
+          lastName: student.lastName,
+        })
+      }}
+    </div>
+    <div>
+      {{ recitedStudents[student.id]?.points ?? 0 }}
+    </div>
   </div>
 </template>
 
