@@ -23,7 +23,10 @@
 import { SeatingArrangement, StudentEntity } from 'src/models/entities'
 import { PropType } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { RecitedStudentsEntityMap } from './grading-types'
+import {
+  PointUpdateEventValue,
+  RecitedStudentsEntityMap,
+} from './grading-types'
 import GradingSeatingGrid from './GradingSeatingGrid.vue'
 
 const { t } = useI18n()
@@ -46,6 +49,6 @@ defineProps({
 })
 
 defineEmits<{
-  (e: 'update:modelValue', value: RecitedStudentsEntityMap): void
+  (e: 'point-update', value: PointUpdateEventValue): void
 }>()
 </script>
