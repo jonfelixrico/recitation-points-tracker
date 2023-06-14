@@ -10,21 +10,26 @@ export function useRecitationData(
   classId: Ref<string>,
   recitationId: Ref<string>
 ) {
-  const { getRecitation } = useRecitationsAPI()
+  const { getRecitation, getRecitedStudentList } = useRecitationsAPI()
 
   const data = ref<ExtendedRecitationEntity | null>(null)
   const isFetchOngoing = ref(false)
+
   async function fetchRecitations() {
     isFetchOngoing.value = true
     try {
       const recitation = await getRecitation(classId.value, recitationId.value)
+      const recitedStudents = await getRecitedStudentList(
+        classId.value,
+        recitationId.value
+      )
 
       if (!recitation) {
         data.value = null
       } else {
         data.value = {
           ...recitation,
-          recitedStudents: [],
+          recitedStudents,
         }
       }
     } finally {
