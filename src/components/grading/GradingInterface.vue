@@ -10,7 +10,12 @@
         }}
       </div>
     </div>
-    <div class="col">interface</div>
+    <GradingSeatingGrid
+      class="col"
+      :student-list="studentList"
+      :seating-arrangement="seatingArrangement"
+      :recited-students="recitedStudents"
+    />
   </div>
 </template>
 
@@ -19,6 +24,9 @@ import { SeatingArrangement, StudentEntity } from 'src/models/entities'
 import { PropType } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { RecitedStudentsEntityMap } from './grading-types'
+import GradingSeatingGrid from './GradingSeatingGrid.vue'
+
+const { t } = useI18n()
 
 defineProps({
   seatingArrangement: {
@@ -31,7 +39,7 @@ defineProps({
     type: Array as PropType<StudentEntity[]>,
   },
 
-  modelValue: {
+  recitedStudents: {
     required: true,
     type: Object as PropType<RecitedStudentsEntityMap>,
   },
@@ -40,6 +48,4 @@ defineProps({
 defineEmits<{
   (e: 'update:modelValue', value: RecitedStudentsEntityMap): void
 }>()
-
-const { t } = useI18n()
 </script>
