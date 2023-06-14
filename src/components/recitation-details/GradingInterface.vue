@@ -6,6 +6,7 @@
 </template>
 
 <script setup lang="ts">
+import { RecitedStudentsEntity } from 'src/models/entities'
 import { SeatingArrangement, StudentEntity } from 'src/models/entities'
 import { PropType } from 'vue'
 
@@ -19,5 +20,14 @@ defineProps({
     required: true,
     type: Array as PropType<StudentEntity[]>,
   },
+
+  modelValue: {
+    required: true,
+    type: Object as PropType<Record<string, RecitedStudentsEntity>>,
+  },
 })
+
+defineEmits<{
+  (e: 'update:modelValue', value: Record<string, RecitedStudentsEntity>): void
+}>()
 </script>
