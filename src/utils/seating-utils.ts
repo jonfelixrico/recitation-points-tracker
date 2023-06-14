@@ -1,3 +1,6 @@
+import { keyBy, set } from 'lodash'
+import { SeatingArrangement, StudentEntity } from 'src/models/entities'
+
 /**
  * Helper for computing the "global seat index" by determining the "column seat index"
  * of the first seat in the column.
@@ -27,4 +30,21 @@ export function computeStartingSeatIndexPerColumn(columns: number[]): number[] {
   }
 
   return startingSeatCountPerColumn
+}
+
+export function getInverseOccupantMap(
+  students: StudentEntity[],
+  occupants: SeatingArrangement['occupants']
+) {
+  const indexedStudents = keyBy(students, ({ id }) => id)
+
+  const map: Record<number, Record<number, StudentEntity>> = {}
+  for (const [studentId, [colNo, rowNo]] of Object.entries(occupants)) {
+    const student = indexedStudents[studentId]
+    if (student) {
+      set(map, [colNo, rowNo], student)
+    }
+  }
+
+  return map
 }
