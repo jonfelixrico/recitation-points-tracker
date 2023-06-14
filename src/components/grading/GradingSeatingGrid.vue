@@ -3,7 +3,11 @@
     :columns="seatingArrangement.columns"
     v-slot="{ colIdx, rowIdx, seatIdx }"
   >
-    <div v-if="inverseOccupantMap[colIdx]?.[rowIdx]" class="cursor-pointer">
+    <div
+      v-if="inverseOccupantMap[colIdx]?.[rowIdx]"
+      @click="emit('tile-click', inverseOccupantMap[colIdx][rowIdx].id)"
+      class="cursor-pointer"
+    >
       {{ inverseOccupantMap[colIdx][rowIdx].points }}
     </div>
 
@@ -15,11 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  RecitedStudentEntity,
-  SeatingArrangement,
-  StudentEntity,
-} from 'src/models/entities'
+import { SeatingArrangement, StudentEntity } from 'src/models/entities'
 import { PropType, computed } from 'vue'
 import { RecitedStudentsEntityMap } from './grading-types'
 import SeatingGrid from 'components/seating/SeatingGrid.vue'
@@ -46,8 +46,8 @@ const props = defineProps({
   },
 })
 
-defineEmits<{
-  (e: 'student-update', value: RecitedStudentEntity): void
+const emit = defineEmits<{
+  (e: 'tile-click', value: string): void
 }>()
 
 const inverseOccupantMap = computed(() => {
