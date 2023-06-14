@@ -18,7 +18,7 @@ import {
 import { PropType, computed } from 'vue'
 import { RecitedStudentsEntityMap } from './grading-types'
 import SeatingGrid from 'components/seating/SeatingGrid.vue'
-import { getInverseOccupantMap } from 'src/utils/seating-utils'
+import { keyBy, set } from 'lodash'
 
 const props = defineProps({
   seatingArrangement: {
@@ -41,7 +41,22 @@ defineEmits<{
   (e: 'student-update', value: RecitedStudentEntity): void
 }>()
 
-const inverseOccupantMap = computed(() =>
-  getInverseOccupantMap(props.students, props.seatingArrangement.occupants)
-)
+const inverseOccupantMap = computed(() => {
+  const indexedStudents = keyBy(props.students, ({ id }) => id)
+
+  const map: Record<number, Record<number, StudentEntity>> = {}
+  for (const [studentId, [colNo, rowNo]] of Object.entries(
+    props.seatingArrangement.occupants
+  )) {
+    const student = indexedStudents[studentId]
+    if (student) {
+      set(map, [colNo, rowNo], {
+        ...student,
+        points: props.recitedStudents[student.id]?.points ?? 0,
+      })
+    }
+  }
+
+  return map
+})
 </script>
